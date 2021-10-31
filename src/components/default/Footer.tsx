@@ -12,7 +12,9 @@ export const Footer = () => {
 						<p>Github React App</p>
 					</a>
 				</div>
-				<p className='mt-4 text-base text-gray-400 md:mt-0 md:order-1'>© 2021 Marcondes, Inc. All rights reserved.</p>
+				<p className='mt-4 text-base text-gray-400 md:mt-0 md:order-1'>
+					© 2021 Marcondes, Inc. All rights reserved.
+				</p>
 			</div>
 		</div>
 	)

@@ -1,11 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { BsList, BsX } from 'react-icons/bs'
+import { BsList, BsX, BsSunFill, BsMoonFill } from 'react-icons/bs'
 
 const links = ['Entries', 'Templates', 'Analytics']
 const profileLinks = ['Profile', 'Logout']
 
-export const Header = () => {
+type headerProps = {
+	onToggleDarkMode: () => void
+	darkMode: boolean
+}
+
+export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
 	let location = useLocation()
 	if (location.pathname.includes('/login')) return null
 
@@ -35,7 +40,12 @@ export const Header = () => {
 						))}
 					</nav>
 				</div>
-				<ProfileButton />
+				<span className='flex space-x-4'>
+					<button onClick={onToggleDarkMode} className='p-1 rounded-md hover:bg-gray-200 my-auto p-2'>
+						{darkMode ? <BsSunFill className='block h-5 w-5 text-gray-700' /> : <BsMoonFill className='block h-5 w-5' />}
+					</button>
+					<ProfileButton />
+				</span>
 			</div>
 			{showMobileNav && <MobileMenu toggleNav={toggleMobileNav} />}
 		</div>
@@ -79,11 +89,11 @@ const ProfileButton = () => {
 	)
 }
 
-type Props = {
+type mobileMenuProps = {
 	toggleNav: () => void
 }
 
-const MobileMenu = ({ toggleNav }: Props) => (
+const MobileMenu = ({ toggleNav }: mobileMenuProps) => (
 	<nav className='pb-3 space-y-1'>
 		{links.map((page) => (
 			<NavLink
