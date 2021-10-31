@@ -1,13 +1,16 @@
-import { Flex, Box } from '@chakra-ui/react'
-import { Filters } from '../components/Entries'
+import { Filters, Entry } from '../components/entries'
 
 export const Entries = () => {
 	return (
-		<Flex>
-			<Box w="20rem" size="9">
+		<div className='flex'>
+			<div className='w-80'>
 				<Filters />
-			</Box>
-			<Box flex="1">Box 3</Box>
-		</Flex>
+			</div>
+			<div className='flex-1'>
+				{[...new Array(10)].map((val, index) => {
+					return <Entry key={index} />
+				})}
+			</div>
+		</div>
 	)
 }
