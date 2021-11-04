@@ -20,20 +20,20 @@ export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
 	}
 
 	return (
-		<div className='py-2 px-4 md:px-8 border'>
-			<div className='relative flex items-center justify-between h-12'>
-				<button onClick={toggleMobileNav} className='p-1 rounded-md hover:bg-gray-200 md:hidden'>
-					{showMobileNav ? <BsX className='block h-6 w-6' /> : <BsList className='block h-6 w-6' />}
+		<div className='border py-2 px-4 md:px-8'>
+			<div className='flex h-12 relative items-center justify-between'>
+				<button onClick={toggleMobileNav} className='rounded-md p-1 md:hidden hover:bg-gray-200'>
+					{showMobileNav ? <BsX className='h-6 w-6 block' /> : <BsList className='h-6 w-6 block' />}
 				</button>
 				<div className='flex space-x-4'>
-					<span className='flex-shrink-0 flex items-center text-2xl md:text-xl font-bold'>marco</span>
+					<span className='flex font-bold flex-shrink-0 text-2xl items-center md:text-xl'>marco</span>
 					<nav className='space-x-4 hidden md:flex'>
-						{links.map((page) => (
+						{links.map(page => (
 							<NavLink
 								to={`/${page.toLowerCase()}`}
 								key={page}
 								activeClassName='font-bold'
-								className='text-gray-900 px-3 py-2 rounded-md text-sm font-large no-underline'
+								className='rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline'
 							>
 								{page}
 							</NavLink>
@@ -41,8 +41,8 @@ export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
 					</nav>
 				</div>
 				<span className='flex space-x-4'>
-					<button onClick={onToggleDarkMode} className='p-1 rounded-md hover:bg-gray-200 my-auto p-2'>
-						{darkMode ? <BsSunFill className='block h-5 w-5 text-gray-700' /> : <BsMoonFill className='block h-5 w-5' />}
+					<button onClick={onToggleDarkMode} className='rounded-md my-auto p-1 p-2 hover:bg-gray-200'>
+						{darkMode ? <BsSunFill className='h-5 text-gray-700 w-5 block' /> : <BsMoonFill className='h-5 w-5 block' />}
 					</button>
 					<ProfileButton />
 				</span>
@@ -68,17 +68,17 @@ const ProfileButton = () => {
 
 	return (
 		<div ref={menuRef}>
-			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-xl rounded-full p-2'>
+			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-xl p-2 '>
 				LM
 			</button>
 			{showMenu && (
-				<menu className='pl-0 absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white'>
-					{profileLinks.map((page) => (
+				<menu className='bg-white rounded-md shadow-lg mt-2 pl-0 right-0 w-48 absolute'>
+					{profileLinks.map(page => (
 						<NavLink
 							to={`/${page.toLowerCase()}`}
 							onClick={() => setShowMenu(false)}
 							key={page}
-							className='block px-4 py-3 text-sm text-gray-900 hover:bg-gray-100 no-underline'
+							className='text-sm py-3 px-4 text-gray-900 block no-underline hover:bg-gray-100'
 						>
 							{page}
 						</NavLink>
@@ -94,14 +94,14 @@ type mobileMenuProps = {
 }
 
 const MobileMenu = ({ toggleNav }: mobileMenuProps) => (
-	<nav className='pb-3 space-y-1'>
-		{links.map((page) => (
+	<nav className='space-y-1 pb-3'>
+		{links.map(page => (
 			<NavLink
 				to={`/${page.toLowerCase()}`}
 				onClick={toggleNav}
 				key={page}
 				activeClassName='font-bold'
-				className='self-center flex p-1 m-1 rounded-md no-underline text-gray-900 '
+				className='rounded-md flex m-1 p-1 text-gray-900 self-center no-underline '
 			>
 				{page}
 			</NavLink>

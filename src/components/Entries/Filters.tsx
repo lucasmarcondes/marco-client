@@ -2,9 +2,9 @@ import { Tag } from '../default'
 
 export const Filters = () => {
 	return (
-		<div className='sticky top-4'>
-			<h2 className='text-lg mb-1 font-semibold'>Sort by</h2>
-			<fieldset id='chronoSort' className='mb-4 flex flex-col'>
+		<div className='top-4 sticky'>
+			<h2 className='font-semibold text-lg mb-1'>Sort by</h2>
+			<fieldset id='chronoSort' className='flex flex-col mb-4'>
 				<div>
 					<label>
 						<input type='radio' name='chronoSort' value='newest' className='align-text-bottom' defaultChecked />
@@ -18,8 +18,8 @@ export const Filters = () => {
 					</label>
 				</div>
 			</fieldset>
-			<h2 className='text-lg mb-1 font-semibold'>Templates</h2>
-			<div className='mb-4 flex flex-col'>
+			<h2 className='font-semibold text-lg mb-1'>Templates</h2>
+			<div className='flex flex-col mb-4'>
 				{[...new Array(4)].map((val, index) => {
 					return (
 						<label key={index}>
@@ -29,13 +29,13 @@ export const Filters = () => {
 					)
 				})}
 			</div>
-			<h2 className='text-lg mb-1 font-semibold'>Properties</h2>
+			<h2 className='font-semibold text-lg mb-1'>Properties</h2>
 			<div className='flex flex-wrap mb-4'>
 				{[...new Array(5)].map((val, index) => {
 					return <Tag key={index} label={`Property ${index}`} className='m-1' />
 				})}
 			</div>
-			<h2 className='text-lg mb-1 font-semibold'>Dates</h2>
+			<h2 className='font-semibold text-lg mb-1'>Dates</h2>
 			<div className='flex flex-col'>
 				<label className='flex flex-col'>
 					<span>Begin</span>

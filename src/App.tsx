@@ -14,7 +14,7 @@ export default function App() {
 			<div {...(darkMode && { className: 'dark' })}>
 				<Header onToggleDarkMode={() => setDarkMode(!darkMode)} darkMode={darkMode} />
 				<div className='flex flex-col min-h-[93vh]'>
-					<div className='flex-auto p-4 md: p-8'>
+						<div className='flex-auto p-4 md:p-8 '>
 						<Switch>
 							<Route exact path={['/', '/entries']} component={Entries} />
 							<Route path='/login' component={Login} />
