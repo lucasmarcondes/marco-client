@@ -11,9 +11,9 @@ export default function App() {
 
 	return (
 		<BrowserRouter>
-			<div {...(darkMode && { className: 'dark' })}>
+			<div id='root' {...(darkMode && { className: 'dark' })}>
 				<Header onToggleDarkMode={() => setDarkMode(!darkMode)} darkMode={darkMode} />
-				<div className='flex flex-col min-h-[93vh]'>
+				<div className='flex flex-col min-h-[93vh] dark:(bg-gray-700 text-light-300)'>
 					<div className='flex-auto p-4 md: p-8'>
 						<Switch>
 							<Route exact path={['/', '/entries']} component={Entries} />
