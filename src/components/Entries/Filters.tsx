@@ -32,7 +32,7 @@ export const Filters = () => {
 			<h2 className='text-lg mb-1 font-semibold'>Properties</h2>
 			<div className='flex flex-wrap mb-4'>
 				{[...new Array(5)].map((val, index) => {
-					return <Tag key={index} label={`Property ${index}`} />
+					return <Tag key={index} label={`Property ${index}`} className='m-1' />
 				})}
 			</div>
 			<h2 className='text-lg mb-1 font-semibold'>Dates</h2>
