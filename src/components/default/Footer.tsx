@@ -2,7 +2,7 @@ import { BsGithub } from 'react-icons/bs'
 import { useLocation } from 'react-router-dom'
 export const Footer = () => {
 	let location = useLocation()
-	if (location.pathname.includes('/login')) return null
+	if (['/login', '/register'].includes(location.pathname)) return null
 
 	return (
 		<div className='border-t mx-4 p-4 md:mx-4 md:p-8 '>

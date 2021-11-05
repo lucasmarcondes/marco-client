@@ -12,7 +12,7 @@ type headerProps = {
 
 export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
 	let location = useLocation()
-	if (location.pathname.includes('/login')) return null
+	if (['/login', '/register'].includes(location.pathname)) return null
 
 	const [showMobileNav, setShowMobileNav] = useState(false)
 	const toggleMobileNav = (): void => {
