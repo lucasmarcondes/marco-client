@@ -5,12 +5,12 @@ import { BsList, BsX, BsSunFill, BsMoonFill } from 'react-icons/bs'
 const links = ['Entries', 'Templates', 'Analytics']
 const profileLinks = ['Profile', 'Logout']
 
-type headerProps = {
+type HeaderProps = {
 	onToggleDarkMode: () => void
 	darkMode: boolean
 }
 
-export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
+export const Header = ({ onToggleDarkMode, darkMode }: HeaderProps) => {
 	let location = useLocation()
 	if (['/login', '/register'].includes(location.pathname)) return null
 
@@ -20,9 +20,9 @@ export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
 	}
 
 	return (
-		<div className='border py-2 px-4 md:px-8'>
+		<div className='border py-2 px-4 md:px-8 dark:( bg-gray-800 border-0 text-light-300 ) '>
 			<div className='flex h-12 relative items-center justify-between'>
-				<button onClick={toggleMobileNav} className='rounded-md p-1 md:hidden hover:bg-gray-200'>
+				<button onClick={toggleMobileNav} className='rounded-md my-auto p-1 md:hidden dark:(hover:bg-gray-300) hover:bg-gray-200 hover:text-dark-200'>
 					{showMobileNav ? <BsX className='h-6 w-6 block' /> : <BsList className='h-6 w-6 block' />}
 				</button>
 				<div className='flex space-x-4'>
@@ -33,7 +33,7 @@ export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
 								to={`/${page.toLowerCase()}`}
 								key={page}
 								activeClassName='font-bold'
-								className='rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline'
+								className='rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline dark:(text-light-300 ) '
 							>
 								{page}
 							</NavLink>
@@ -41,8 +41,11 @@ export const Header = ({ onToggleDarkMode, darkMode }: headerProps) => {
 					</nav>
 				</div>
 				<span className='flex space-x-4'>
-					<button onClick={onToggleDarkMode} className='rounded-md my-auto p-1 p-2 hover:bg-gray-200'>
-						{darkMode ? <BsSunFill className='h-5 text-gray-700 w-5 block' /> : <BsMoonFill className='h-5 w-5 block' />}
+					<button
+						onClick={onToggleDarkMode}
+						className='rounded-md my-auto p-1 p-2 text-light-700 dark:(hover:bg-gray-300) hover:bg-gray-200 hover:text-dark-200'
+					>
+						{darkMode ? <BsSunFill className='h-5 w-5 block ' /> : <BsMoonFill className='h-5 text-dark-200 w-5 block' />}
 					</button>
 					<ProfileButton />
 				</span>
@@ -72,13 +75,13 @@ const ProfileButton = () => {
 				LM
 			</button>
 			{showMenu && (
-				<menu className='bg-white rounded-md shadow-lg mt-2 pl-0 right-0 w-48 absolute'>
+				<menu className='bg-white rounded-md shadow-lg mt-2 pl-0 right-0 w-48 absolute dark:( bg-gray-800 border-0 text-light-300 )s '>
 					{profileLinks.map(page => (
 						<NavLink
 							to={`/${page.toLowerCase()}`}
 							onClick={() => setShowMenu(false)}
 							key={page}
-							className='text-sm py-3 px-4 text-gray-900 block no-underline hover:bg-gray-100'
+							className='text-sm py-3 px-4 text-gray-900 block no-underline dark:( hover:bg-gray-600 bg-gray-800 border-0 text-light-300 ) hover:bg-gray-100 '
 						>
 							{page}
 						</NavLink>
@@ -89,19 +92,19 @@ const ProfileButton = () => {
 	)
 }
 
-type mobileMenuProps = {
+type MobileMenuProps = {
 	toggleNav: () => void
 }
 
-const MobileMenu = ({ toggleNav }: mobileMenuProps) => (
-	<nav className='space-y-1 pb-3'>
+const MobileMenu = ({ toggleNav }: MobileMenuProps) => (
+	<nav className='space-y-1 pb-3 '>
 		{links.map(page => (
 			<NavLink
 				to={`/${page.toLowerCase()}`}
 				onClick={toggleNav}
 				key={page}
 				activeClassName='font-bold'
-				className='rounded-md flex m-1 p-1 text-gray-900 self-center no-underline '
+				className='rounded-md flex m-1 p-1 text-gray-900 self-center no-underline dark:( bg-gray-800 border-0 text-light-300 ) '
 			>
 				{page}
 			</NavLink>

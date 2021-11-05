@@ -1,5 +1,12 @@
 import { Tag } from '../default'
 
+const properties = [
+	{ title: 'Checkbox', type: 'checkbox' },
+	{ title: 'Text', type: 'text' },
+	{ title: 'Select', type: 'select' },
+	{ title: 'Number	', type: 'number' },
+]
+
 export const Filters = () => {
 	return (
 		<div className='top-4 sticky'>
@@ -31,20 +38,20 @@ export const Filters = () => {
 			</div>
 			<h2 className='font-semibold text-lg mb-1'>Properties</h2>
 			<div className='flex flex-wrap mb-4'>
-				{[...new Array(5)].map((val, index) => {
-					return <Tag key={index} label={`Property ${index}`} className='m-1' />
+				{[...properties].map((val, index) => {
+					return <Tag key={index} label={val.title} className='m-1' property={val} />
 				})}
 			</div>
 			<h2 className='font-semibold text-lg mb-1'>Dates</h2>
 			<div className='flex flex-col'>
 				<label className='flex flex-col'>
 					<span>Begin</span>
-					<input type='date' className='mb-2' />
+					<input type='date' className='mb-2 dark:( bg-gray-400 border-gray-500)' />
 				</label>
 
 				<label className='flex flex-col'>
 					<span>End</span>
-					<input id='endDate' type='date' />
+					<input id='endDate' type='date' className='dark:( bg-gray-400 border-gray-500)' />
 				</label>
 			</div>
 		</div>
