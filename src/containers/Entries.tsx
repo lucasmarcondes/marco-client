@@ -1,7 +1,8 @@
-import { Filters, EntryList, SearchBar } from '../components/entries'
+import { Filters, Entry, SearchBar } from '../components/entries'
 import { useState } from 'react'
 import { entries } from '../testData'
-import { LooseObject } from '../types'
+import { LooseObject, Entry as EntryType } from '../types'
+
 import { useEntriesQuery } from '../api/entry'
 
 export const Entries = () => {
@@ -19,9 +20,9 @@ export const Entries = () => {
 			let obj: LooseObject = { ...entry }
 			let searchList: string[] = []
 			searchAgainst.forEach(key => {
-				if (key.toLowerCase().includes('date')) {
-					obj[key] = obj[key].toLocaleDateString()
-				}
+				// if (key.toLowerCase().includes('date')) {
+				// 	obj[key] = obj[key].toLocaleDateString()
+				// }
 				searchList.push(obj[key])
 			})
 			// console.log('searching:', searchList)
@@ -29,7 +30,7 @@ export const Entries = () => {
 		})
 
 	const updateSearchKey = (key: any) => {
-		setState({ searchKey: key })
+		setState({ ...state, searchKey: key })
 	}
 	return (
 		<div className='flex p-4 md:p-8'>
@@ -46,4 +47,12 @@ export const Entries = () => {
 			</div>
 		</div>
 	)
+}
+
+type EntryListProps = {
+	entries: EntryType[] | undefined
+	searchedText: string
+}
+export const EntryList = ({ entries, searchedText }: EntryListProps) => {
+	return <div>{entries && entries.map((val, index) => <Entry key={index} entry={val} index={index} searchedText={searchedText} />)}</div>
 }
