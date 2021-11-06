@@ -1,5 +1,5 @@
-import { Entry as EntryType } from '../../types'
 import { Tag } from '../default'
+import { Entry as EntryType } from '../../types'
 
 type EntryProps = {
 	entry: EntryType
@@ -23,19 +23,19 @@ export const Entry = ({ entry, index, searchedText }: EntryProps) => {
 	}
 
 	return (
-		<div className='mx-auto px-8 '>
-			<div className='bg-white rounded-sm border-1 mb-10 py-4 px-8 dark:bg-gray-500'>
+		<div className='mx-auto px-8'>
+			<div className='bg-white rounded-lg shadow-lg my-10 py-4 px-8 dark:bg-gray-500'>
 				<div onDoubleClick={toggleEditMode}>
 					<div className='flex'>
 						<h2 className='font-semibold text-gray-800 text-3xl dark:text-white'>{title}</h2>
 
-						<div className='ml-auto text-sm text-gray-500 dark:text-white'>{entry.createdDate.toLocaleDateString()}</div>
+						<div className='ml-auto text-sm text-gray-500 dark:text-white'>{entry.createdDate}</div>
 					</div>
 					<p className='mt-2 text-gray-600 dark:text-white'>{text}</p>
 				</div>
 				<div className='flex flex-wrap mt-4 mb-4'>
-					{[...entry.properties].map((val, idx) => {
-						return <Tag key={idx} label={`Property ${idx + 1}`} className='m-2 ml-0' property={val} />
+					{entry.properties.map((val, idx) => {
+						return <Tag key={idx} label={val.type} className='m-2 ml-0' property={val} />
 					})}
 				</div>
 				<div className='flex mt-4 justify-end'></div>

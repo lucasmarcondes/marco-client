@@ -32,8 +32,9 @@ export const Header = ({ onToggleDarkMode, darkMode }: HeaderProps) => {
 							<NavLink
 								to={`/${page.toLowerCase()}`}
 								key={page}
-								activeClassName='font-bold'
-								className='rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline dark:(text-light-300 ) '
+								className={({ isActive }) =>
+									`${isActive ? 'font-bold ' : ''}rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline dark:(text-light-300)`
+								}
 							>
 								{page}
 							</NavLink>
@@ -103,8 +104,9 @@ const MobileMenu = ({ toggleNav }: MobileMenuProps) => (
 				to={`/${page.toLowerCase()}`}
 				onClick={toggleNav}
 				key={page}
-				activeClassName='font-bold'
-				className='rounded-md flex m-1 p-1 text-gray-900 self-center no-underline dark:( bg-gray-800 border-0 text-light-300 ) '
+				className={({ isActive }) =>
+					`${isActive ? 'font-bold ' : ''}rounded-md flex m-1 p-1 text-gray-900 self-center no-underline dark:( bg-gray-800 border-0 text-light-300)`
+				}
 			>
 				{page}
 			</NavLink>

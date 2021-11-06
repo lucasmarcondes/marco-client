@@ -2,31 +2,35 @@ import { Filters, EntryList, SearchBar } from '../components/entries'
 import { useState } from 'react'
 import { entries } from '../testData'
 import { LooseObject } from '../types'
+import { useEntriesQuery } from '../api/entry'
 
 export const Entries = () => {
+	const { data: entries, isLoading } = useEntriesQuery()
+
 	const [state, setState] = useState({
 		searchKey: '',
 	})
 
 	const searchAgainst = ['title', 'properties', 'text', 'createdDate']
 
-	const filteredEntries = entries.filter(entry => {
-		let obj: LooseObject = { ...entry }
-		let searchList: string[] = []
-		searchAgainst.forEach(key => {
-			if (key.toLowerCase().includes('date')) {
-				obj[key] = obj[key].toLocaleDateString()
-			}
-			searchList.push(obj[key])
+	const filteredEntries =
+		entries &&
+		entries.filter(entry => {
+			let obj: LooseObject = { ...entry }
+			let searchList: string[] = []
+			searchAgainst.forEach(key => {
+				if (key.toLowerCase().includes('date')) {
+					obj[key] = obj[key].toLocaleDateString()
+				}
+				searchList.push(obj[key])
+			})
+			// console.log('searching:', searchList)
+			return JSON.stringify(searchList).toLowerCase().includes(state.searchKey.toLowerCase())
 		})
-		// console.log('searching:', searchList)
-		return JSON.stringify(searchList).toLowerCase().includes(state.searchKey.toLowerCase())
-	})
 
 	const updateSearchKey = (key: any) => {
 		setState({ searchKey: key })
 	}
-
 	return (
 		<div className='flex p-4 md:p-8'>
 			<div className='w-80'>
@@ -37,9 +41,7 @@ export const Entries = () => {
 					<div className='m-8 mb-5'>
 						<SearchBar onSearch={updateSearchKey} />
 					</div>
-					<div>
-						<EntryList entries={filteredEntries} searchedText={state.searchKey} />
-					</div>
+					<div>{!isLoading && entries ? <EntryList entries={filteredEntries} searchedText={state.searchKey} /> : null}</div>
 				</div>
 			</div>
 		</div>

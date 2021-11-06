@@ -22,3 +22,12 @@ export interface Entry {
 	templateId: number
 	properties: Array<any>
 }
+
+export interface Template {
+	_id: number
+	description: String
+	properties: Array<any>
+	createdDate: Date
+	createdById: number
+	lastModifiedDate: Date
+}
