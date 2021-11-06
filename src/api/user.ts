@@ -1,10 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { User } from '../types'
 
-export interface UserResponse {
-	user: User
-}
-
 export interface LoginRequest {
 	email: string
 	password: string
@@ -18,31 +14,38 @@ export interface RegisterRequest {
 	confirmPassword: string
 }
 
+export interface MessageResponse {
+	msg: string
+}
+
 export const userApi = createApi({
 	reducerPath: 'userApi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/api/user/' }),
+	baseQuery: fetchBaseQuery({
+		baseUrl: 'http://localhost:3030/api/user/',
+		credentials: 'include',
+	}),
 	endpoints: builder => ({
-		register: builder.mutation<UserResponse, RegisterRequest>({
+		register: builder.mutation<MessageResponse, RegisterRequest>({
 			query: credentials => ({
 				url: '/',
 				method: 'POST',
 				body: credentials,
 			}),
 		}),
-		login: builder.mutation<UserResponse, LoginRequest>({
+		login: builder.mutation<MessageResponse, LoginRequest>({
 			query: credentials => ({
 				url: 'login',
 				method: 'POST',
 				body: credentials,
 			}),
 		}),
-		logout: builder.mutation<UserResponse, void>({
+		logout: builder.query<MessageResponse, void>({
 			query: () => ({
 				url: 'logout',
 				method: 'GET',
 			}),
 		}),
-		getUser: builder.mutation<UserResponse, void>({
+		user: builder.query<User, void>({
 			query: () => ({
 				url: '/',
 				method: 'GET',
@@ -51,4 +54,4 @@ export const userApi = createApi({
 	}),
 })
 
-export const { useLoginMutation, useRegisterMutation } = userApi
+export const { useUserQuery, useLoginMutation, useRegisterMutation } = userApi
