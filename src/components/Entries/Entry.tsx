@@ -23,8 +23,8 @@ export const Entry = ({ entry, index, searchedText }: EntryProps) => {
 					<p className='mt-2 text-gray-600 dark:text-white'>{getHighlightedText(entry.text, searchedText)}</p>
 				</div>
 				<div className='flex flex-wrap mt-4 mb-4'>
-					{entry.properties.map((val, idx) => {
-						return <Tag key={idx} label={val.description} className='m-2 ml-0' property={val} />
+					{entry.properties.map((prop, idx) => {
+						return <Tag key={idx} label={prop.description} className='m-2 ml-0' type={prop.type} />
 					})}
 				</div>
 				<div className='flex mt-4 justify-end'></div>

@@ -17,7 +17,7 @@ export interface Entry {
 	text?: string
 	title?: string
 	createdDate: Date
-	lastModifiedDate?: Date
+	lastModifiedDate: Date
 	createdById: string
 	templateId: string
 	properties: Array<any>

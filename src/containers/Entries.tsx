@@ -25,10 +25,25 @@ export const Entries = () => {
 		entries.filter(entry => {
 			let obj: LooseObject = { ...entry }
 			let searchList: string[] = []
+			let matches = true
 			searchAgainst.forEach(key => {
 				searchList.push(obj[key])
 			})
-			return JSON.stringify(searchList).toLowerCase().includes(state.searchKey.toLowerCase())
+			if (state.filters.templates.length > 0) {
+				if (!state.filters.templates.includes(obj.templateId)) {
+					matches = false
+				}
+			}
+			if (matches && state.filters.properties.length > 0) {
+				matches = state.filters.properties.every((prop: any) => obj.properties.some((e: any) => e.type === prop))
+			}
+			if (matches && state.filters.startDate) {
+				matches = new Date(obj.lastModifiedDate).getTime() - new Date(state.filters.startDate).getTime() > 0
+			}
+			if (matches && state.filters.endDate) {
+				matches = new Date(obj.lastModifiedDate).getTime() - new Date(state.filters.endDate).getTime() < 0
+			}
+			return matches && JSON.stringify(searchList).toLowerCase().includes(state.searchKey.toLowerCase())
 		})
 	if (state.filters.chronoSort == 'newFirst') {
 		filteredEntries =
@@ -50,10 +65,6 @@ export const Entries = () => {
 		setState({ ...state, searchKey: key })
 	}
 	const updateFilters = (filters: any) => {
-		// if the sort filter changed, sort the list
-		if (state.filters.chronoSort != filters.chronoSort) {
-			filteredEntries = filteredEntries
-		}
 		setState({ ...state, filters: filters })
 	}
 	return (

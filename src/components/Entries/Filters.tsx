@@ -1,6 +1,7 @@
 import { Tag } from '../default'
 import { useGetTemplatesQuery } from '../../store/api'
 import { useState, useEffect } from 'react'
+import { LooseObject } from '../../types'
 
 const properties = [
 	{ title: 'Checkbox', type: 'checkbox' },
@@ -11,20 +12,33 @@ const properties = [
 
 type FiltersProp = {
 	onChange: (filters: any) => void
-	filters: {}
+	filters: LooseObject
 }
 
 export const Filters = ({ onChange, filters }: FiltersProp) => {
 	const { data: templates, isLoading } = useGetTemplatesQuery()
 
 	const handleFilterChange = (e: any) => {
+		// handle adding to list
 		switch (e.target.name) {
-			case 'startDate' || 'endDate':
+			case 'properties':
+			case 'templates':
+				let filterList = [...filters[e.target.name]]
+				let index = filterList.indexOf(e.target.id)
+				if (index > -1) filterList.splice(index, 1)
+				else filterList.push(e.target.id)
+				onChange({ ...filters, [e.target.name]: filterList })
+				break
+			case 'startDate':
+			case 'endDate':
 				onChange({ ...filters, [e.target.name]: e.target.value })
+				break
 			default:
 				onChange({ ...filters, [e.target.name]: e.target.id })
+				break
 		}
 	}
+
 	return (
 		<form onChange={handleFilterChange}>
 			<div className='top-4 sticky'>
@@ -58,12 +72,13 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 				</div>
 				<h2 className='font-semibold text-lg mb-1'>Properties</h2>
 				<div className='flex flex-wrap mb-4'>
-					{[...properties].map(val => {
+					{[...properties].map(prop => {
+						let type = filters.properties.includes(prop.type) ? 'checked' : prop.type
 						return (
-							<span key={val.type}>
-								<input name='properties' id={val.type} className='hidden' onClick={handleFilterChange} />
-								<label htmlFor={val.type}>
-									<Tag label={val.title} className='m-1' property={val} />
+							<span key={prop.type}>
+								<input type='checkbox' name='properties' id={prop.type} className='hidden' onClick={handleFilterChange} />
+								<label htmlFor={prop.type}>
+									<Tag type={type} label={prop.title} className='border-1 m-1 hover:(cursor-pointer bg-light-200 border-dark-100) ' />
 								</label>
 							</span>
 						)
