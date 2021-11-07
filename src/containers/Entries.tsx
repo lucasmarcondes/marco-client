@@ -30,9 +30,7 @@ export const Entries = () => {
 				searchList.push(obj[key])
 			})
 			if (state.filters.templates.length > 0) {
-				if (!state.filters.templates.includes(obj.templateId)) {
-					matches = false
-				}
+				matches = state.filters.templates.includes(obj.templateId)
 			}
 			if (matches && state.filters.properties.length > 0) {
 				matches = state.filters.properties.every((prop: any) => obj.properties.some((e: any) => e.type === prop))
