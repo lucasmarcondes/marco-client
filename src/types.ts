@@ -15,11 +15,11 @@ export interface User {
 export interface Entry {
 	_id: string
 	text?: string
-	title: string
+	title?: string
 	createdDate: Date
-	lastModifiedDate: Date
-	createdById: number
-	templateId: number
+	lastModifiedDate?: Date
+	createdById: string
+	templateId: string
 	properties: Array<any>
 }
 
@@ -28,6 +28,6 @@ export interface Template {
 	description: String
 	properties: Array<any>
 	createdDate: Date
-	createdById: number
+	createdById: string
 	lastModifiedDate: Date
 }

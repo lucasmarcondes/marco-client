@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useRegisterMutation } from '../api/user'
+import { useRegisterMutation } from '../store/api'
 
 export const Register = () => {
 	const [formData, setFormData] = useState({

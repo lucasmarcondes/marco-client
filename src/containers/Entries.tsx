@@ -2,10 +2,10 @@ import { Filters, Entry, SearchBar } from '../components/entries'
 import { useState } from 'react'
 import { LooseObject, Entry as EntryType } from '../types'
 
-import { useEntriesQuery } from '../api/entry'
+import { useGetEntriesQuery } from '../store/api'
 
 export const Entries = () => {
-	const { data: entries, isLoading } = useEntriesQuery()
+	const { data: entries, isLoading } = useGetEntriesQuery()
 
 	const [state, setState] = useState({
 		searchKey: '',
