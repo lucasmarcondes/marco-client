@@ -1,5 +1,5 @@
 import { Tag } from '../default'
-import { useTemplatesQuery } from '../../api/template'
+import { useGetTemplatesQuery } from '../../store/api'
 import { useState, useEffect } from 'react'
 
 const properties = [
@@ -15,7 +15,7 @@ type FiltersProp = {
 }
 
 export const Filters = ({ onChange, filters }: FiltersProp) => {
-	const { data: templates, isLoading } = useTemplatesQuery()
+	const { data: templates, isLoading } = useGetTemplatesQuery()
 
 	const handleFilterChange = (e: any) => {
 		switch (e.target.name) {
