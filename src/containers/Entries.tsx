@@ -1,6 +1,5 @@
 import { Filters, Entry, SearchBar } from '../components/entries'
 import { useState } from 'react'
-import { entries } from '../testData'
 import { LooseObject, Entry as EntryType } from '../types'
 
 import { useEntriesQuery } from '../api/entry'
@@ -10,32 +9,57 @@ export const Entries = () => {
 
 	const [state, setState] = useState({
 		searchKey: '',
+		filters: {
+			chronoSort: 'newFirst',
+			properties: new Array<String>(),
+			templates: new Array<String>(),
+			startDate: null,
+			endDate: null,
+		},
 	})
 
 	const searchAgainst = ['title', 'properties', 'text', 'createdDate']
 
-	const filteredEntries =
+	let filteredEntries =
 		entries &&
 		entries.filter(entry => {
 			let obj: LooseObject = { ...entry }
 			let searchList: string[] = []
 			searchAgainst.forEach(key => {
-				// if (key.toLowerCase().includes('date')) {
-				// 	obj[key] = obj[key].toLocaleDateString()
-				// }
 				searchList.push(obj[key])
 			})
-			// console.log('searching:', searchList)
 			return JSON.stringify(searchList).toLowerCase().includes(state.searchKey.toLowerCase())
 		})
+	if (state.filters.chronoSort == 'newFirst') {
+		filteredEntries =
+			filteredEntries &&
+			filteredEntries
+				.sort((a, b) => {
+					return new Date(a.lastModifiedDate).getTime() - new Date(b.lastModifiedDate).getTime()
+				})
+				.reverse()
+	} else {
+		filteredEntries =
+			filteredEntries &&
+			filteredEntries.sort((a, b) => {
+				return new Date(a.lastModifiedDate).getTime() - new Date(b.lastModifiedDate).getTime()
+			})
+	}
 
 	const updateSearchKey = (key: any) => {
 		setState({ ...state, searchKey: key })
 	}
+	const updateFilters = (filters: any) => {
+		// if the sort filter changed, sort the list
+		if (state.filters.chronoSort != filters.chronoSort) {
+			filteredEntries = filteredEntries
+		}
+		setState({ ...state, filters: filters })
+	}
 	return (
 		<div className='flex p-4 md:p-8'>
 			<div className='w-80'>
-				<Filters />
+				<Filters filters={state.filters} onChange={updateFilters} />
 			</div>
 			<div className='flex-1'>
 				<div className='border-solid border-light-800 border-l-1 ml-10'>

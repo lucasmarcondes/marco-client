@@ -11,42 +11,20 @@ export const Entry = ({ entry, index, searchedText }: EntryProps) => {
 		alert('open edit mode!')
 	}
 
-	// let title = <span>{entry.title}</span>
-	// let text = <span>{entry.text}</span>
-	// if (searchedText) {
-	// 	if (entry.title && entry.title.toLowerCase().includes(searchedText.toLowerCase())) {
-	// 		title = getHighlightedText(entry.title, searchedText)
-	// 	}
-	// 	if (entry.text && entry.text.toLowerCase().includes(searchedText.toLowerCase())) {
-	// 		text = getHighlightedText(entry.text, searchedText)
-	// 	}
-	// }
-	const title = getHighlightedText(entry.title, searchedText)
-	const text = getHighlightedText(entry.text, searchedText)
-	// let text = <span>{entry.text}</span>
-	// if (searchedText) {
-	// 	if (entry.title && entry.title.toLowerCase().includes(searchedText.toLowerCase())) {
-	// 		title =
-	// 	}
-	// 	if (entry.text && entry.text.toLowerCase().includes(searchedText.toLowerCase())) {
-	// 		text = getHighlightedText(entry.text, searchedText)
-	// 	}
-	// }
-
 	return (
 		<div className='mx-auto px-8'>
 			<div className='bg-white rounded-md border-1 border-gray-300 my-8 py-4 px-8 dark:bg-gray-500'>
 				<div onDoubleClick={toggleEditMode}>
 					<div className='flex'>
-						<h2 className='font-semibold text-gray-800 text-3xl dark:text-white'>{title}</h2>
+						<h2 className='font-semibold text-gray-800 text-3xl dark:text-white'>{getHighlightedText(entry.title, searchedText)}</h2>
 
-						<div className='ml-auto text-sm text-gray-500 dark:text-white'>{entry.createdDate}</div>
+						<div className='ml-auto text-sm text-gray-500 dark:text-white'>{new Date(entry.lastModifiedDate).toLocaleString()}</div>
 					</div>
-					<p className='mt-2 text-gray-600 dark:text-white'>{text}</p>
+					<p className='mt-2 text-gray-600 dark:text-white'>{getHighlightedText(entry.text, searchedText)}</p>
 				</div>
 				<div className='flex flex-wrap mt-4 mb-4'>
 					{entry.properties.map((val, idx) => {
-						return <Tag key={idx} label={val.value} className='m-2 ml-0' property={val} />
+						return <Tag key={idx} label={val.description} className='m-2 ml-0' property={val} />
 					})}
 				</div>
 				<div className='flex mt-4 justify-end'></div>
@@ -61,7 +39,7 @@ const getHighlightedText = (text?: string, highlight?: string) => {
 	const parts = text && text.split(new RegExp(`(${highlight})`, 'gi'))
 	// console.log(parts)
 	return (
-		<span>
+		<span className='line-clamp-3 '>
 			{' '}
 			{parts && highlight ? (
 				parts.map((part, i) => (
@@ -70,7 +48,7 @@ const getHighlightedText = (text?: string, highlight?: string) => {
 					</span>
 				))
 			) : (
-				<span>{text}</span>
+				<span className='line-clamp-3 '>{text}</span>
 			)}{' '}
 		</span>
 	)

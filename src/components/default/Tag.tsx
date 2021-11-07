@@ -12,12 +12,12 @@ const getTagIcon = (type?: string) => getStyles(type).icon
 const getStyles = (type?: string) => {
 	let obj = {
 		background: 'bg-gray-200',
-		icon: <BsX className='cursor-pointer my-auto h-5 w-5' />,
+		icon: <span className='pl-2'></span>,
 	}
 	switch (type) {
 		case 'select': {
 			obj.background = 'bg-red-400'
-			obj.icon = <BsCursor className='my-auto h-4 w-4 mr-1' />
+			obj.icon = <BsCursor className='my-auto h-4 mr-1 w-4' />
 			break
 		}
 		case 'checkbox': {
@@ -27,7 +27,7 @@ const getStyles = (type?: string) => {
 		}
 		case 'text': {
 			obj.background = 'bg-blue-400'
-			obj.icon = <BsJournalText className='my-auto h-4 w-4 mr-1' />
+			obj.icon = <BsJournalText className='my-auto h-4 mr-1 w-4' />
 			break
 		}
 		case 'number': {
