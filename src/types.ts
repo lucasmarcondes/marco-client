@@ -2,7 +2,7 @@ export interface LooseObject {
 	[key: string]: any
 }
 export interface User {
-	_id: number
+	_id: string
 	firstName: string
 	lastName: string
 	email: string
@@ -13,18 +13,18 @@ export interface User {
 }
 
 export interface Entry {
-	_id: number
+	_id: string
 	text?: string
-	title: string
+	title?: string
 	createdDate: Date
 	lastModifiedDate?: Date
 	createdById: string
-	templateId: number
+	templateId: string
 	properties: Array<any>
 }
 
 export interface Template {
-	_id: number
+	_id: string
 	description: String
 	properties: Array<any>
 	createdDate: Date

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLoginMutation } from '../api/user'
+import { useLoginMutation } from '../store/api'
 
 export const Login = () => {
 	const [login, { isLoading }] = useLoginMutation()
