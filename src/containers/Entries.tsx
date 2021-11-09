@@ -1,21 +1,19 @@
 import { Filters, Entry, SearchBar } from '../components/entries'
+import { Modal } from '../components/default/Modal'
 import { useState } from 'react'
 import { LooseObject, Entry as EntryType } from '../types'
+import { BsPlus } from 'react-icons/bs'
+import { IModalContent } from '../components/default/Modal'
 
 import { useGetEntriesQuery } from '../store/api'
 
 export const Entries = () => {
-	const { data: entries, isLoading } = useGetEntriesQuery()
+	const { data: entries } = useGetEntriesQuery()
 
 	const [state, setState] = useState({
 		searchKey: '',
-		filters: {
-			chronoSort: 'newFirst',
-			properties: new Array<String>(),
-			templates: new Array<String>(),
-			startDate: null,
-			endDate: null,
-		},
+		filters: { chronoSort: 'newFirst', properties: new Array<String>(), templates: new Array<String>(), startDate: null, endDate: null },
+		modalContent: null as IModalContent,
 	})
 
 	const searchAgainst = ['title', 'properties', 'text', 'createdDate']
@@ -59,12 +57,37 @@ export const Entries = () => {
 			})
 	}
 
-	const updateSearchKey = (key: any) => {
-		setState({ ...state, searchKey: key })
+	const updateSearchKey = (searchKey: string) => {
+		setState({ ...state, searchKey })
 	}
 	const updateFilters = (filters: any) => {
-		setState({ ...state, filters: filters })
+		setState({ ...state, filters })
 	}
+
+	const openModal = () => {
+		setState({
+			...state,
+			modalContent: {
+				title: 'New Entry',
+				content: <div>test</div>,
+				actions: (
+					<>
+						<button className='danger'>Delete</button>
+						<button className='secondary' onClick={closeModal}>
+							Cancel
+						</button>
+						<button className='primary'>Edit</button>
+						<button className='primary'>Submit</button>
+					</>
+				),
+			},
+		})
+	}
+
+	const closeModal = () => {
+		setState({ ...state, modalContent: null })
+	}
+
 	return (
 		<div className='flex p-4 md:p-8'>
 			<div className='w-80'>
@@ -72,12 +95,18 @@ export const Entries = () => {
 			</div>
 			<div className='flex-1'>
 				<div className='border-solid border-light-800 border-l-1 ml-10'>
-					<div className='m-8 mb-5'>
-						<SearchBar onSearch={updateSearchKey} />
+					<div className='flex m-8 mb-5'>
+						<SearchBar className='grow' onSearch={updateSearchKey} />
+						<NewEntryButton onClick={openModal} />
 					</div>
-					<div>{!isLoading && entries ? <EntryList entries={filteredEntries} searchedText={state.searchKey} /> : null}</div>
+					{entries && (
+						<div>
+							<EntryList entries={filteredEntries} searchedText={state.searchKey} />
+						</div>
+					)}
 				</div>
 			</div>
+			<Modal modalContent={state.modalContent} onClose={closeModal} />
 		</div>
 	)
 }
@@ -89,3 +118,13 @@ type EntryListProps = {
 export const EntryList = ({ entries, searchedText }: EntryListProps) => {
 	return <div>{entries && entries.map((val, index) => <Entry key={index} entry={val} index={index} searchedText={searchedText} />)}</div>
 }
+
+interface NewEntryButtonProps {
+	onClick: () => void
+}
+export const NewEntryButton = ({ onClick }: NewEntryButtonProps) => (
+	<button onClick={onClick} className='ml-2 secondary'>
+		<BsPlus className='my-auto h-6 w-6' />
+		<span className='my-auto w-max'>New Entry</span>
+	</button>
+)

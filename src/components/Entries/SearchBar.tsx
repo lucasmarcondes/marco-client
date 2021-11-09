@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react'
+
 type SearchBarProps = {
 	className?: string
 	onSearch: (key: any) => void
@@ -6,13 +8,9 @@ type SearchBarProps = {
 export const SearchBar = ({ className, onSearch }: SearchBarProps) => {
 	const css = ['w-full', className]
 
-	const handleSearchKeyChange = (e: any) => {
+	const handleSearchKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
 		onSearch(e.target.value)
 	}
 
-	return (
-		<div className='flex'>
-			<input type='text' onChange={handleSearchKeyChange} className={css.join(' ')} placeholder='Search...' />
-		</div>
-	)
+	return <input type='text' onChange={handleSearchKeyChange} className={css.join(' ')} placeholder='Search...' />
 }
