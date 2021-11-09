@@ -10,6 +10,7 @@ export interface User {
 	password?: string
 	mobile?: string
 	createdDate: Date
+	lastModifiedDate: Date
 }
 
 export interface Entry {
@@ -20,14 +21,26 @@ export interface Entry {
 	lastModifiedDate: Date
 	createdById: string
 	templateId: string
-	properties: Array<any>
+	properties: Property[]
 }
 
 export interface Template {
 	_id: string
 	description: String
-	properties: Array<any>
+	properties: Property[]
 	createdDate: Date
 	createdById: string
 	lastModifiedDate: Date
+}
+
+export interface Property {
+	_id: string
+	type: 'text' | 'checkbox' | 'number' | 'select'
+	subType?: string
+	description: string
+	default?: string | boolean | number | Array<string>
+	multipleValues?: boolean
+	showOnCard: boolean
+	options?: Array<string>
+	value?: string | boolean | number | Array<string>
 }
