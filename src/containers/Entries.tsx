@@ -5,15 +5,17 @@ import { LooseObject, Entry as EntryType } from '../types'
 import { BsPlus } from 'react-icons/bs'
 import { IModalContent } from '../components/default/Modal'
 
-import { useGetEntriesQuery } from '../store/api'
+import { useGetEntriesQuery, useGetTemplatesQuery } from '../store/api'
 
 export const Entries = () => {
 	const { data: entries } = useGetEntriesQuery()
+	const { data: templates } = useGetTemplatesQuery()
 
 	const [state, setState] = useState({
 		searchKey: '',
 		filters: { chronoSort: 'newFirst', properties: new Array<String>(), templates: new Array<String>(), startDate: null, endDate: null },
 		modalContent: null as IModalContent,
+		currentEntry: {} as EntryType,
 	})
 
 	const searchAgainst = ['title', 'properties', 'text', 'createdDate']
@@ -64,12 +66,49 @@ export const Entries = () => {
 		setState({ ...state, filters })
 	}
 
-	const openModal = () => {
+	const closeModal = () => {
+		setState({ ...state, modalContent: null })
+	}
+
+	const updateCurrentEntry = (val: any) => {
+		setState({ ...state, currentEntry: { ...state.currentEntry, ...val } })
+	}
+
+	const showTemplateSelectionModal = () => {
+		if (templates?.length === 1) {
+			updateCurrentEntry({ templateId: templates[0]._id })
+			return showEntryModal()
+		}
+		setState({
+			...state,
+			modalContent: {
+				title: 'Select a template',
+				content: (
+					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80'>
+						{templates?.map((template, index) => (
+							<button
+								onClick={() => {
+									updateCurrentEntry({ templateId: template._id })
+									showEntryModal()
+								}}
+								className=' border-gray-300 w-full py-2 text-gray-700 block hover:bg-gray-100'
+								key={index}
+							>
+								{template.description}
+							</button>
+						))}
+					</ul>
+				),
+			},
+		})
+	}
+
+	const showEntryModal = () => {
 		setState({
 			...state,
 			modalContent: {
 				title: 'New Entry',
-				content: <div>test</div>,
+				content: <div>Insert new Entry Information Here</div>,
 				actions: (
 					<>
 						<button className='danger'>Delete</button>
@@ -84,10 +123,6 @@ export const Entries = () => {
 		})
 	}
 
-	const closeModal = () => {
-		setState({ ...state, modalContent: null })
-	}
-
 	return (
 		<div className='flex p-4 md:p-8'>
 			<div className='w-80'>
@@ -97,7 +132,7 @@ export const Entries = () => {
 				<div className='border-solid border-light-800 border-l-1 ml-10'>
 					<div className='flex m-8 mb-5'>
 						<SearchBar className='grow' onSearch={updateSearchKey} />
-						<NewEntryButton onClick={openModal} />
+						<NewEntryButton onClick={showTemplateSelectionModal} />
 					</div>
 					{entries && (
 						<div>
