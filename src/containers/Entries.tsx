@@ -1,4 +1,4 @@
-import { Filters, Entry, SearchBar } from '../components/entries'
+import { Filters, Entry, SearchBar, EntryTemplate } from '../components/entries'
 import { Modal } from '../components/default/Modal'
 import { useState } from 'react'
 import { LooseObject, Entry as EntryType } from '../types'
@@ -71,25 +71,27 @@ export const Entries = () => {
 	}
 
 	const updateCurrentEntry = (val: any) => {
-		setState({ ...state, currentEntry: { ...state.currentEntry, ...val } })
+		setState(state => {
+			return { ...state, currentEntry: { ...state.currentEntry, ...val } }
+		})
 	}
 
 	const showTemplateSelectionModal = () => {
 		if (templates?.length === 1) {
-			updateCurrentEntry({ templateId: templates[0]._id })
-			return showEntryModal()
+			showEntryModal()
+			return updateCurrentEntry({ templateId: templates[0]._id })
 		}
 		setState({
 			...state,
 			modalContent: {
-				title: 'Select a template',
+				title: 'Select a Template',
 				content: (
 					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80'>
 						{templates?.map((template, index) => (
 							<button
 								onClick={() => {
-									updateCurrentEntry({ templateId: template._id })
 									showEntryModal()
+									updateCurrentEntry({ templateId: template._id })
 								}}
 								className=' border-gray-300 w-full py-2 text-gray-700 block hover:bg-gray-100'
 								key={index}
@@ -108,15 +110,14 @@ export const Entries = () => {
 			...state,
 			modalContent: {
 				title: 'New Entry',
-				content: <div>Insert new Entry Information Here</div>,
+				content: <EntryTemplate />,
+				size: 'h-[80%] w-2/3',
 				actions: (
 					<>
-						<button className='danger'>Delete</button>
 						<button className='secondary' onClick={closeModal}>
 							Cancel
 						</button>
-						<button className='primary'>Edit</button>
-						<button className='primary'>Submit</button>
+						<button className='primary'>Create</button>
 					</>
 				),
 			},

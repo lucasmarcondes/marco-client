@@ -1,4 +1,5 @@
 export { Footer } from './Footer'
 export { Header } from './Header'
 export { Modal } from './Modal'
+export { MultiSelect } from './MultiSelect'
 export { Tag } from './Tag'

@@ -1,13 +1,13 @@
 /* disable focus but enable custom focusing for focus-within  */
 :focus {
 	outline: none !important;
-	@apply focus-visible:ring transition ease-in duration-75 z-50;
+	@apply transition ease-in z-50 duration-75 focus-visible:ring;
 }
 
-/* remove all types of focus for inputs that do not have tailwind form's "form-input" class */
-/* input:not(.form-input):not([type='checkbox']):not([type='radio']):focus {
+/* remove all types of focus for inputs that do not have a type */
+input:not([type='text']):focus {
 	@apply ring-0;
-} */
+}
 
 input[type='text'],
 input[type='date'],
@@ -15,24 +15,24 @@ input[type='email'],
 input[type='number'],
 input[type='password'],
 input[type='search'] {
-	@apply focus:ring-offset-0 focus:ring-2 focus:ring-opacity-50 focus:ring-blue-500 focus:border-blue-200 border rounded-md border-gray-300;
+	@apply border rounded-md border-gray-300 focus:border-blue-200 focus:ring-offset-0 focus:ring-2 focus:ring-opacity-50 focus:ring-blue-500;
 }
 
 input[type='checkbox'] {
-	@apply w-[1.15rem] h-[1.15rem] focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500 border rounded-sm border-gray-300;
+	@apply border rounded-sm border-gray-300 h-[1.15rem] w-[1.15rem] focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500;
 }
 
 input[type='radio'] {
-	@apply focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500 border border-gray-300;
+	@apply border border-gray-300 focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500;
 }
 
 /* buttons */
 button.danger {
-	@apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 sm:w-auto sm:text-sm;
+	@apply border border-transparent rounded-md font-medium bg-red-600 shadow-sm text-base text-white w-full py-2 px-4 inline-flex justify-center sm:text-sm sm:w-auto hover:bg-red-700;
 }
 button.primary {
-	@apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 sm:w-auto sm:text-sm;
+	@apply border border-transparent rounded-md font-medium bg-blue-500 shadow-sm text-base text-white w-full py-2 px-4 inline-flex justify-center sm:text-sm sm:w-auto hover:bg-blue-600;
 }
 button.secondary {
-	@apply w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm;
+	@apply bg-white border rounded-md font-medium border-gray-300 shadow-sm text-base w-full py-2 px-4 text-gray-700 inline-flex justify-center sm:mt-0 sm:text-sm sm:w-auto hover:bg-gray-50;
 }

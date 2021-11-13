@@ -59,20 +59,20 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 				</fieldset>
 				<h2 className='font-semibold text-lg mb-1'>Templates</h2>
 				<div className='flex flex-col mb-4'>
-					{!isLoading && templates
-						? templates.map((val, index) => {
-								return (
-									<label key={index}>
-										<input name='templates' type='checkbox' id={val._id} />
-										<span className='pl-2'>Template {index + 1}</span>
-									</label>
-								)
-						  })
-						: ''}
+					{!isLoading &&
+						templates &&
+						templates.map((val, index) => {
+							return (
+								<label key={index}>
+									<input name='templates' type='checkbox' id={val._id} />
+									<span className='pl-2'>{val.description}</span>
+								</label>
+							)
+						})}
 				</div>
 				<h2 className='font-semibold text-lg mb-1'>Properties</h2>
 				<div className='flex flex-wrap mb-4'>
-					{[...properties].map(prop => {
+					{properties.map(prop => {
 						let type = filters.properties.includes(prop.type) ? 'checked' : prop.type
 						return (
 							<span key={prop.type}>
