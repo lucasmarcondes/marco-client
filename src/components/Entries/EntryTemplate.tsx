@@ -1,7 +1,7 @@
 import { MultiSelect } from '../default/MultiSelect'
 export const EntryTemplate = () => {
 	return (
-		<div className='bg-white overflow-auto'>
+		<div className='bg-white'>
 			<div className='flex justify-between'>
 				<input
 					role='heading'
@@ -19,9 +19,7 @@ export const EntryTemplate = () => {
 			</div>
 			<div className='flex'>
 				<div className='my-auto py-1 w-2/5 overflow-x-auto whitespace-nowrap sm:w-1/4'>Test</div>
-				<div className='border border-transparent rounded-md flex px-2 w-3/5 sm:w-3/4 focus-within:border-gray-300 focus-within:shadow-lg focus-within:z-50'>
-					<MultiSelect />
-				</div>
+				<MultiSelect options={['a', 'ab', 'abc', 'abcd']} />
 			</div>
 		</div>
 	)

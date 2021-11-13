@@ -24,11 +24,11 @@ export const useDisableBackgroundScroll = (open: boolean) => {
 }
 
 export const Modal = ({ modalContent, onClose }: Props) => {
-	const css = `${modalContent?.size ? modalContent.size : ''} bg-white rounded-lg flex flex-col my-auto shadow-lg z-50`
+	const css = `${modalContent?.size ? modalContent.size : ''} bg-white rounded-lg flex flex-col my-auto shadow-lg`
 	useDisableBackgroundScroll(!!modalContent)
 	return (
 		modalContent && (
-			<div className='flex bg-gray-700 bg-opacity-70 w-full inset-0 animate-fade-in animate-animated z-50 fixed justify-center items-center'>
+			<div className='flex bg-gray-700 bg-opacity-70 w-full inset-0 animate-fade-in animate-animated z-50 fixed justify-center'>
 				<div className={css}>
 					{modalContent.title && (
 						<div className='rounded-t-md flex px-4 pt-4 justify-between'>
