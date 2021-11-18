@@ -1,4 +1,4 @@
-import { Tag } from '../default'
+import { Tag } from '../common'
 import { useGetTemplatesQuery } from '../../store/api'
 import { ILooseObject } from '../../types'
 

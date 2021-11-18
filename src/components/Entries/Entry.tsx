@@ -1,4 +1,4 @@
-import { Tag } from '../default'
+import { Tag } from '../common'
 import { IEntry } from '../../types'
 import { IModalType } from '../../store/root'
 

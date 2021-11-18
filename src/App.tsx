@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Entries, Login, Register, Templates, Analytics, Profile } from './containers'
 
-import { Header, Footer } from './components/default'
+import { Header, Footer } from './components/common'
 
 import { useState } from 'react'
 

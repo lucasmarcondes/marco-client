@@ -1,9 +1,9 @@
-import { Modal } from '../default'
+import { Modal } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentEntry, setModalType, updateCurrentEntry } from '../../store/root'
 import { EntryTemplate } from '.'
 import { useGetTemplatesQuery, useCreateEntryMutation, useUpdateEntryMutation, useRemoveEntryMutation } from '../../store/api'
-import { IModalContent } from '../default/Modal'
+import { IModalContent } from '../common/Modal'
 import { RootState } from '../../store/store'
 import { INewEntry } from '../../types'
 

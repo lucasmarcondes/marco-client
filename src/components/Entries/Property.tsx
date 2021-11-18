@@ -1,4 +1,4 @@
-import { MultiSelect, Select } from '../default'
+import { MultiSelect, Select } from '../common'
 import { IProperty } from '../../types'
 import { Entry } from '.'
 
