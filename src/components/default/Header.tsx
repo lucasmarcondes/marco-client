@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { BsList, BsX, BsSunFill, BsMoonFill } from 'react-icons/bs'
+import { useLogoutMutation, useGetUserQuery } from '../../store/api'
+import { useNavigate } from 'react-router-dom'
 
 const links = ['Entries', 'Templates', 'Analytics']
-const profileLinks = ['Profile', 'Logout']
 
 type HeaderProps = {
 	onToggleDarkMode: () => void
@@ -57,8 +58,11 @@ export const Header = ({ onToggleDarkMode, darkMode }: HeaderProps) => {
 }
 
 const ProfileButton = () => {
+	const { data: user } = useGetUserQuery()
 	const [showMenu, setShowMenu] = useState(false)
 	const menuRef = useRef<HTMLInputElement>(null)
+	const [logout] = useLogoutMutation()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const isOutsideClick = (e: Event) => {
@@ -70,23 +74,37 @@ const ProfileButton = () => {
 		}
 	}, [showMenu])
 
+	const signout = async () => {
+		try {
+			const response = await logout()
+			if (response) {
+				navigate('/login')
+			}
+		} catch (err) {
+			console.error(err)
+		}
+	}
+
 	return (
 		<div ref={menuRef}>
-			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-xl p-2 '>
-				LM
+			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-lg p-2 '>
+				{user && (user.firstName[0] + user.lastName[0]).toUpperCase()}
 			</button>
 			{showMenu && (
-				<menu className='bg-white rounded-md shadow-lg mt-2 pl-0 right-0 w-48 absolute dark:( bg-gray-800 border-0 text-light-300 )s '>
-					{profileLinks.map(page => (
-						<NavLink
-							to={`/${page.toLowerCase()}`}
-							onClick={() => setShowMenu(false)}
-							key={page}
-							className='text-sm py-3 px-4 text-gray-900 block no-underline dark:( hover:bg-gray-600 bg-gray-800 border-0 text-light-300 ) hover:bg-gray-100 '
-						>
-							{page}
-						</NavLink>
-					))}
+				<menu className='bg-white rounded-md shadow-lg mt-2 pl-0 right-0 w-48 z-50 absolute dark:( bg-gray-800 border-0 text-light-300 ) '>
+					<NavLink
+						to='/profile'
+						onClick={() => setShowMenu(false)}
+						className='text-sm py-3 px-4 text-gray-900 block no-underline dark:( hover:bg-gray-600 bg-gray-800 border-0 text-light-300 ) hover:bg-gray-100 '
+					>
+						Profile
+					</NavLink>
+					<button
+						onClick={() => signout()}
+						className='text-sm text-left w-full py-3 px-4 text-gray-900 block no-underline dark:( hover:bg-gray-600 bg-gray-800 border-0 text-light-300 ) hover:bg-gray-100 '
+					>
+						Logout
+					</button>
 				</menu>
 			)}
 		</div>

@@ -10,9 +10,10 @@ export const Login = () => {
 
 	const submit = async () => {
 		try {
-			const response = await login({ email, password }).unwrap()
-			navigate('/entries')
-			console.log(response)
+			const response = await login({ email, password })
+			if (response) {
+				navigate('/entries')
+			}
 		} catch (err) {
 			console.error(err)
 		}
