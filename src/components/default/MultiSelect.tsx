@@ -4,12 +4,22 @@ import { BsX, BsChevronDown } from 'react-icons/bs'
 
 export interface IMultiSelectProps {
 	options: string[]
+	onSelect: (val: string[]) => void
+	defaultValue: string[] | undefined
 }
 
-export const MultiSelect = ({ options }: IMultiSelectProps) => {
-	const [inputValue, setInputValue] = useState<string>('')
+export const MultiSelect = ({ defaultValue, options, onSelect }: IMultiSelectProps) => {
+	const [inputValue, setInputValue] = useState('')
 	const { getSelectedItemProps, getDropdownProps, addSelectedItem, removeSelectedItem, selectedItems } = useMultipleSelection({
-		initialSelectedItems: [],
+		initialSelectedItems: defaultValue || [],
+		onStateChange: ({ type, selectedItems }) => {
+			switch (type) {
+				case useMultipleSelection.stateChangeTypes.DropdownKeyDownBackspace:
+				case useMultipleSelection.stateChangeTypes.FunctionRemoveSelectedItem:
+					onSelect(selectedItems as string[])
+					break
+			}
+		},
 	})
 
 	const getFilteredOptions = () =>
@@ -43,6 +53,7 @@ export const MultiSelect = ({ options }: IMultiSelectProps) => {
 				case useCombobox.stateChangeTypes.ItemClick:
 					if (selectedItem) {
 						setInputValue('')
+						onSelect([...selectedItems, selectedItem])
 						addSelectedItem(selectedItem as never)
 					}
 					break
@@ -51,32 +62,35 @@ export const MultiSelect = ({ options }: IMultiSelectProps) => {
 			}
 		},
 	})
+
 	return (
-		<div className='w-full relative '>
-			<div className={`${isOpen && 'shadow-lg'} border rounded-md w-full absolute`}>
-				<div className='flex'>
-					<div className='flex space-x-1.5 ml-1.5'>
+		<div className='h-10 relative'>
+			<div
+				className={`${
+					isOpen && 'shadow-lg border-blue-200 ring-offset-0 ring-2 ring-opacity-50 ring-blue-500 transition ease-in duration-25 z-50'
+				} absolute rounded-md border border-gray-300 w-full bg-white min-h-10 flex flex-col`}
+			>
+				<div className='flex p-1'>
+					<div className='flex flex-wrap flex-1 ml-1.5 min-h-7.5' {...getComboboxProps()}>
 						{selectedItems.map((selectedItem, index) => (
 							<span
-								className='rounded-md flex bg-gray-100 my-0.5 pr-1.5 pl-0.5'
+								className='rounded-md flex bg-gray-100 h-6 my-0.5 mr-1 pr-1.5 pl-0.5'
 								key={`selected-item-${index}`}
 								{...getSelectedItemProps({ selectedItem, index })}
 							>
 								<BsX
-									className='cursor-pointer my-auto h-5 transition w-5 hover:(cursor-pointer text-gray-600 duration-150) '
+									className='cursor-pointer h-5 mt-0.75 transition w-5 hover:(cursor-pointer text-gray-600 duration-150) '
 									type='button'
-									onClick={() => {
-										openMenu()
+									onClick={e => {
+										e.stopPropagation()
 										removeSelectedItem(selectedItem)
 									}}
 								/>
 								{selectedItem}
 							</span>
 						))}
-					</div>
-					<div className='flex flex-1 justify-between' {...getComboboxProps()}>
 						<input
-							className='flex-1 m-1 '
+							className='bg-transparent h-0 focus:h-auto'
 							{...getInputProps({
 								...getDropdownProps(),
 								onFocus: e => {
@@ -84,22 +98,23 @@ export const MultiSelect = ({ options }: IMultiSelectProps) => {
 								},
 							})}
 						/>
-						<button type='button' className='flex' {...getToggleButtonProps()} aria-label={'toggle menu'}>
-							<BsChevronDown className={`${isOpen && 'transform rotate-180'} my-auto mr-2`} />
-						</button>
 					</div>
+					<button type='button' className='flex' {...getToggleButtonProps()} aria-label={'toggle menu'}>
+						<BsChevronDown className={`${isOpen && 'transform rotate-180'} mt-2 mr-2`} />
+					</button>
 				</div>
 				<ul className='w-full' {...getMenuProps()}>
-					{isOpen &&
-						getFilteredOptions().map((item, index) => (
-							<li
-								className={`${highlightedIndex === index && 'bg-gray-100'}  bg-white py-1 px-2 last:rounded-b-md`}
-								key={`${item}${index}`}
-								{...getItemProps({ item, index })}
-							>
-								{item}
-							</li>
-						))}
+					{isOpen && getFilteredOptions().length > 0
+						? getFilteredOptions().map((item, index) => (
+								<li
+									className={`${highlightedIndex === index && 'bg-gray-100'} bg-white py-1 px-2 last:rounded-b-md`}
+									key={`${item}${index}`}
+									{...getItemProps({ item, index })}
+								>
+									{item}
+								</li>
+						  ))
+						: isOpen && <li className='m-1 text-sm'>No results found</li>}
 				</ul>
 			</div>
 		</div>

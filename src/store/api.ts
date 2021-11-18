@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { User, Template, Entry } from '../types'
+import { IUser, ITemplate, IEntry, INewEntry } from '../types'
 
-export interface LoginRequest {
+export interface ILoginRequest {
 	email: string
 	password: string
 }
 
-export interface RegisterRequest {
+export interface IRegisterRequest {
 	firstName: string
 	lastName: string
 	email: string
@@ -22,14 +22,14 @@ export const api = createApi({
 	}),
 	tagTypes: ['User', 'Entry', 'Template'],
 	endpoints: builder => ({
-		getUser: builder.query<User, void>({
+		getUser: builder.query<IUser, void>({
 			query: () => ({
 				url: 'user',
 				method: 'GET',
 			}),
 			providesTags: ['User'],
 		}),
-		register: builder.mutation<User, RegisterRequest>({
+		register: builder.mutation<IUser, IRegisterRequest>({
 			query: credentials => ({
 				url: 'user',
 				method: 'POST',
@@ -37,7 +37,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		login: builder.mutation<User, LoginRequest>({
+		login: builder.mutation<IUser, ILoginRequest>({
 			query: credentials => ({
 				url: 'user/login',
 				method: 'POST',
@@ -52,14 +52,14 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		getEntries: builder.query<Entry[], void>({
+		getEntries: builder.query<IEntry[], void>({
 			query: () => ({
 				url: 'entry',
 				method: 'GET',
 			}),
 			providesTags: ['Entry'],
 		}),
-		createEntry: builder.mutation<Entry, Omit<Entry, '_id'>>({
+		createEntry: builder.mutation<IEntry, INewEntry>({
 			query: entry => ({
 				url: 'entry',
 				method: 'POST',
@@ -68,7 +68,7 @@ export const api = createApi({
 			invalidatesTags: ['Entry'],
 		}),
 
-		updateEntry: builder.mutation<Entry, Entry>({
+		updateEntry: builder.mutation<IEntry, INewEntry>({
 			query: entry => ({
 				url: `entry/${entry._id}`,
 				method: 'PUT',
@@ -83,14 +83,14 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Entry'],
 		}),
-		getTemplates: builder.query<Template[], void>({
+		getTemplates: builder.query<ITemplate[], void>({
 			query: () => ({
 				url: 'template',
 				method: 'GET',
 			}),
 			providesTags: ['Template'],
 		}),
-		createTemplate: builder.mutation<Template, Omit<Template, '_id'>>({
+		createTemplate: builder.mutation<ITemplate, Omit<ITemplate, '_id'>>({
 			query: template => ({
 				url: 'template',
 				method: 'POST',
@@ -99,7 +99,7 @@ export const api = createApi({
 			invalidatesTags: ['Template'],
 		}),
 
-		updateTemplate: builder.mutation<Template, Template>({
+		updateTemplate: builder.mutation<ITemplate, ITemplate>({
 			query: template => ({
 				url: `template/${template._id}`,
 				method: 'PUT',

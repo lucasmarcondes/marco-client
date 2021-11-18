@@ -1,17 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { INewEntry } from '../types'
 
-export interface RootState {}
+export type IModalType = 'create' | 'edit' | 'view' | null
+export interface IRootState {
+	currentEntry: INewEntry | null
+	modalType: IModalType
+}
 
-const initialState: RootState = {}
+const initialState: IRootState = {
+	currentEntry: null,
+	modalType: null,
+}
 
 export const root = createSlice({
 	name: 'root',
 	initialState,
 	reducers: {
-		// add function here
+		setModalType: (state, action: PayloadAction<IModalType>) => {
+			state.modalType = action.payload
+		},
+		setCurrentEntry: (state, action: PayloadAction<INewEntry | null>) => {
+			state.currentEntry = action.payload
+		},
+		updateCurrentEntry: (state, action: PayloadAction<object>) => {
+			state.currentEntry = { ...state.currentEntry, ...action.payload } as INewEntry
+		},
 	},
 })
 
-export const {
-	/* export function here */
-} = root.actions
+export const { setCurrentEntry, updateCurrentEntry, setModalType } = root.actions

@@ -17,7 +17,7 @@ export const Register = () => {
 			const response = await register(formData).unwrap()
 			console.log(response)
 		} catch (err) {
-			console.log(err)
+			console.error(err)
 		}
 	}
 

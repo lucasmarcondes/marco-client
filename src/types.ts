@@ -1,7 +1,7 @@
-export interface LooseObject {
+export interface ILooseObject {
 	[key: string]: any
 }
-export interface User {
+export interface IUser {
 	_id: string
 	firstName: string
 	lastName: string
@@ -13,7 +13,7 @@ export interface User {
 	lastModifiedDate: Date
 }
 
-export interface Entry {
+export interface IEntry {
 	_id: string
 	text?: string
 	title?: string
@@ -21,19 +21,29 @@ export interface Entry {
 	lastModifiedDate: Date
 	createdById: string
 	templateId: string
-	properties: Property[]
+	properties: IProperty[]
+}
+export interface INewEntry {
+	_id?: string
+	text?: string
+	title?: string
+	createdDate?: Date
+	lastModifiedDate?: Date
+	createdById?: string
+	templateId: string
+	properties: IProperty[]
 }
 
-export interface Template {
+export interface ITemplate {
 	_id: string
 	description: String
-	properties: Property[]
+	properties: IProperty[]
 	createdDate: Date
 	createdById: string
 	lastModifiedDate: Date
 }
 
-export interface Property {
+export interface IProperty {
 	_id: string
 	type: 'text' | 'checkbox' | 'number' | 'select'
 	subType?: string

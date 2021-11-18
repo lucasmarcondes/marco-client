@@ -1,7 +1,6 @@
 import { Tag } from '../default'
 import { useGetTemplatesQuery } from '../../store/api'
-import { useState, useEffect } from 'react'
-import { LooseObject } from '../../types'
+import { ILooseObject } from '../../types'
 
 const properties = [
 	{ title: 'Checkbox', type: 'checkbox' },
@@ -12,7 +11,7 @@ const properties = [
 
 type FiltersProp = {
 	onChange: (filters: any) => void
-	filters: LooseObject
+	filters: ILooseObject
 }
 
 export const Filters = ({ onChange, filters }: FiltersProp) => {

@@ -1,21 +1,26 @@
-import { Filters, Entry, SearchBar, EntryTemplate } from '../components/entries'
-import { Modal } from '../components/default/Modal'
+import { Filters, Entry, SearchBar, EntryModal } from '../components/entries'
 import { useState } from 'react'
-import { LooseObject, Entry as EntryType } from '../types'
+import { ILooseObject, IEntry, INewEntry } from '../types'
 import { BsPlus } from 'react-icons/bs'
-import { IModalContent } from '../components/default/Modal'
+import { useDispatch, useSelector } from 'react-redux'
+import { IModalType, setCurrentEntry, setModalType } from '../store/root'
+import { RootState } from '../store/store'
 
-import { useGetEntriesQuery, useGetTemplatesQuery } from '../store/api'
+import { useGetEntriesQuery } from '../store/api'
 
 export const Entries = () => {
 	const { data: entries } = useGetEntriesQuery()
-	const { data: templates } = useGetTemplatesQuery()
+	const modalType = useSelector((state: RootState) => state.root.modalType)
+	const dispatch = useDispatch()
 
-	const [state, setState] = useState({
+	interface IStateProps {
+		searchKey: string
+		filters: any
+	}
+
+	const [state, setState] = useState<IStateProps>({
 		searchKey: '',
 		filters: { chronoSort: 'newFirst', properties: new Array<String>(), templates: new Array<String>(), startDate: null, endDate: null },
-		modalContent: null as IModalContent,
-		currentEntry: {} as EntryType,
 	})
 
 	const searchAgainst = ['title', 'properties', 'text', 'createdDate']
@@ -23,7 +28,7 @@ export const Entries = () => {
 	let filteredEntries =
 		entries &&
 		entries.filter(entry => {
-			let obj: LooseObject = { ...entry }
+			let obj: ILooseObject = { ...entry }
 			let searchList: string[] = []
 			let matches = true
 			searchAgainst.forEach(key => {
@@ -66,99 +71,35 @@ export const Entries = () => {
 		setState({ ...state, filters })
 	}
 
-	const closeModal = () => {
-		setState({ ...state, modalContent: null })
-	}
-
-	const updateCurrentEntry = (val: any) => {
-		setState(state => {
-			return { ...state, currentEntry: { ...state.currentEntry, ...val } }
-		})
-	}
-
-	const showTemplateSelectionModal = () => {
-		if (templates?.length === 1) {
-			showEntryModal()
-			return updateCurrentEntry({ templateId: templates[0]._id })
-		}
-		setState({
-			...state,
-			modalContent: {
-				title: 'Select a Template',
-				content: (
-					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80'>
-						{templates?.map((template, index) => (
-							<button
-								onClick={() => {
-									showEntryModal()
-									updateCurrentEntry({ templateId: template._id })
-								}}
-								className=' border-gray-300 w-full py-2 text-gray-700 block hover:bg-gray-100'
-								key={index}
-							>
-								{template.description}
-							</button>
-						))}
-					</ul>
-				),
-			},
-		})
-	}
-
-	const showEntryModal = () => {
-		setState({
-			...state,
-			modalContent: {
-				title: 'New Entry',
-				content: <EntryTemplate />,
-				size: 'h-[80%] w-2/3',
-				actions: (
-					<>
-						<button className='secondary' onClick={closeModal}>
-							Cancel
-						</button>
-						<button className='primary'>Create</button>
-					</>
-				),
-			},
-		})
+	const openModal = (type: IModalType, entry?: IEntry | null) => {
+		entry && dispatch(setCurrentEntry(entry))
+		dispatch(setModalType(type))
 	}
 
 	return (
 		<div className='flex p-4 md:p-8'>
-			<div className='w-80'>
+			<div className='top-4 w-80 sticky'>
 				<Filters filters={state.filters} onChange={updateFilters} />
 			</div>
 			<div className='flex-1'>
 				<div className='border-solid border-light-800 border-l-1 ml-10'>
 					<div className='flex m-8 mb-5'>
 						<SearchBar className='grow' onSearch={updateSearchKey} />
-						<NewEntryButton onClick={showTemplateSelectionModal} />
+						<NewEntryButton onClick={() => openModal('create')} />
 					</div>
-					{entries && (
-						<div>
-							<EntryList entries={filteredEntries} searchedText={state.searchKey} />
-						</div>
-					)}
+					{filteredEntries &&
+						filteredEntries.map((entry, index) => <Entry key={index} entry={entry} searchedText={state.searchKey} onClick={openModal} />)}
 				</div>
 			</div>
-			<Modal modalContent={state.modalContent} onClose={closeModal} />
+			{modalType && <EntryModal />}
 		</div>
 	)
 }
 
-type EntryListProps = {
-	entries: EntryType[] | undefined
-	searchedText: string
-}
-export const EntryList = ({ entries, searchedText }: EntryListProps) => {
-	return <div>{entries && entries.map((val, index) => <Entry key={index} entry={val} index={index} searchedText={searchedText} />)}</div>
-}
-
-interface NewEntryButtonProps {
+interface INewEntryButtonProps {
 	onClick: () => void
 }
-export const NewEntryButton = ({ onClick }: NewEntryButtonProps) => (
+export const NewEntryButton = ({ onClick }: INewEntryButtonProps) => (
 	<button onClick={onClick} className='ml-2 secondary'>
 		<BsPlus className='my-auto h-6 w-6' />
 		<span className='my-auto w-max'>New Entry</span>
