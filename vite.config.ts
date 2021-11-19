@@ -14,10 +14,10 @@ export default defineConfig({
 				plugins: [
 					WindiCSSForms,
 					WindiCSSClamp,
-					WindiCSSAnimate({
-						settings: { animatedSpeed: 150 },
-						variants: ['responsive'],
-					}),
+					// WindiCSSAnimate({
+					// 	settings: { animatedSpeed: 150 },
+					// 	variants: ['responsive'],
+					// }),
 				],
 			},
 		}),

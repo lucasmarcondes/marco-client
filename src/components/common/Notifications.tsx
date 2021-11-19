@@ -11,7 +11,7 @@ export const Notifications = () => {
 	let notifications = useSelector((state: RootState) => state.root.notifications)
 
 	return (
-		<div className='flex flex-col m-3 w-min right-0 bottom-0 fixed'>
+		<div className='flex flex-col m-3 w-min right-0 bottom-0 z-999 fixed'>
 			{notifications.map((notification, index) => {
 				return (
 					<div key={'notification-' + index}>

@@ -89,6 +89,8 @@ export const Entries = () => {
 					</div>
 					{filteredEntries &&
 						filteredEntries.map((entry, index) => <Entry key={index} entry={entry} searchedText={state.searchKey} onClick={openModal} />)}
+					{!filteredEntries &&
+						[...new Array<IEntry>(2)].map((entry, index) => <Entry key={index} entry={entry} searchedText={state.searchKey} onClick={openModal} />)}
 				</div>
 			</div>
 			{modalType && <EntryModal />}

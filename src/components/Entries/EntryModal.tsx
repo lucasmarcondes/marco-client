@@ -1,6 +1,6 @@
 import { Modal } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentEntry, setModalType, updateCurrentEntry } from '../../store/root'
+import { pushNotification, setCurrentEntry, setModalType, updateCurrentEntry } from '../../store/root'
 import { EntryTemplate } from '.'
 import { useGetTemplatesQuery, useCreateEntryMutation, useUpdateEntryMutation, useRemoveEntryMutation } from '../../store/api'
 import { IModalContent } from '../common/Modal'
@@ -20,20 +20,92 @@ export const EntryModal = () => {
 
 	let modalContent: IModalContent = null
 
-	const closeModal = (action: 'create' | 'update' | 'delete' | 'cancel', val?: INewEntry) => {
+	const closeModal = async (action: 'create' | 'update' | 'delete' | 'cancel', val?: INewEntry) => {
+		let hasError = false
 		switch (action) {
 			case 'create':
-				val && createEntry(val)
+				val &&
+					(await createEntry(val)
+						.unwrap()
+						.then(payload => {
+							dispatch(
+								pushNotification({
+									title: 'Success',
+									message: 'Entry created successfully',
+									variant: 'success',
+									dismissable: true,
+								})
+							)
+						})
+						.catch(error => {
+							hasError = true
+							dispatch(
+								pushNotification({
+									title: 'Error',
+									message: error.data,
+									variant: 'error',
+									dismissable: true,
+								})
+							)
+						}))
 				break
 			case 'update':
-				val && updateEntry(val)
+				val &&
+					(await updateEntry(val)
+						.unwrap()
+						.then(payload => {
+							dispatch(
+								pushNotification({
+									title: 'Success',
+									message: 'Entry updated successfully',
+									variant: 'success',
+									dismissable: true,
+								})
+							)
+						})
+						.catch(error => {
+							hasError = true
+							dispatch(
+								pushNotification({
+									title: 'Error',
+									message: error.data,
+									variant: 'error',
+									dismissable: true,
+								})
+							)
+						}))
 				break
 			case 'delete':
-				val?._id && removeEntry(val._id)
+				val?._id &&
+					(await removeEntry(val._id)
+						.unwrap()
+						.then(payload => {
+							dispatch(
+								pushNotification({
+									title: 'Success',
+									message: payload,
+									variant: 'success',
+									dismissable: true,
+								})
+							)
+						})
+						.catch(error => {
+							hasError = true
+							dispatch(
+								pushNotification({
+									title: 'Error',
+									message: error.data,
+									variant: 'error',
+									dismissable: true,
+								})
+							)
+						}))
 				break
 		}
-		dispatch(setModalType(null))
-		dispatch(setCurrentEntry(null))
+		if (!hasError) {
+			dispatch(setModalType(null))
+			dispatch(setCurrentEntry(null))
+		}
 	}
 
 	if (entry) {

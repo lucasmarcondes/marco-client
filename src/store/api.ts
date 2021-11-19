@@ -76,7 +76,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Entry'],
 		}),
-		removeEntry: builder.mutation<void, string>({
+		removeEntry: builder.mutation<string, string>({
 			query: id => ({
 				url: `entry/${id}`,
 				method: 'DELETE',
