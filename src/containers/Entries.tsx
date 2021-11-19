@@ -28,29 +28,29 @@ export const Entries = () => {
 		filters: { chronoSort: 'newFirst', properties: new Array<String>(), templates: new Array<String>(), startDate: null, endDate: null },
 	})
 
-	let filteredEntries =
-		entries &&
-		entries.filter(entry => {
-			let obj: ILooseObject = { ...entry }
-			let searchList: string[] = []
-			let matches = true
-			SearchProps.forEach(key => {
-				searchList.push(obj[key])
-			})
-			if (state.filters.templates.length > 0) {
-				matches = state.filters.templates.includes(obj.templateId)
-			}
-			if (matches && state.filters.properties.length > 0) {
-				matches = state.filters.properties.every((prop: any) => obj.properties.some((e: any) => e.type === prop))
-			}
-			if (matches && state.filters.startDate) {
-				matches = new Date(obj.lastModifiedDate).getTime() - new Date(state.filters.startDate).getTime() > 0
-			}
-			if (matches && state.filters.endDate) {
-				matches = new Date(obj.lastModifiedDate).getTime() - new Date(state.filters.endDate).getTime() < 0
-			}
-			return matches && JSON.stringify(searchList).toLowerCase().includes(state.searchKey.toLowerCase())
-		})
+	let filteredEntries = !entries
+		? []
+		: entries.filter(entry => {
+				let obj: ILooseObject = { ...entry }
+				let searchList: string[] = []
+				let matches = true
+				SearchProps.forEach(key => {
+					searchList.push(obj[key])
+				})
+				if (state.filters.templates.length > 0) {
+					matches = state.filters.templates.includes(obj.templateId)
+				}
+				if (matches && state.filters.properties.length > 0) {
+					matches = state.filters.properties.every((prop: any) => obj.properties.some((e: any) => e.type === prop))
+				}
+				if (matches && state.filters.startDate) {
+					matches = new Date(obj.lastModifiedDate).getTime() - new Date(state.filters.startDate).getTime() > 0
+				}
+				if (matches && state.filters.endDate) {
+					matches = new Date(obj.lastModifiedDate).getTime() - new Date(state.filters.endDate).getTime() < 0
+				}
+				return matches && JSON.stringify(searchList).toLowerCase().includes(state.searchKey.toLowerCase())
+		  })
 	if (state.filters.chronoSort == 'newFirst') {
 		filteredEntries =
 			filteredEntries &&
@@ -77,10 +77,20 @@ export const Entries = () => {
 		setState({ ...state, currentPage: page })
 	}
 
-	const lastPageIndex = state.currentPage * PageSize
-	const firstPageIndex = lastPageIndex - PageSize
-	const pages = filteredEntries && Math.ceil(filteredEntries.length / PageSize)
+	const lastPageIndex: number = state.currentPage * PageSize
+	const firstPageIndex: number = lastPageIndex - PageSize
+	const pages: number = Math.ceil(filteredEntries.length / PageSize)
 	const currentEntries = filteredEntries && filteredEntries.slice(firstPageIndex, lastPageIndex)
+
+	let pageNumbers = [state.currentPage]
+	// if (!pageNumbers.includes(1)) pageNumbers.unshift(1)
+	let range = 2
+	for (let i = 1; i < range; i++) {
+		if (state.currentPage - i > 0) pageNumbers.unshift(state.currentPage - i)
+		if (state.currentPage + i <= pages) pageNumbers.push(state.currentPage + i)
+	}
+	if (state.currentPage == 1) pageNumbers.push(state.currentPage + 2)
+	if (state.currentPage == pages) pageNumbers.unshift(state.currentPage - 2)
 
 	const openModal = (type: IModalType, entry?: IEntry | null) => {
 		entry && dispatch(setCurrentEntry(entry))
@@ -110,14 +120,9 @@ export const Entries = () => {
 								<BsChevronLeft className='my-auto h-3 mr-2 w-3' />
 								Previous
 							</button>
-
-							{[...new Array(pages)].map((item, index) => (
-								<button
-									onClick={() => updateCurrentPage(index + 1)}
-									key={index}
-									className={state.currentPage == index + 1 ? 'mx-1 primary' : 'mx-1 secondary'}
-								>
-									{index + 1}
+							{pageNumbers.map((num: any) => (
+								<button onClick={() => updateCurrentPage(num)} key={num} className={state.currentPage == num ? 'mx-1 primary' : 'mx-1 secondary'}>
+									{num}
 								</button>
 							))}
 							<button onClick={() => updateCurrentPage(state.currentPage + 1)} disabled={state.currentPage == pages} className='mx-1 secondary'>
