@@ -82,15 +82,15 @@ export const Entries = () => {
 	const pages: number = Math.ceil(filteredEntries.length / PageSize)
 	const currentEntries = filteredEntries && filteredEntries.slice(firstPageIndex, lastPageIndex)
 
-	let pageNumbers = [state.currentPage]
-	// if (!pageNumbers.includes(1)) pageNumbers.unshift(1)
-	let range = 2
-	for (let i = 1; i < range; i++) {
-		if (state.currentPage - i > 0) pageNumbers.unshift(state.currentPage - i)
-		if (state.currentPage + i <= pages) pageNumbers.push(state.currentPage + i)
-	}
-	if (state.currentPage == 1) pageNumbers.push(state.currentPage + 2)
-	if (state.currentPage == pages) pageNumbers.unshift(state.currentPage - 2)
+	let pageNumbers = [state.currentPage, pages]
+	if (!pageNumbers.includes(1)) pageNumbers.unshift(1)
+	// let range = 2
+	// for (let i = 1; i < range; i++) {
+	// 	if (state.currentPage - i > 0) pageNumbers.unshift(state.currentPage - i)
+	// 	if (state.currentPage + i <= pages) pageNumbers.push(state.currentPage + i)
+	// }
+	// if (state.currentPage == 1) pageNumbers.push(state.currentPage + 2)
+	// if (state.currentPage == pages) pageNumbers.unshift(state.currentPage - 2)
 
 	const openModal = (type: IModalType, entry?: IEntry | null) => {
 		entry && dispatch(setCurrentEntry(entry))
@@ -120,11 +120,39 @@ export const Entries = () => {
 								<BsChevronLeft className='my-auto h-3 mr-2 w-3' />
 								Previous
 							</button>
-							{pageNumbers.map((num: any) => (
-								<button onClick={() => updateCurrentPage(num)} key={num} className={state.currentPage == num ? 'mx-1 primary' : 'mx-1 secondary'}>
-									{num}
-								</button>
-							))}
+							{state.currentPage != 1 && (
+								<>
+									<button onClick={() => updateCurrentPage(1)} className='mx-1 secondary'>
+										1
+									</button>
+									{state.currentPage > 2 && <span className='self-end'>...</span>}
+								</>
+							)}
+							{state.currentPage > 2 && (
+								<>
+									<button onClick={() => updateCurrentPage(state.currentPage - 1)} className='mx-1 secondary'>
+										{state.currentPage - 1}
+									</button>
+								</>
+							)}
+							<button onClick={() => updateCurrentPage(state.currentPage)} className='mx-1 primary'>
+								{state.currentPage}
+							</button>
+							{state.currentPage < pages - 1 && (
+								<>
+									<button onClick={() => updateCurrentPage(state.currentPage + 1)} className='mx-1 secondary'>
+										{state.currentPage + 1}
+									</button>
+								</>
+							)}
+							{state.currentPage != pages && (
+								<>
+									{state.currentPage < pages - 2 && <span className='self-end'>...</span>}
+									<button onClick={() => updateCurrentPage(pages)} className='mx-1 secondary'>
+										{pages}
+									</button>
+								</>
+							)}
 							<button onClick={() => updateCurrentPage(state.currentPage + 1)} disabled={state.currentPage == pages} className='mx-1 secondary'>
 								Next
 								<BsChevronRight className='my-auto h-3 ml-2 w-3' />
