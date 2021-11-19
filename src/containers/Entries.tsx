@@ -1,12 +1,14 @@
 import { Filters, Entry, SearchBar, EntryModal } from '../components/entries'
 import { useState } from 'react'
-import { ILooseObject, IEntry, INewEntry } from '../types'
+import { ILooseObject, IEntry, IModalType } from '../types'
 import { BsPlus } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
-import { IModalType, setCurrentEntry, setModalType } from '../store/root'
+import { setCurrentEntry, setModalType } from '../store/root'
 import { RootState } from '../store/store'
 
 import { useGetEntriesQuery } from '../store/api'
+
+const SearchProps = ['title', 'properties', 'text', 'createdDate']
 
 export const Entries = () => {
 	const { data: entries } = useGetEntriesQuery()
@@ -23,15 +25,13 @@ export const Entries = () => {
 		filters: { chronoSort: 'newFirst', properties: new Array<String>(), templates: new Array<String>(), startDate: null, endDate: null },
 	})
 
-	const searchAgainst = ['title', 'properties', 'text', 'createdDate']
-
 	let filteredEntries =
 		entries &&
 		entries.filter(entry => {
 			let obj: ILooseObject = { ...entry }
 			let searchList: string[] = []
 			let matches = true
-			searchAgainst.forEach(key => {
+			SearchProps.forEach(key => {
 				searchList.push(obj[key])
 			})
 			if (state.filters.templates.length > 0) {

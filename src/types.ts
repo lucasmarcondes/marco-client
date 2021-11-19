@@ -1,6 +1,16 @@
 export interface ILooseObject {
 	[key: string]: any
 }
+export type IModalType = 'create' | 'edit' | 'view' | null
+
+export interface INotificationType {
+	message?: string
+	title: string
+	variant: 'success' | 'error' | 'info' | 'warning'
+	timeout?: number
+	dismissable?: boolean
+}
+
 export interface IUser {
 	_id: string
 	firstName: string

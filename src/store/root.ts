@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { INewEntry } from '../types'
+import { INewEntry, IModalType, INotificationType } from '../types'
 
-export type IModalType = 'create' | 'edit' | 'view' | null
+const DefaultNotificationTimeout = 5000
+
 export interface IRootState {
 	currentEntry: INewEntry | null
 	modalType: IModalType
+	notifications: INotificationType[]
 }
 
 const initialState: IRootState = {
 	currentEntry: null,
 	modalType: null,
+	notifications: [],
 }
 
 export const root = createSlice({
@@ -25,7 +28,19 @@ export const root = createSlice({
 		updateCurrentEntry: (state, action: PayloadAction<object>) => {
 			state.currentEntry = { ...state.currentEntry, ...action.payload } as INewEntry
 		},
+		pushNotification: (state, action: PayloadAction<INotificationType>) => {
+			state.notifications.push(action.payload)
+			setTimeout(
+				() => {
+					state.notifications.splice(state.notifications.indexOf(action.payload), 1)
+				},
+				action.payload.timeout ? action.payload.timeout : DefaultNotificationTimeout
+			)
+		},
+		removeNotification: (state, action: PayloadAction<INotificationType>) => {
+			state.notifications.splice(state.notifications.indexOf(action.payload), 1)
+		},
 	},
 })
 
-export const { setCurrentEntry, updateCurrentEntry, setModalType } = root.actions
+export const { setCurrentEntry, updateCurrentEntry, setModalType, removeNotification, pushNotification } = root.actions

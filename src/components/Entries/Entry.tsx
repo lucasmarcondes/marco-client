@@ -1,6 +1,5 @@
 import { Tag } from '../common'
-import { IEntry } from '../../types'
-import { IModalType } from '../../store/root'
+import { IEntry, IModalType } from '../../types'
 
 interface IEntryProps {
 	entry: IEntry

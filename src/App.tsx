@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Entries, Login, Register, Templates, Analytics, Profile } from './containers'
 
-import { Header, Footer } from './components/common'
+import { Header, Footer, Notifications } from './components/common'
 
 import { useState } from 'react'
 
@@ -26,6 +26,7 @@ export default function App() {
 							<Route path='/analytics' element={<Analytics />} />
 							<Route path='/profile' element={<Profile />} />
 						</Routes>
+						<Notifications />
 					</div>
 					<Footer />
 				</div>
