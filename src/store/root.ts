@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { INewEntry, IModalType, INotificationType } from '../types'
 
-const DefaultNotificationTimeout = 5000
-
 export interface IRootState {
 	currentEntry: INewEntry | null
 	modalType: IModalType
@@ -29,16 +27,11 @@ export const root = createSlice({
 			state.currentEntry = { ...state.currentEntry, ...action.payload } as INewEntry
 		},
 		pushNotification: (state, action: PayloadAction<INotificationType>) => {
+			action.payload.id = new Date().valueOf() + ''
 			state.notifications.push(action.payload)
-			setTimeout(
-				() => {
-					state.notifications.splice(state.notifications.indexOf(action.payload), 1)
-				},
-				action.payload.timeout ? action.payload.timeout : DefaultNotificationTimeout
-			)
 		},
 		removeNotification: (state, action: PayloadAction<INotificationType>) => {
-			state.notifications.splice(state.notifications.indexOf(action.payload), 1)
+			state.notifications = state.notifications.filter(item => item.id != action.payload.id)
 		},
 	},
 })

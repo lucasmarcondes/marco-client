@@ -9,7 +9,7 @@ interface IEntryProps {
 export const Entry = ({ entry, searchedText, onClick }: IEntryProps) => {
 	return (
 		<div className='mx-auto px-8' onClick={() => onClick('view', entry)}>
-			<div className='bg-white rounded-md border-1 border-gray-300 my-8 py-4 px-8 dark:bg-gray-500'>
+			<div className='bg-white rounded-md border-1 border-gray-300 my-8 py-4 px-8 dark:(bg-gray-800 border-0 text-light-300) '>
 				<div>
 					<div className='flex'>
 						<h2 className='font-semibold text-gray-800 text-3xl dark:text-white'>{getHighlightedText(entry.title, searchedText)}</h2>
@@ -36,7 +36,7 @@ const getHighlightedText = (text?: string, highlight?: string) => {
 			{' '}
 			{parts && highlight ? (
 				parts.map((part, i) => (
-					<span key={i} className={part.toLowerCase() === highlight.toLowerCase() ? 'bg-blue-200' : ''}>
+					<span key={i} className={part.toLowerCase() === highlight.toLowerCase() ? 'bg-blue-200 dark:bg-gray-500' : ''}>
 						{part}
 					</span>
 				))

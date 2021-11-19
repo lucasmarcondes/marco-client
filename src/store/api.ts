@@ -37,7 +37,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		login: builder.mutation<IUser, ILoginRequest>({
+		login: builder.mutation<string, ILoginRequest>({
 			query: credentials => ({
 				url: 'user/login',
 				method: 'POST',

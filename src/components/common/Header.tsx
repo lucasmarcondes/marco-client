@@ -13,12 +13,13 @@ type HeaderProps = {
 
 export const Header = ({ onToggleDarkMode, darkMode }: HeaderProps) => {
 	let location = useLocation()
-	if (['/login', '/register'].includes(location.pathname)) return null
 
 	const [showMobileNav, setShowMobileNav] = useState(false)
 	const toggleMobileNav = (): void => {
 		setShowMobileNav(!showMobileNav)
 	}
+
+	if (['/login', '/register'].includes(location.pathname)) return null
 
 	return (
 		<div className='border py-2 px-4 md:px-8 dark:( bg-gray-800 border-0 text-light-300 ) '>
@@ -45,7 +46,7 @@ export const Header = ({ onToggleDarkMode, darkMode }: HeaderProps) => {
 				<span className='flex space-x-4'>
 					<button
 						onClick={onToggleDarkMode}
-						className='rounded-md my-auto p-1 p-2 text-light-700 dark:(hover:bg-gray-300) hover:bg-gray-200 hover:text-dark-200'
+						className='rounded-md my-auto p-1 p-2 text-light-700 dark:(hover:(bg-gray-500 text-dark-200) ) hover:bg-gray-200 '
 					>
 						{darkMode ? <BsSunFill className='h-5 w-5 block ' /> : <BsMoonFill className='h-5 text-dark-200 w-5 block' />}
 					</button>
@@ -87,11 +88,11 @@ const ProfileButton = () => {
 
 	return (
 		<div ref={menuRef}>
-			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-lg p-2 '>
+			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-lg p-2 dark:(text-dark-400)'>
 				{user && (user.firstName[0] + user.lastName[0]).toUpperCase()}
 			</button>
 			{showMenu && (
-				<menu className='bg-white rounded-md shadow-lg mt-2 pl-0 right-0 w-48 z-50 absolute dark:( bg-gray-800 border-0 text-light-300 ) '>
+				<menu className='bg-white rounded-md shadow-md mt-2 pl-0 right-0 animate-fadeIn animate-animated w-48 z-50 absolute dark:( bg-gray-800 rounded-md text-light-300 ) '>
 					<NavLink
 						to='/profile'
 						onClick={() => setShowMenu(false)}

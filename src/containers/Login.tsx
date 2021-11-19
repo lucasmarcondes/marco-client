@@ -1,22 +1,35 @@
 import { useState } from 'react'
 import { useLoginMutation } from '../store/api'
 import { useNavigate } from 'react-router-dom'
+import { pushNotification } from '../store/root'
+import { useDispatch } from 'react-redux'
 
 export const Login = () => {
 	const [login, { isLoading }] = useLoginMutation()
 	const navigate = useNavigate()
 	const [email, setEmail] = useState('')
+	const [errors, setErrors] = useState('')
 	const [password, setPassword] = useState('')
+	const dispatch = useDispatch()
 
 	const submit = async () => {
-		try {
-			const response = await login({ email, password })
-			if (response) {
+		setErrors('')
+		login({ email, password })
+			.unwrap()
+			.then(payload => {
 				navigate('/entries')
-			}
-		} catch (err) {
-			console.error(err)
-		}
+				dispatch(
+					pushNotification({
+						title: 'Success',
+						message: payload,
+						variant: 'success',
+						dismissable: true,
+					})
+				)
+			})
+			.catch(error => {
+				setErrors(error?.data)
+			})
 	}
 
 	return isLoading ? (
@@ -28,6 +41,7 @@ export const Login = () => {
 				<input onChange={e => setEmail(e.target.value)} type='email' placeholder='email' />
 				<input onChange={e => setPassword(e.target.value)} type='password' placeholder='password' />
 				<button className='primary'>Login</button>
+				{errors && <span className='mt-2 text-sm text-red-500'>{errors}</span>}
 			</form>
 		</div>
 	)

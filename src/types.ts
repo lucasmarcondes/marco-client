@@ -4,8 +4,9 @@ export interface ILooseObject {
 export type IModalType = 'create' | 'edit' | 'view' | null
 
 export interface INotificationType {
-	message?: string
 	title: string
+	id?: string
+	message?: string
 	variant: 'success' | 'error' | 'info' | 'warning'
 	timeout?: number
 	dismissable?: boolean
