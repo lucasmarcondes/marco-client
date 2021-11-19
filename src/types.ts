@@ -25,38 +25,29 @@ export interface IUser {
 }
 
 export interface IEntry {
-	_id: string
-	text?: string
-	title?: string
-	createdDate: Date
-	lastModifiedDate: Date
-	createdById: string
-	templateId: string
-	properties: IProperty[]
-}
-export interface INewEntry {
 	_id?: string
 	text?: string
 	title?: string
 	createdDate?: Date
 	lastModifiedDate?: Date
 	createdById?: string
-	templateId: string
-	properties: IProperty[]
+	templateId?: string
+	properties?: IProperty[]
 }
 
 export interface ITemplate {
-	_id: string
-	description: String
-	properties: IProperty[]
-	createdDate: Date
-	createdById: string
-	lastModifiedDate: Date
+	_id?: string
+	description?: String
+	properties?: IProperty[]
+	createdDate?: Date
+	createdById?: string
+	lastModifiedDate?: Date
 }
 
+export type PropertyType = 'text' | 'checkbox' | 'number' | 'select'
 export interface IProperty {
 	_id: string
-	type: 'text' | 'checkbox' | 'number' | 'select'
+	type: PropertyType
 	subType?: string
 	description: string
 	default?: string | boolean | number | Array<string>

@@ -1,11 +1,11 @@
 import { Modal } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
 import { pushNotification, setCurrentEntry, setModalType, updateCurrentEntry } from '../../store/root'
-import { EntryTemplate } from '.'
+import { EntryContainer } from '.'
 import { useGetTemplatesQuery, useCreateEntryMutation, useUpdateEntryMutation, useRemoveEntryMutation } from '../../store/api'
 import { IModalContent } from '../common/Modal'
 import { RootState } from '../../store/store'
-import { INewEntry } from '../../types'
+import { IEntry } from '../../types'
 
 export const EntryModal = () => {
 	const [createEntry] = useCreateEntryMutation()
@@ -20,7 +20,7 @@ export const EntryModal = () => {
 
 	let modalContent: IModalContent = null
 
-	const closeModal = async (action: 'create' | 'update' | 'delete' | 'cancel', val?: INewEntry) => {
+	const closeModal = async (action: 'create' | 'update' | 'delete' | 'cancel', val?: IEntry) => {
 		let hasError = false
 		switch (action) {
 			case 'create':
@@ -118,7 +118,7 @@ export const EntryModal = () => {
 					placeholder='Title'
 				/>
 			),
-			content: <EntryTemplate entry={entry} />,
+			content: <EntryContainer entry={entry} />,
 			size: 'h-[80%] w-2/3',
 			actions: (
 				<>
