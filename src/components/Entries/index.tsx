@@ -1,6 +1,6 @@
 export { Entry } from './Entry'
 export { EntryModal } from './EntryModal'
-export { EntryTemplate } from './EntryTemplate'
+export { EntryContainer } from './EntryContainer'
 export { Filters } from './Filters'
 export { SearchBar } from './SearchBar'
 export { Property } from './Property'

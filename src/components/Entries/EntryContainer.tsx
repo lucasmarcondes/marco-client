@@ -1,16 +1,16 @@
-import { Property } from './'
-import { IProperty, INewEntry } from '../../types'
+import { Property } from '.'
+import { IProperty, IEntry } from '../../types'
 import { useDispatch } from 'react-redux'
 import { updateCurrentEntry } from '../../store/root'
 
-export interface IEntryTemplateProps {
-	entry: INewEntry
+export interface IEntryContainerProps {
+	entry: IEntry
 }
 
-export const EntryTemplate = ({ entry }: IEntryTemplateProps) => {
+export const EntryContainer = ({ entry }: IEntryContainerProps) => {
 	const dispatch = useDispatch()
 	const updateProperty = (property: IProperty) => {
-		const properties = entry.properties.map(o => (o._id === property._id ? property : o))
+		const properties = entry?.properties?.map(o => (o._id === property._id ? property : o))
 		dispatch(updateCurrentEntry({ properties }))
 	}
 
@@ -21,7 +21,7 @@ export const EntryTemplate = ({ entry }: IEntryTemplateProps) => {
 	return (
 		<div className='flex flex-col'>
 			<div className='grid gap-3 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
-				{entry.properties.map(property => (
+				{entry?.properties?.map(property => (
 					<Property key={property._id} property={property} onChange={updateProperty} />
 				))}
 			</div>

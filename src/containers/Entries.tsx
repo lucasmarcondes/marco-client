@@ -53,14 +53,20 @@ export const Entries = () => {
 			filteredEntries &&
 			filteredEntries
 				.sort((a, b) => {
-					return new Date(a.lastModifiedDate).getTime() - new Date(b.lastModifiedDate).getTime()
+					if (a?.lastModifiedDate && b?.lastModifiedDate) {
+						return new Date(a.lastModifiedDate).getTime() - new Date(b.lastModifiedDate).getTime()
+					}
+					return 0
 				})
 				.reverse()
 	} else {
 		filteredEntries =
 			filteredEntries &&
 			filteredEntries.sort((a, b) => {
-				return new Date(a.lastModifiedDate).getTime() - new Date(b.lastModifiedDate).getTime()
+				if (a?.lastModifiedDate && b?.lastModifiedDate) {
+					return new Date(a.lastModifiedDate).getTime() - new Date(b.lastModifiedDate).getTime()
+				}
+				return 0
 			})
 	}
 
