@@ -1,7 +1,7 @@
 import { Filters, Entry, SearchBar, EntryModal } from '../components/entries'
 import { useState } from 'react'
 import { ILooseObject, IEntry, IModalType } from '../types'
-import { BsPlus } from 'react-icons/bs'
+import { BsChevronLeft, BsChevronRight, BsPlus } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentEntry, setModalType } from '../store/root'
 import { RootState } from '../store/store'
@@ -9,6 +9,7 @@ import { RootState } from '../store/store'
 import { useGetEntriesQuery } from '../store/api'
 
 const SearchProps = ['title', 'properties', 'text', 'createdDate']
+const PageSize = 1
 
 export const Entries = () => {
 	const { data: entries } = useGetEntriesQuery()
@@ -18,10 +19,12 @@ export const Entries = () => {
 	interface IStateProps {
 		searchKey: string
 		filters: any
+		currentPage: any
 	}
 
 	const [state, setState] = useState<IStateProps>({
 		searchKey: '',
+		currentPage: 1,
 		filters: { chronoSort: 'newFirst', properties: new Array<String>(), templates: new Array<String>(), startDate: null, endDate: null },
 	})
 
@@ -65,11 +68,19 @@ export const Entries = () => {
 	}
 
 	const updateSearchKey = (searchKey: string) => {
-		setState({ ...state, searchKey })
+		setState({ ...state, currentPage: 1, searchKey: searchKey })
 	}
 	const updateFilters = (filters: any) => {
-		setState({ ...state, filters })
+		setState({ ...state, currentPage: 1, filters })
 	}
+	const updateCurrentPage = (page: number) => {
+		setState({ ...state, currentPage: page })
+	}
+
+	const lastPageIndex = state.currentPage * PageSize
+	const firstPageIndex = lastPageIndex - PageSize
+	const pages = filteredEntries && Math.ceil(filteredEntries.length / PageSize)
+	const currentEntries = filteredEntries && filteredEntries.slice(firstPageIndex, lastPageIndex)
 
 	const openModal = (type: IModalType, entry?: IEntry | null) => {
 		entry && dispatch(setCurrentEntry(entry))
@@ -87,10 +98,35 @@ export const Entries = () => {
 						<SearchBar className='grow' onSearch={updateSearchKey} />
 						<NewEntryButton onClick={() => openModal('create')} />
 					</div>
-					{filteredEntries &&
-						filteredEntries.map((entry, index) => <Entry key={index} entry={entry} searchedText={state.searchKey} onClick={openModal} />)}
-					{!filteredEntries &&
-						[...new Array<IEntry>(2)].map((entry, index) => <Entry key={index} entry={entry} searchedText={state.searchKey} onClick={openModal} />)}
+					{currentEntries &&
+						currentEntries.map((entry, index) => <Entry key={index} entry={entry} searchedText={state.searchKey} onClick={openModal} />)}
+					{!currentEntries &&
+						[...new Array<IEntry>(PageSize)].map((entry, index) => (
+							<Entry key={index} entry={entry} searchedText={state.searchKey} onClick={openModal} />
+						))}
+					{filteredEntries && filteredEntries?.length > PageSize && (
+						<div className='flex w-full justify-center'>
+							<button onClick={() => updateCurrentPage(state.currentPage - 1)} disabled={state.currentPage == 1} className='mx-1 secondary'>
+								<BsChevronLeft className='my-auto h-3 mr-2 w-3' />
+								Previous
+							</button>
+
+							{[...new Array(pages)].map((item, index) => (
+								<button
+									onClick={() => updateCurrentPage(index + 1)}
+									key={index}
+									className={state.currentPage == index + 1 ? 'mx-1 primary' : 'mx-1 secondary'}
+								>
+									{index + 1}
+								</button>
+							))}
+							<button onClick={() => updateCurrentPage(state.currentPage + 1)} disabled={state.currentPage == pages} className='mx-1 secondary'>
+								Next
+								<BsChevronRight className='my-auto h-3 ml-2 w-3' />
+							</button>
+							{/* {filteredEntries.length} */}
+						</div>
+					)}
 				</div>
 			</div>
 			{modalType && <EntryModal />}
