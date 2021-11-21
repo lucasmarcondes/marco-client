@@ -21,7 +21,9 @@ export const Register = () => {
 		}
 	}
 
-	return (
+	return isLoading ? (
+		<div>Loading...</div>
+	) : (
 		<div className='flex h-screen items-center justify-center'>
 			<form onSubmit={submit} method='POST' className='border rounded-md flex flex-col space-y-3 shadow-sm p-8 w-1/4'>
 				<div className='font-semibold text-lg'>Register</div>
