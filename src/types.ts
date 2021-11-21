@@ -12,6 +12,13 @@ export interface INotificationType {
 	dismissable?: boolean
 }
 
+export interface AppResponse {
+	success: boolean
+	status: number
+	message: string
+	data?: any
+}
+
 export interface IUser {
 	_id: string
 	firstName: string
@@ -20,8 +27,13 @@ export interface IUser {
 	googleId?: string
 	password?: string
 	mobile?: string
+	preferences: IUserPreferences
 	createdDate: Date
 	lastModifiedDate: Date
+}
+
+export interface IUserPreferences {
+	darkMode: boolean
 }
 
 export interface IEntry {

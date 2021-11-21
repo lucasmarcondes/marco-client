@@ -15,7 +15,7 @@ export default function App() {
 		<Provider store={store}>
 			<BrowserRouter>
 				<div className={`${darkMode ? 'dark ' : ''}flex flex-col h-screen dark:(bg-gray-700 text-light-300)`}>
-					<Header onToggleDarkMode={() => setDarkMode(!darkMode)} darkMode={darkMode} />
+					<Header setDarkMode={setDarkMode} />
 					<div className='flex-1'>
 						<Routes>
 							<Route path={'/entries'} element={<Entries />} />

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IUser, ITemplate, IEntry } from '../types'
+import { IUser, ITemplate, IEntry, AppResponse } from '../types'
 
 export interface ILoginRequest {
 	email: string
@@ -29,6 +29,14 @@ export const api = createApi({
 			}),
 			providesTags: ['User'],
 		}),
+		updateUser: builder.mutation<IUser, IUser>({
+			query: credentials => ({
+				url: 'user',
+				method: 'PUT',
+				body: credentials,
+			}),
+			invalidatesTags: ['User'],
+		}),
 		register: builder.mutation<IUser, IRegisterRequest>({
 			query: credentials => ({
 				url: 'user',
@@ -37,7 +45,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		login: builder.mutation<string, ILoginRequest>({
+		login: builder.mutation<AppResponse, ILoginRequest>({
 			query: credentials => ({
 				url: 'user/login',
 				method: 'POST',
@@ -119,6 +127,7 @@ export const api = createApi({
 
 export const {
 	useGetUserQuery,
+	useUpdateUserMutation,
 	useLoginMutation,
 	useRegisterMutation,
 	useLogoutMutation,
