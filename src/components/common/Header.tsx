@@ -3,24 +3,17 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { BsList, BsX, BsSunFill, BsMoonFill } from 'react-icons/bs'
 import { useLogoutMutation, useGetUserQuery, useUpdateUserMutation } from '../../store/api'
 import { useNavigate } from 'react-router-dom'
-import { IUser } from '../../types'
 
 const links = ['Entries', 'Templates', 'Analytics']
 
-type HeaderProps = {
-	setDarkMode: (darkMode: boolean) => void
-}
-export const Header = ({ setDarkMode }: HeaderProps) => {
+export const Header = () => {
 	const { data: user } = useGetUserQuery()
 	const [updateUser] = useUpdateUserMutation()
 
-	const darkMode = (user as IUser)?.preferences?.darkMode
+	const darkMode = user ? user.preferences.darkMode : false
 	const toggleDarkMode = async () => {
 		if (!user) return
-		let preferences = { ...user.preferences }
-		preferences.darkMode = !darkMode
-		await updateUser({ ...user, preferences: preferences })
-		setDarkMode(!darkMode)
+		updateUser({ ...user, preferences: { ...user.preferences, darkMode: !darkMode } })
 	}
 
 	const [showMobileNav, setShowMobileNav] = useState(false)
@@ -94,7 +87,6 @@ const ProfileButton = () => {
 			console.error(err)
 		}
 	}
-
 	return (
 		<div ref={menuRef}>
 			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-lg p-2 dark:(text-dark-400)'>

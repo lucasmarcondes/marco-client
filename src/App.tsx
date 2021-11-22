@@ -3,34 +3,30 @@ import { Entries, Login, Register, Templates, Analytics, Profile } from './conta
 
 import { Header, Footer, Notifications } from './components/common'
 
-import { useState } from 'react'
-
-import { Provider } from 'react-redux'
-import { store } from './store/store'
+import { useGetUserQuery } from './store/api'
 
 export default function App() {
-	const [darkMode, setDarkMode] = useState(false)
+	const { data: user } = useGetUserQuery()
+	const darkMode = user ? user.preferences.darkMode : false
 
 	return (
-		<Provider store={store}>
-			<BrowserRouter>
-				<div className={`${darkMode ? 'dark ' : ''}flex flex-col h-screen dark:(bg-gray-700 text-light-300)`}>
-					<Header setDarkMode={setDarkMode} />
-					<div className='flex-1'>
-						<Routes>
-							<Route path={'/entries'} element={<Entries />} />
-							<Route path={'/'} element={<Entries />} />
-							<Route path='/login' element={<Login />} />
-							<Route path='/register' element={<Register />} />
-							<Route path='/templates' element={<Templates />} />
-							<Route path='/analytics' element={<Analytics />} />
-							<Route path='/profile' element={<Profile />} />
-						</Routes>
-						<Notifications />
-					</div>
-					<Footer />
+		<BrowserRouter>
+			<div className={`${darkMode ? 'dark ' : ''}flex flex-col h-screen dark:(bg-gray-700 text-light-300)`}>
+				<Header />
+				<div className='flex-1'>
+					<Routes>
+						<Route path={'/entries'} element={<Entries />} />
+						<Route path={'/'} element={<Entries />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/register' element={<Register />} />
+						<Route path='/templates' element={<Templates />} />
+						<Route path='/analytics' element={<Analytics />} />
+						<Route path='/profile' element={<Profile />} />
+					</Routes>
+					<Notifications />
 				</div>
-			</BrowserRouter>
-		</Provider>
+				<Footer />
+			</div>
+		</BrowserRouter>
 	)
 }

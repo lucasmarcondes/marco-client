@@ -28,8 +28,11 @@ export const api = createApi({
 				method: 'GET',
 			}),
 			providesTags: ['User'],
+			transformResponse: (response: AppResponse) => {
+				return response.data
+			},
 		}),
-		updateUser: builder.mutation<IUser, IUser>({
+		updateUser: builder.mutation<AppResponse, IUser>({
 			query: credentials => ({
 				url: 'user',
 				method: 'PUT',
@@ -37,7 +40,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		register: builder.mutation<IUser, IRegisterRequest>({
+		register: builder.mutation<AppResponse, IRegisterRequest>({
 			query: credentials => ({
 				url: 'user',
 				method: 'POST',
@@ -53,7 +56,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		logout: builder.mutation<void, void>({
+		logout: builder.mutation<AppResponse, void>({
 			query: () => ({
 				url: 'user/logout',
 				method: 'POST',
@@ -66,6 +69,9 @@ export const api = createApi({
 				method: 'GET',
 			}),
 			providesTags: ['Entry'],
+			transformResponse: (response: AppResponse) => {
+				return response.data
+			},
 		}),
 		createEntry: builder.mutation<IEntry, IEntry>({
 			query: entry => ({
@@ -76,7 +82,7 @@ export const api = createApi({
 			invalidatesTags: ['Entry'],
 		}),
 
-		updateEntry: builder.mutation<IEntry, IEntry>({
+		updateEntry: builder.mutation<AppResponse, IEntry>({
 			query: entry => ({
 				url: `entry/${entry._id}`,
 				method: 'PUT',
@@ -84,7 +90,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Entry'],
 		}),
-		removeEntry: builder.mutation<string, string>({
+		removeEntry: builder.mutation<AppResponse, string>({
 			query: id => ({
 				url: `entry/${id}`,
 				method: 'DELETE',
@@ -97,6 +103,9 @@ export const api = createApi({
 				method: 'GET',
 			}),
 			providesTags: ['Template'],
+			transformResponse: (response: AppResponse) => {
+				return response.data
+			},
 		}),
 		createTemplate: builder.mutation<ITemplate, Omit<ITemplate, '_id'>>({
 			query: template => ({
@@ -107,7 +116,7 @@ export const api = createApi({
 			invalidatesTags: ['Template'],
 		}),
 
-		updateTemplate: builder.mutation<ITemplate, ITemplate>({
+		updateTemplate: builder.mutation<AppResponse, ITemplate>({
 			query: template => ({
 				url: `template/${template._id}`,
 				method: 'PUT',
@@ -115,7 +124,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Template'],
 		}),
-		removeTemplate: builder.mutation<void, string>({
+		removeTemplate: builder.mutation<AppResponse, string>({
 			query: id => ({
 				url: `template/${id}`,
 				method: 'DELETE',

@@ -27,8 +27,8 @@ export const Login = () => {
 					})
 				)
 			})
-			.catch(error => {
-				setErrors(error?.data)
+			.catch(({ data: error }) => {
+				setErrors(error?.message)
 			})
 	}
 
@@ -41,7 +41,13 @@ export const Login = () => {
 				<input onChange={e => setEmail(e.target.value)} type='email' placeholder='email' />
 				<input onChange={e => setPassword(e.target.value)} type='password' placeholder='password' />
 				<button className='primary'>Login</button>
-				{errors && <span className='mt-2 text-sm text-red-500'>{errors}</span>}
+				{errors && <span className='my-2 text-sm text-red-500'>{errors}</span>}
+				<span>
+					Don't have an account?{' '}
+					<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/register')}>
+						Register here
+					</a>
+				</span>
 			</form>
 		</div>
 	)

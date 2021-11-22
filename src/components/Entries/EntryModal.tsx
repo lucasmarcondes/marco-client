@@ -83,7 +83,7 @@ export const EntryModal = () => {
 							dispatch(
 								pushNotification({
 									title: 'Success',
-									message: payload,
+									message: payload.message,
 									variant: 'success',
 									dismissable: true,
 								})

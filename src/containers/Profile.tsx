@@ -8,5 +8,17 @@ export const Profile = () => {
 	const [errors, setErrors] = useState('')
 	const [userInfo, setUserInfo] = useState(user)
 	const dispatch = useDispatch()
-	return <div className='p-4 md:p-8'>Profile</div>
+	return (
+		<div className='p-4 md:p-8'>
+			{user &&
+				Object.entries(user).map(([key, value]) => {
+					return (
+						<div key={key}>
+							<span>{key}</span>
+							<span>{JSON.stringify(value)}</span>
+						</div>
+					)
+				})}
+		</div>
+	)
 }
