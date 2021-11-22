@@ -37,12 +37,12 @@ export const EntryModal = () => {
 								})
 							)
 						})
-						.catch(error => {
+						.catch(({ data: error }) => {
 							hasError = true
 							dispatch(
 								pushNotification({
 									title: 'Error',
-									message: error.data,
+									message: error.message,
 									variant: 'error',
 									dismissable: true,
 								})
@@ -57,18 +57,18 @@ export const EntryModal = () => {
 							dispatch(
 								pushNotification({
 									title: 'Success',
-									message: 'Entry updated successfully',
+									message: payload.message,
 									variant: 'success',
 									dismissable: true,
 								})
 							)
 						})
-						.catch(error => {
+						.catch(({ data: error }) => {
 							hasError = true
 							dispatch(
 								pushNotification({
 									title: 'Error',
-									message: error.data,
+									message: error.message,
 									variant: 'error',
 									dismissable: true,
 								})
@@ -89,12 +89,12 @@ export const EntryModal = () => {
 								})
 							)
 						})
-						.catch(error => {
+						.catch(({ data: error }) => {
 							hasError = true
 							dispatch(
 								pushNotification({
 									title: 'Error',
-									message: error.data,
+									message: error.message,
 									variant: 'error',
 									dismissable: true,
 								})
@@ -148,7 +148,7 @@ export const EntryModal = () => {
 			modalContent = {
 				title: 'Select a Template',
 				content: (
-					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80'>
+					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80 dark:( bg-gray-800 border-0 text-light-300) '>
 						{templates?.map((template, index) => (
 							<button
 								onClick={() => {

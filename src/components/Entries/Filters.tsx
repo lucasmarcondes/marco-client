@@ -45,13 +45,26 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 				<fieldset id='chronoSort' className='flex flex-col mb-4'>
 					<div>
 						<label>
-							<input id='newFirst' type='radio' name='chronoSort' value='newest' className='align-text-bottom' defaultChecked />
+							<input
+								id='newFirst'
+								type='radio'
+								name='chronoSort'
+								value='newest'
+								className='align-text-bottom dark:(text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
+								defaultChecked
+							/>
 							<span className='pl-2'>Newest First</span>
 						</label>
 					</div>
 					<div>
 						<label>
-							<input id='oldFirst' type='radio' name='chronoSort' value='oldest' className='align-text-bottom' />
+							<input
+								id='oldFirst'
+								type='radio'
+								name='chronoSort'
+								value='oldest'
+								className='align-text-bottom dark:(text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
+							/>
 							<span className='pl-2'>Oldest First</span>
 						</label>
 					</div>
@@ -63,7 +76,12 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 						templates.map((val, index) => {
 							return (
 								<label key={index}>
-									<input name='templates' type='checkbox' id={val._id} />
+									<input
+										name='templates'
+										type='checkbox'
+										id={val._id}
+										className='dark:( text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
+									/>
 									<span className='pl-2'>{val.description}</span>
 								</label>
 							)
@@ -77,7 +95,11 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 							<span key={prop.type}>
 								<input type='checkbox' name='properties' id={prop.type} className='hidden' onClick={handleFilterChange} />
 								<label htmlFor={prop.type}>
-									<Tag type={type} label={prop.title} className='border-1 m-1 hover:(cursor-pointer bg-light-200 border-dark-100) ' />
+									<Tag
+										type={type}
+										label={prop.title}
+										className='border-1 m-1 dark:(border-dark-500) hover:(cursor-pointer bg-light-200 border-dark-500) '
+									/>
 								</label>
 							</span>
 						)
@@ -87,12 +109,12 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 				<div className='flex flex-col'>
 					<label className='flex flex-col'>
 						<span>Begin</span>
-						<input name='startDate' type='date' className='mb-2 dark:( bg-gray-400 border-gray-500) ' />
+						<input name='startDate' type='date' className='mb-2 dark:( text-black bg-gray-300 border-gray-800) ' />
 					</label>
 
 					<label className='flex flex-col'>
 						<span>End</span>
-						<input name='endDate' type='date' className='dark:( bg-gray-400 border-gray-500) ' />
+						<input name='endDate' type='date' className='dark:( text-black bg-gray-300 border-gray-800) ' />
 					</label>
 				</div>
 			</div>

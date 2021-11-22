@@ -36,7 +36,7 @@ const getStyles = (type?: string) => {
 			break
 		}
 		case 'checked': {
-			obj.style = 'border-1 border-dark-100'
+			obj.style = 'border-1 border-dark-100 dark:(bg-light-800 border-)'
 			obj.icon = <BsCheck className='my-auto h-5 w-5' />
 			break
 		}

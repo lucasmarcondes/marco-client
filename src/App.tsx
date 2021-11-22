@@ -13,7 +13,7 @@ export default function App() {
 		<BrowserRouter>
 			<div className={`${darkMode ? 'dark ' : ''}flex flex-col h-screen dark:(bg-gray-700 text-light-300)`}>
 				<Header />
-				<div className='flex-1'>
+				<div className='flex-1 dark: (border-gray-800 bg-gray-800) '>
 					<Routes>
 						<Route path={'/entries'} element={<Entries />} />
 						<Route path={'/'} element={<Entries />} />

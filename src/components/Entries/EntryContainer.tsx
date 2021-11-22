@@ -19,7 +19,7 @@ export const EntryContainer = ({ entry }: IEntryContainerProps) => {
 	}
 
 	return (
-		<div className='flex flex-col'>
+		<div className='flex flex-col '>
 			<div className='grid gap-3 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
 				{entry?.properties?.map(property => (
 					<Property key={property._id} property={property} onChange={updateProperty} />
@@ -29,7 +29,7 @@ export const EntryContainer = ({ entry }: IEntryContainerProps) => {
 				onInput={e => updateText((e.target as HTMLInputElement).value)}
 				defaultValue={entry.text || ''}
 				rows={15}
-				className='border rounded-md border-gray-300 flex-1 mt-3 p-3 focus:outline-none focus:border-gray-300 focus:ring-0'
+				className='border rounded-md border-gray-300 flex-1 mt-3 p-3 dark:( bg-gray-500 border-0 text-light-300) focus:outline-none focus:border-gray-300 focus:ring-0 '
 			></textarea>
 		</div>
 	)

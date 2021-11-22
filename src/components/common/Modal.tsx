@@ -20,7 +20,9 @@ export const Modal = ({ modalContent, onClose }: IModalProps) => {
 			document.body.style.overflow = 'unset'
 		}
 	}, [])
-	const css = `${modalContent?.size ? modalContent.size : ''} bg-white rounded-lg flex flex-col my-auto shadow-lg`
+	const css = `${
+		modalContent?.size ? modalContent.size : ''
+	} bg-white rounded-lg flex flex-col my-auto shadow-lg dark:( bg-gray-800 border-0 text-light-300)`
 	return (
 		modalContent && (
 			<div className='flex bg-gray-700 bg-opacity-70 w-full inset-0 animate-fade-in animate-animated z-50 fixed justify-center'>
@@ -33,7 +35,7 @@ export const Modal = ({ modalContent, onClose }: IModalProps) => {
 					)}
 					<div className='flex-1 p-4'>{modalContent.content}</div>
 					{modalContent.actions && (
-						<div className='flex bg-gray-50 px-4 justify-end md:rounded-b-lg'>
+						<div className='flex bg-gray-50 px-4 justify-end md:rounded-b-lg dark:( bg-gray-800 border-0 text-light-300) '>
 							<div className='my-auto space-x-2 py-4 inline-flex'>{modalContent.actions}</div>
 						</div>
 					)}

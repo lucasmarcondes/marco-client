@@ -82,7 +82,7 @@ export const Entries = () => {
 	}
 
 	return (
-		<div className='flex p-4 md:p-8'>
+		<div className='flex p-4 md:p-8 dark:( bg-gray-500 border-0 text-light-300) '>
 			<div className='top-4 w-80 sticky'>
 				<Filters filters={state.filters} onChange={updateFilters} />
 			</div>
@@ -106,8 +106,8 @@ interface INewEntryButtonProps {
 	onClick: () => void
 }
 export const NewEntryButton = ({ onClick }: INewEntryButtonProps) => (
-	<button onClick={onClick} className='ml-2 secondary'>
-		<BsPlus className='my-auto h-6 w-6' />
+	<button onClick={onClick} className='ml-2 py-0 secondary'>
+		<BsPlus className='my-auto h-5 w-6' />
 		<span className='my-auto w-max'>New Entry</span>
 	</button>
 )
