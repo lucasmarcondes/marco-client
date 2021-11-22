@@ -8,12 +8,12 @@ export type IModalContent = null | {
 	size?: string
 }
 
-interface Props {
+interface IModalProps {
 	modalContent: IModalContent
 	onClose: () => void
 }
 
-export const Modal = ({ modalContent, onClose }: Props) => {
+export const Modal = ({ modalContent, onClose }: IModalProps) => {
 	useEffect(() => {
 		document.body.style.overflow = 'hidden'
 		return () => {
