@@ -80,7 +80,7 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 										name='templates'
 										type='checkbox'
 										id={val._id}
-										className='dark:( text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
+										className='dark:(text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
 									/>
 									<span className='pl-2'>{val.description}</span>
 								</label>
