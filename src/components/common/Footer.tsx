@@ -5,7 +5,7 @@ export const Footer = () => {
 	if (['/login', '/register'].includes(location.pathname)) return null
 
 	return (
-		<div className='border-t mx-4 p-4 md:mx-4 md:p-8 dark:(bg-gray-800 text-white) '>
+		<div className='border-t p-4 px-4 md:p-8 md:px-4 dark:(bg-gray-800 text-white) '>
 			<div className='md:flex md:items-center md:justify-between'>
 				<div className='flex md:order-2'>
 					<a

@@ -82,7 +82,7 @@ export const Entries = () => {
 	}
 
 	return (
-		<div className='flex p-4 md:p-8 dark:( bg-gray-500 border-0 text-light-300) '>
+		<div className='flex h-full p-4 md:p-8 dark:( bg-gray-500 border-0 text-light-300) '>
 			<div className='top-4 w-80 sticky'>
 				<Filters filters={state.filters} onChange={updateFilters} />
 			</div>
