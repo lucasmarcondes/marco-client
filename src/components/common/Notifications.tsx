@@ -41,7 +41,7 @@ export const Notification = ({ notification }: Props) => {
 
 	let variant = getVarient(notification.variant)
 	return (
-		<div className='bg-white rounded-lg flex border-gray-300 border-1 shadow-sm mt-2 w-md animate-slideInUp animate-animated overflow-hidden dark:bg-gray-800'>
+		<div className='bg-white rounded-lg flex shadow-lg mt-2 w-md animate-slideInUp animate-animated overflow-hidden dark:(bg-gray-800) '>
 			{variant.icon}
 
 			<div className='-mx-3 py-2 px-4'>
@@ -56,7 +56,7 @@ export const Notification = ({ notification }: Props) => {
 					<BsX
 						type='button'
 						onClick={() => dispatch(removeNotification(notification))}
-						className='my-auto h-6 transition w-6 hover:(cursor-pointer text-gray-600 duration-150) '
+						className='my-auto h-6 transition w-6 dark:(text-white) hover:(cursor-pointer text-gray-600 duration-150) '
 					/>
 				</div>
 			)}
