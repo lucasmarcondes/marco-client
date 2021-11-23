@@ -67,6 +67,9 @@ const ProfileButton = () => {
 	const [logout] = useLogoutMutation()
 	const navigate = useNavigate()
 
+	const userColor = user?.preferences.accentColor ? user.preferences.accentColor : '#BFDBFF'
+	const textColor = user?.preferences.textColor ? user.preferences.textColor : 'black'
+
 	useEffect(() => {
 		const isOutsideClick = (e: Event) => {
 			showMenu && !menuRef.current?.contains(e.target as HTMLElement) && setShowMenu(false)
@@ -89,7 +92,11 @@ const ProfileButton = () => {
 	}
 	return (
 		<div ref={menuRef}>
-			<button onClick={() => setShowMenu(!showMenu)} className='rounded-full bg-blue-200 text-lg p-2 dark:(text-dark-400)'>
+			<button
+				onClick={() => setShowMenu(!showMenu)}
+				className='rounded-full text-lg p-2 dark:(text-dark-400)'
+				style={{ background: userColor, color: textColor }}
+			>
 				{user && (user.firstName[0] + user.lastName[0]).toUpperCase()}
 			</button>
 			{showMenu && (
