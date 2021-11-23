@@ -100,7 +100,7 @@ const ProfileButton = () => {
 				{user && (user.firstName[0] + user.lastName[0]).toUpperCase()}
 			</button>
 			{showMenu && (
-				<menu className='bg-white rounded-md shadow-md mt-2 pl-0 right-0 animate-fadeIn animate-animated w-48 z-50 absolute dark:( bg-gray-800 rounded-md text-light-300 ) '>
+				<menu className='bg-white rounded-sm border-1 shadow-md mt-1 pl-0 right-0 animate-fadeIn animate-animated w-48 z-50 absolute dark:( bg-gray-800 text-light-300 border-gray-900 ) '>
 					<NavLink
 						to='/profile'
 						onClick={() => setShowMenu(false)}

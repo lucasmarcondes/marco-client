@@ -1,25 +1,16 @@
-import { INotificationType } from '../../types'
+import { INotification, IUser } from '../../types'
 import { BsX, BsBell, BsCircle, BsMailbox } from 'react-icons/bs'
-import { useGetUserQuery, useRemoveNotificationMutation } from '../../store/api'
+import { useGetUserQuery, useRemoveNotificationMutation, useUpdateUserMutation } from '../../store/api'
 import { useState, useRef, useEffect } from 'react'
 
 export const Notifications = () => {
-	// const { data: user } = useGetUserQuery()
+	const { data: user } = useGetUserQuery()
 	// const userColor = user?.preferences.accentColor ? user.preferences.accentColor : '#BFDBFF'
 	// const textColor = user?.preferences.textColor ? user.preferences.textColor : 'black'
 	const notificationsRef = useRef<HTMLInputElement>(null)
 	const [showNotifications, setShowNotifications] = useState(false)
-	const notifications: INotificationType[] = [
-		{
-			id: '6',
-			message: 'You need to confirm your email',
-		},
-		{ id: '1', message: 'This is a test', title: 'Test Notification' },
-		{ id: '2', message: 'This is a test', title: 'Test Notification' },
-		{ id: '3', message: 'This is a test', title: 'Test Notification' },
-		{ id: '4', message: 'This is a test', title: 'Test Notification' },
-		{ id: '5', message: 'This is a test', title: 'Test Notification' },
-	]
+
+	let notifications = user ? getNotifications(user) : []
 
 	useEffect(() => {
 		const isOutsideClick = (e: Event) => {
@@ -32,7 +23,7 @@ export const Notifications = () => {
 	}, [showNotifications])
 
 	return (
-		<div ref={notificationsRef} className='flex'>
+		<div ref={notificationsRef} className='flex '>
 			<button onClick={() => setShowNotifications(!showNotifications)} className='rounded-md my-auto mr-5 p-2 text-light-700 '>
 				<span className='relative'>
 					<BsBell className='h-5 text-dark-200 w-5 block dark:(text-white ) ' />
@@ -44,9 +35,9 @@ export const Notifications = () => {
 				</span>
 			</button>
 			{showNotifications && (
-				<div className='divide-y bg-white rounded-md divide-gray-300 shadow-md mt-10 grid px-2 right-14 animate-fadeIn animate-animated w-3/9 z-50 grid-cols-1 absolute dark:( bg-gray-800 rounded-md text-light-300 ) '>
+				<div className='divide-y bg-white rounded-sm divide-gray-300 border-1 shadow-md mt-10 w-ful grid px-2 right-14 animate-fadeIn animate-animated z-50 grid-cols-1 absolute md:w-3/9  dark:( bg-gray-800 text-light-300 border-black ) '>
 					<div className=' p-4 pb-2 '>Notifications</div>
-					<div className='divide-y divide-gray-300 h-80 overflow-y-auto'>
+					<div className='divide-y divide-gray-300 max-h-80 overflow-y-auto'>
 						{notifications.map((notification, index) => {
 							return (
 								<div key={index}>
@@ -62,28 +53,62 @@ export const Notifications = () => {
 }
 
 interface Props {
-	notification: INotificationType
+	notification: INotification
 }
 
 export const Notification = ({ notification }: Props) => {
-	const [removeNotifiction] = useRemoveNotificationMutation()
+	const [updateUser] = useUpdateUserMutation()
+	const { data: user } = useGetUserQuery()
 
+	const removeNotification = (notification: INotification) => {
+		if (!user) return
+		updateUser({ ...user, notifications: user.notifications.filter(item => item.id != notification.id) })
+	}
 	return (
-		<a className='border-b flex -mx-2 py-3 px-4 items-center dark:(bg-gray-800 hover:bg-gray-700) hover:bg-gray-50 '>
-			<div className='flex -mx-3 py-2 px-4'>
+		<div className='border-b flex -mx-2 py-3 px-4 items-center dark:(bg-gray-800 hover:bg-gray-700) hover:bg-gray-50 '>
+			<div className='flex -mx-3 p-2 px-4'>
 				<div className='mx-3 text-sm'>
 					<span className='font-bold mb-2'>{notification.title} </span>
-					<p className='text-gray-600 dark:text-gray-200'>{notification.message}</p>
+					<span className='text-gray-600 dark:text-gray-200'>{notification.message}</span>
 				</div>
 			</div>
 
-			<div className='ml-auto '>
-				<BsX
-					type='button'
-					onClick={() => removeNotifiction(notification)}
-					className='my-auto h-6 transition w-6 dark:(text-white) hover:(cursor-pointer text-gray-600 duration-150) '
-				/>
-			</div>
-		</a>
+			{notification.dismissable && (
+				<div className='mb-auto ml-auto '>
+					<BsX
+						type='button'
+						onClick={() => removeNotification(notification)}
+						className='my-auto h-6 transition w-6 dark:(text-white) hover:(cursor-pointer text-gray-600 duration-150) '
+					/>
+				</div>
+			)}
+		</div>
 	)
+}
+
+const getNotifications = (user: IUser): INotification[] => {
+	let notifications = user.notifications ? [...user.notifications] : []
+	let emailAlertExists = notifications.some(item => item.id == 'email-confirmation')
+	if (emailAlertExists && user.isEmailConfirmed) {
+		// remove email notification if user confirmed email
+		notifications = notifications.filter(item => item.id != 'email-confirmation')
+	} else if (!emailAlertExists && !user.isEmailConfirmed) {
+		// add email notification if user has not confirmed email and it does not exist
+		notifications.push({
+			id: 'email-confirmation',
+			message: (
+				<span>
+					Your email needs to be confirmed!
+					<p>
+						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => alert('TODO!')}>
+							Click here
+						</a>{' '}
+						to resend the confirmation email
+					</p>
+				</span>
+			),
+			dismissable: false,
+		})
+	}
+	return notifications
 }

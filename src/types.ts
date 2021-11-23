@@ -1,9 +1,11 @@
+import { ReactNode } from 'react'
+
 export interface ILooseObject {
 	[key: string]: any
 }
 export type IModalType = 'create' | 'edit' | 'view' | null
 
-export interface IToastMessageType {
+export interface IToastMessage {
 	title: string
 	id?: string
 	message?: string
@@ -12,10 +14,11 @@ export interface IToastMessageType {
 	dismissable?: boolean
 }
 
-export interface INotificationType {
+export interface INotification {
 	id: string
 	title?: string
-	message: string
+	message: string | ReactNode
+	dismissable: boolean
 }
 
 export interface AppResponse {
@@ -30,10 +33,12 @@ export interface IUser {
 	firstName: string
 	lastName: string
 	email: string
+	isEmailConfirmed: boolean
 	googleId?: string
 	password?: string
 	mobile?: string
 	preferences: IUserPreferences
+	notifications: INotification[]
 	createdDate: Date
 	lastModifiedDate: Date
 }

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IUser, ITemplate, IEntry, AppResponse, INotificationType } from '../types'
+import { IUser, ITemplate, IEntry, AppResponse, INotification } from '../types'
 
 export interface ILoginRequest {
 	email: string
@@ -63,7 +63,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		getNotifications: builder.query<INotificationType[], void>({
+		getNotifications: builder.query<INotification[], void>({
 			query: () => ({
 				url: 'notification',
 				method: 'GET',
@@ -73,7 +73,7 @@ export const api = createApi({
 				return response.data
 			},
 		}),
-		removeNotification: builder.mutation<AppResponse, INotificationType>({
+		removeNotification: builder.mutation<AppResponse, INotification>({
 			query: id => ({
 				url: `notification/${id}`,
 				method: 'DELETE',

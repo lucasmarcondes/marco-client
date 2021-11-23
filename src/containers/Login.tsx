@@ -45,12 +45,12 @@ export const Login = () => {
 				</form>
 				<div className='space-y-1 my-3'>
 					{errors && <span className=' text-sm text-red-500'>{errors}</span>}
-					<>
+					<p>
 						<span>Reset password? </span>
 						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/password-reset')}>
 							Click here
 						</a>
-					</>
+					</p>
 					<p>
 						Don't have an account?{' '}
 						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/register')}>

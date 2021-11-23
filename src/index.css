@@ -21,6 +21,14 @@ input[type='search'] {
 input[type='checkbox']:not(.toggle) {
 	@apply border rounded-sm border-gray-300 h-[1.15rem] w-[1.15rem] focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500;
 }
+input:checked ~ .dot {
+	transform: translateX(100%);
+	background-color: black;
+}
+input:checked ~ .dot {
+	transform: translateX(100%);
+	background-color: black;
+}
 
 input[type='radio'] {
 	@apply border border-gray-300 focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500;

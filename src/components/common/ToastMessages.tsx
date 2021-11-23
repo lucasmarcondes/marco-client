@@ -1,4 +1,4 @@
-import { IToastMessageType } from '../../types'
+import { IToastMessage } from '../../types'
 import { BsX, BsCheckCircle, BsExclamationCircle, BsExclamationDiamond, BsXCircle } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store/store'
@@ -24,7 +24,7 @@ export const ToastMessages = () => {
 }
 
 interface Props {
-	toastMessage: IToastMessageType
+	toastMessage: IToastMessage
 }
 
 export const ToastMessage = ({ toastMessage }: Props) => {

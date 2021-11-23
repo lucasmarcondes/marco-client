@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IEntry, IModalType, IToastMessageType, ITemplate, IProperty } from '../types'
+import { IEntry, IModalType, IToastMessage, ITemplate, IProperty } from '../types'
 
 export interface IRootState {
 	currentEntry: IEntry | null
 	currentTemplate: ITemplate | null
 	currentProperty: IProperty | null
 	modalType: IModalType
-	toastMessages: IToastMessageType[]
+	toastMessages: IToastMessage[]
 }
 
 const initialState: IRootState = {
@@ -39,11 +39,11 @@ export const root = createSlice({
 		updateCurrentTemplate: (state, action: PayloadAction<ITemplate>) => {
 			state.currentTemplate = { ...state.currentTemplate, ...action.payload }
 		},
-		pushToastMessage: (state, action: PayloadAction<IToastMessageType>) => {
+		pushToastMessage: (state, action: PayloadAction<IToastMessage>) => {
 			action.payload.id = new Date().valueOf() + ''
 			state.toastMessages.push(action.payload)
 		},
-		removeToastMessage: (state, action: PayloadAction<IToastMessageType>) => {
+		removeToastMessage: (state, action: PayloadAction<IToastMessage>) => {
 			state.toastMessages = state.toastMessages.filter(item => item.id != action.payload.id)
 		},
 	},
