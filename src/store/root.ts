@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IEntry, IModalType, INotificationType, ITemplate, IProperty } from '../types'
+import { IEntry, IModalType, IToastMessageType, ITemplate, IProperty } from '../types'
 
 export interface IRootState {
 	currentEntry: IEntry | null
 	currentTemplate: ITemplate | null
 	currentProperty: IProperty | null
 	modalType: IModalType
-	notifications: INotificationType[]
+	toastMessages: IToastMessageType[]
 }
 
 const initialState: IRootState = {
@@ -14,7 +14,7 @@ const initialState: IRootState = {
 	currentTemplate: null,
 	currentProperty: null,
 	modalType: null,
-	notifications: [],
+	toastMessages: [],
 }
 
 export const root = createSlice({
@@ -39,12 +39,12 @@ export const root = createSlice({
 		updateCurrentTemplate: (state, action: PayloadAction<ITemplate>) => {
 			state.currentTemplate = { ...state.currentTemplate, ...action.payload }
 		},
-		pushNotification: (state, action: PayloadAction<INotificationType>) => {
+		pushToastMessage: (state, action: PayloadAction<IToastMessageType>) => {
 			action.payload.id = new Date().valueOf() + ''
-			state.notifications.push(action.payload)
+			state.toastMessages.push(action.payload)
 		},
-		removeNotification: (state, action: PayloadAction<INotificationType>) => {
-			state.notifications = state.notifications.filter(item => item.id != action.payload.id)
+		removeToastMessage: (state, action: PayloadAction<IToastMessageType>) => {
+			state.toastMessages = state.toastMessages.filter(item => item.id != action.payload.id)
 		},
 	},
 })
@@ -56,6 +56,6 @@ export const {
 	updateCurrentTemplate,
 	setCurrentTemplate,
 	setModalType,
-	removeNotification,
-	pushNotification,
+	removeToastMessage,
+	pushToastMessage,
 } = root.actions

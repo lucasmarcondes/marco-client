@@ -3,13 +3,19 @@ export interface ILooseObject {
 }
 export type IModalType = 'create' | 'edit' | 'view' | null
 
-export interface INotificationType {
+export interface IToastMessageType {
 	title: string
 	id?: string
 	message?: string
 	variant: 'success' | 'error' | 'info' | 'warning'
 	timeout?: number
 	dismissable?: boolean
+}
+
+export interface INotificationType {
+	id: string
+	title?: string
+	message: string
 }
 
 export interface AppResponse {

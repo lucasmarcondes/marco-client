@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Entries, Login, Register, Templates, Analytics, Profile } from './containers'
+import { Entries, Login, Register, Templates, Analytics, Profile, NotFound } from './containers'
 
-import { Header, Footer, Notifications } from './components/common'
+import { Header, Footer, ToastMessages } from './components/common'
 
 import { useGetUserQuery } from './store/api'
 
@@ -22,8 +22,9 @@ export default function App() {
 						<Route path='/templates' element={<Templates />} />
 						<Route path='/analytics' element={<Analytics />} />
 						<Route path='/profile' element={<Profile />} />
+						<Route path='*' element={<NotFound />} />
 					</Routes>
-					<Notifications />
+					<ToastMessages />
 				</div>
 				<Footer />
 			</div>

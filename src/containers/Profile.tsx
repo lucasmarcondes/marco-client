@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useGetUserQuery, useUpdateUserMutation } from '../store/api'
-import { pushNotification } from '../store/root'
+import { pushToastMessage } from '../store/root'
 import { useDispatch } from 'react-redux'
 import { BsCircle, BsPerson, BsToggles } from 'react-icons/bs'
 import { ColorPicker, Select, Toggle } from '../components/common'

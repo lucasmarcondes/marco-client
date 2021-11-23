@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { BsList, BsX, BsSunFill, BsMoonFill } from 'react-icons/bs'
+import { BsList, BsX, BsSunFill, BsMoonFill, BsBell } from 'react-icons/bs'
 import { useLogoutMutation, useGetUserQuery, useUpdateUserMutation } from '../../store/api'
 import { useNavigate } from 'react-router-dom'
+import { Notifications } from './Notifications'
 
 const links = ['Entries', 'Templates', 'Analytics']
 
@@ -21,7 +22,8 @@ export const Header = () => {
 		setShowMobileNav(!showMobileNav)
 	}
 
-	if (['/login', '/register'].includes(useLocation().pathname)) return null
+	if (['/login', '/register'].includes(useLocation().pathname) || !user) return null
+	// if (!user) return null
 
 	return (
 		<div className='border py-2 px-4 md:px-8 dark:( bg-gray-800 border-0 text-light-300 ) '>
@@ -46,12 +48,10 @@ export const Header = () => {
 					</nav>
 				</div>
 				<span className='flex space-x-4'>
-					<button
-						onClick={toggleDarkMode}
-						className='rounded-md my-auto p-1 p-2 text-light-700 dark:(hover:(bg-gray-500 text-dark-200) ) hover:bg-gray-200 '
-					>
+					<button onClick={toggleDarkMode} className='rounded-md my-auto p-1 p-2 text-light-700 '>
 						{darkMode ? <BsSunFill className='h-5 w-5 block ' /> : <BsMoonFill className='h-5 text-dark-200 w-5 block' />}
 					</button>
+					<Notifications />
 					<ProfileButton />
 				</span>
 			</div>

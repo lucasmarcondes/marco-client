@@ -1,6 +1,6 @@
 import { Modal } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
-import { pushNotification, setCurrentEntry, setModalType, updateCurrentEntry } from '../../store/root'
+import { pushToastMessage, setCurrentEntry, setModalType, updateCurrentEntry } from '../../store/root'
 import { EntryContainer } from '.'
 import { useGetTemplatesQuery, useCreateEntryMutation, useUpdateEntryMutation, useRemoveEntryMutation } from '../../store/api'
 import { IModalContent } from '../common/Modal'
@@ -29,7 +29,7 @@ export const EntryModal = () => {
 						.unwrap()
 						.then(payload => {
 							dispatch(
-								pushNotification({
+								pushToastMessage({
 									title: 'Success',
 									message: 'Entry created successfully',
 									variant: 'success',
@@ -40,7 +40,7 @@ export const EntryModal = () => {
 						.catch(({ data: error }) => {
 							hasError = true
 							dispatch(
-								pushNotification({
+								pushToastMessage({
 									title: 'Error',
 									message: error.message,
 									variant: 'error',
@@ -55,7 +55,7 @@ export const EntryModal = () => {
 						.unwrap()
 						.then(payload => {
 							dispatch(
-								pushNotification({
+								pushToastMessage({
 									title: 'Success',
 									message: payload.message,
 									variant: 'success',
@@ -66,7 +66,7 @@ export const EntryModal = () => {
 						.catch(({ data: error }) => {
 							hasError = true
 							dispatch(
-								pushNotification({
+								pushToastMessage({
 									title: 'Error',
 									message: error.message,
 									variant: 'error',
@@ -81,7 +81,7 @@ export const EntryModal = () => {
 						.unwrap()
 						.then(payload => {
 							dispatch(
-								pushNotification({
+								pushToastMessage({
 									title: 'Success',
 									message: payload.message,
 									variant: 'success',
@@ -92,7 +92,7 @@ export const EntryModal = () => {
 						.catch(({ data: error }) => {
 							hasError = true
 							dispatch(
-								pushNotification({
+								pushToastMessage({
 									title: 'Error',
 									message: error.message,
 									variant: 'error',

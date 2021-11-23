@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useLoginMutation } from '../store/api'
 import { useNavigate } from 'react-router-dom'
-import { pushNotification } from '../store/root'
+import { pushToastMessage } from '../store/root'
 import { useDispatch } from 'react-redux'
 
 export const Login = () => {
@@ -19,7 +19,7 @@ export const Login = () => {
 			.then(payload => {
 				navigate('/entries')
 				dispatch(
-					pushNotification({
+					pushToastMessage({
 						title: 'Success',
 						message: payload.message,
 						variant: 'success',
@@ -36,19 +36,29 @@ export const Login = () => {
 		<div>Loading...</div>
 	) : (
 		<div className='flex h-screen items-center justify-center'>
-			<form onSubmit={submit} method='POST' className='border rounded-md flex flex-col space-y-3 shadow-sm p-8 w-1/4'>
-				<div className='font-semibold text-lg'>Login</div>
-				<input onChange={e => setEmail(e.target.value)} type='email' placeholder='email' />
-				<input onChange={e => setPassword(e.target.value)} type='password' placeholder='password' />
-				<button className='primary'>Login</button>
-				{errors && <span className='my-2 text-sm text-red-500'>{errors}</span>}
-				<span>
-					Don't have an account?{' '}
-					<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/register')}>
-						Register here
-					</a>
-				</span>
-			</form>
+			<div className='border rounded-md shadow-sm p-8 w-1/4'>
+				<form onSubmit={submit} method='POST' className='flex flex-col space-y-3'>
+					<div className='font-semibold text-lg'>Login</div>
+					<input onChange={e => setEmail(e.target.value)} type='email' placeholder='email' />
+					<input onChange={e => setPassword(e.target.value)} type='password' placeholder='password' />
+					<button className='primary'>Login</button>
+				</form>
+				<div className='space-y-1 my-3'>
+					{errors && <span className=' text-sm text-red-500'>{errors}</span>}
+					<>
+						<span>Reset password? </span>
+						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/password-reset')}>
+							Click here
+						</a>
+					</>
+					<p>
+						Don't have an account?{' '}
+						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/register')}>
+							Register here
+						</a>
+					</p>
+				</div>
+			</div>
 		</div>
 	)
 }

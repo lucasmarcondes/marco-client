@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRegisterMutation } from '../store/api'
-import { pushNotification } from '../store/root'
+import { pushToastMessage } from '../store/root'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,6 +13,7 @@ export const Register = () => {
 		confirmPassword: '',
 	})
 	const [errors, setErrors] = useState('')
+	const [showResetPassword, setShowResetPassword] = useState(false)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
@@ -20,12 +21,13 @@ export const Register = () => {
 
 	const submit = async () => {
 		setErrors('')
+		setShowResetPassword(false)
 		register(formData)
 			.unwrap()
 			.then(payload => {
 				navigate('/entries')
 				dispatch(
-					pushNotification({
+					pushToastMessage({
 						title: 'Success',
 						message: payload.message,
 						variant: 'success',
@@ -34,6 +36,9 @@ export const Register = () => {
 				)
 			})
 			.catch(({ data: error }) => {
+				if (error.code == 409) {
+					setShowResetPassword(true)
+				}
 				setErrors(error?.message)
 			})
 	}
@@ -42,27 +47,48 @@ export const Register = () => {
 		<div>Loading...</div>
 	) : (
 		<div className='flex h-screen items-center justify-center'>
-			<form onSubmit={submit} method='POST' className='border rounded-md flex flex-col space-y-3 shadow-sm p-8 w-1/4'>
-				<div className='font-semibold text-lg'>Register</div>
-				<input
-					value={formData.firstName}
-					onChange={e => setFormData({ ...formData, firstName: e.target.value })}
-					type='text'
-					placeholder='First Name'
-				/>
-				<input value={formData.lastName} onChange={e => setFormData({ ...formData, lastName: e.target.value })} type='text' placeholder='Last Name' />
-				<input value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type='email' placeholder='Email' />
-				<input onChange={e => setFormData({ ...formData, password: e.target.value })} type='password' placeholder='Password' />
-				<input onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })} type='password' placeholder='Confirm Password' />
-				<button className='primary'>Register</button>
-				{errors && <span className='my-2 text-sm text-red-500'>{errors}</span>}
-				<span>
-					Already have an account?{' '}
-					<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/login')}>
-						Login
-					</a>
-				</span>
-			</form>
+			<div className='border rounded-md  shadow-sm p-8 w-1/4'>
+				<form onSubmit={submit} method='POST' className='flex flex-col space-y-3'>
+					<div className='font-semibold text-lg'>Register</div>
+					<input
+						value={formData.firstName}
+						onChange={e => setFormData({ ...formData, firstName: e.target.value })}
+						type='text'
+						placeholder='First Name'
+					/>
+					<input
+						value={formData.lastName}
+						onChange={e => setFormData({ ...formData, lastName: e.target.value })}
+						type='text'
+						placeholder='Last Name'
+					/>
+					<input value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type='email' placeholder='Email' />
+					<input onChange={e => setFormData({ ...formData, password: e.target.value })} type='password' placeholder='Password' />
+					<input onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })} type='password' placeholder='Confirm Password' />
+					<button className='primary'>Register</button>
+				</form>
+				<div className='mt-2 '>
+					{errors && (
+						<span className='text-sm text-red-500'>
+							<p>{errors}</p>
+							{showResetPassword && (
+								<>
+									<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/password-reset')}>
+										Click here
+									</a>{' '}
+									<span>if you would like to reset your password</span>
+								</>
+							)}
+						</span>
+					)}
+					<p>
+						Already have an account?{' '}
+						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/login')}>
+							Login
+						</a>
+					</p>
+				</div>
+			</div>
 		</div>
 	)
 }

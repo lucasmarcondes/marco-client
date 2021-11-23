@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IUser, ITemplate, IEntry, AppResponse } from '../types'
+import { IUser, ITemplate, IEntry, AppResponse, INotificationType } from '../types'
 
 export interface ILoginRequest {
 	email: string
@@ -20,7 +20,7 @@ export const api = createApi({
 		baseUrl: 'http://localhost:3030/api/',
 		credentials: 'include',
 	}),
-	tagTypes: ['User', 'Entry', 'Template'],
+	tagTypes: ['User', 'Entry', 'Template', 'Notification'],
 	endpoints: builder => ({
 		getUser: builder.query<IUser, void>({
 			query: () => ({
@@ -62,6 +62,23 @@ export const api = createApi({
 				method: 'POST',
 			}),
 			invalidatesTags: ['User'],
+		}),
+		getNotifications: builder.query<INotificationType[], void>({
+			query: () => ({
+				url: 'notification',
+				method: 'GET',
+			}),
+			providesTags: ['Notification'],
+			transformResponse: (response: AppResponse) => {
+				return response.data
+			},
+		}),
+		removeNotification: builder.mutation<AppResponse, INotificationType>({
+			query: id => ({
+				url: `notification/${id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['Notification'],
 		}),
 		getEntries: builder.query<IEntry[], void>({
 			query: () => ({
@@ -140,6 +157,9 @@ export const {
 	useLoginMutation,
 	useRegisterMutation,
 	useLogoutMutation,
+
+	useGetNotificationsQuery,
+	useRemoveNotificationMutation,
 
 	useGetEntriesQuery,
 	useCreateEntryMutation,
