@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Entries, Login, Register, Templates, Analytics, Profile, NotFound } from './containers'
+import { Entries, Login, Register, Templates, Analytics, Profile, NotFound, EmailVerification } from './containers'
 
 import { Header, Footer, ToastMessages } from './components/common'
 
@@ -19,6 +19,7 @@ export default function App() {
 						<Route path={'/'} element={<Entries />} />
 						<Route path='/login' element={<Login />} />
 						<Route path='/register' element={<Register />} />
+						<Route path='/email-verification/*' element={<EmailVerification />} />
 						<Route path='/templates' element={<Templates />} />
 						<Route path='/analytics' element={<Analytics />} />
 						<Route path='/profile' element={<Profile />} />

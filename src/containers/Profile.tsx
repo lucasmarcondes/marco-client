@@ -3,7 +3,7 @@ import { useGetUserQuery, useUpdateUserMutation } from '../store/api'
 import { pushToastMessage } from '../store/root'
 import { useDispatch } from 'react-redux'
 import { BsPerson, BsToggles } from 'react-icons/bs'
-import { ColorPicker, Select, Toggle } from '../components/common'
+import { ColorPicker, Select, Toggle, sendEmailConfirmationEmail } from '../components/common'
 import { IUser } from '../types'
 
 export const Profile = () => {
@@ -89,7 +89,7 @@ export const ViewMode = ({ user }: IViewMode) => {
 			{!user.isEmailConfirmed && (
 				<p className='text-sm p-2 text-gray-500 dark:(text-white)'>
 					Your email needs to be confirmed.{' '}
-					<a className='cursor-pointer text-blue-500  dark:(text-blue-300) hover:(underline ) ' onClick={() => alert('TODO!')}>
+					<a className='cursor-pointer text-blue-500  dark:(text-blue-300) hover:(underline ) ' onClick={() => sendEmailConfirmationEmail()}>
 						Click here
 					</a>{' '}
 					to resend the confirmation email
@@ -112,10 +112,12 @@ export const EditMode = ({ user, toggleEditMode }: IEditMode) => {
 		updateUser(newValues)
 			.unwrap()
 			.then(payload => {
+				console.log(payload)
+
 				dispatch(
 					pushToastMessage({
 						title: 'Success',
-						message: payload.message,
+						message: 'User details updated',
 						variant: 'success',
 						dismissable: true,
 					})
@@ -133,7 +135,7 @@ export const EditMode = ({ user, toggleEditMode }: IEditMode) => {
 	}
 
 	return (
-		<form onReset={toggleEditMode} onSubmit={save} className='divide-y rounded-md flex-row border-1 shadow-md my-2 text-sm w-full '>
+		<div className='divide-y rounded-md flex-row border-1 shadow-md my-2 text-sm w-full '>
 			<div className='w-full grid p-4 md:grid-cols-2'>
 				<div className='grid grid-cols-2'>
 					<div className='font-semibold p-2'>First Name</div>
@@ -160,15 +162,15 @@ export const EditMode = ({ user, toggleEditMode }: IEditMode) => {
 			</div>
 			<div className='flex w-full '>
 				<div className='mt-auto ml-auto p-4'>
-					<button type='reset' className='secondary'>
+					<button onClick={toggleEditMode} className='secondary'>
 						Cancel
 					</button>
-					<button type='submit' className='ml-2 primary'>
+					<button onClick={save} className='ml-2 primary'>
 						Save
 					</button>
 				</div>
 			</div>
-		</form>
+		</div>
 	)
 }
 

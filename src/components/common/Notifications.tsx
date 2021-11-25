@@ -1,6 +1,6 @@
 import { INotification, IUser } from '../../types'
-import { BsX, BsBell, BsCircle, BsMailbox } from 'react-icons/bs'
-import { useGetUserQuery, useRemoveNotificationMutation, useUpdateUserMutation } from '../../store/api'
+import { BsX, BsBell } from 'react-icons/bs'
+import { useGetUserQuery, useUpdateUserMutation } from '../../store/api'
 import { useState, useRef, useEffect } from 'react'
 
 export const Notifications = () => {
@@ -24,7 +24,10 @@ export const Notifications = () => {
 
 	return (
 		<div ref={notificationsRef} className='flex '>
-			<button onClick={() => setShowNotifications(!showNotifications)} className='rounded-md my-auto mr-5 p-2 text-light-700 '>
+			<button
+				onClick={() => notifications.length > 0 && setShowNotifications(!showNotifications)}
+				className='rounded-md my-auto mr-2 p-2 text-light-700 '
+			>
 				<span className='relative'>
 					<BsBell className='h-5 text-dark-200 w-5 block dark:(text-white ) ' />
 					{notifications.length > 0 && (
@@ -34,6 +37,7 @@ export const Notifications = () => {
 					)}
 				</span>
 			</button>
+			{notifications.length > 0 && <div className='mr-3'></div>}
 			{showNotifications && (
 				<div className='divide-y bg-white rounded-sm divide-gray-300 border-1 shadow-md mt-10 w-ful grid px-2 right-14 animate-fadeIn animate-animated z-50 grid-cols-1 absolute md:w-3/9  dark:( bg-gray-800 text-light-300 border-black ) '>
 					<div className=' p-4 pb-2 '>Notifications</div>
@@ -100,7 +104,7 @@ const getNotifications = (user: IUser): INotification[] => {
 				<span>
 					Your email needs to be confirmed!
 					<p>
-						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => alert('TODO!')}>
+						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => sendEmailConfirmationEmail()}>
 							Click here
 						</a>{' '}
 						to resend the confirmation email
@@ -111,4 +115,37 @@ const getNotifications = (user: IUser): INotification[] => {
 		})
 	}
 	return notifications
+}
+
+import { useDispatch } from 'react-redux'
+import { useResendConfirmationEmailMutation } from '../../store/api'
+import { pushToastMessage } from '../../store/root'
+
+export const sendEmailConfirmationEmail = () => {
+	const [resendConfirmationEmail] = useResendConfirmationEmailMutation()
+	const dispatch = useDispatch()
+	return () => {
+		resendConfirmationEmail()
+			.then(payload => {
+				console.log(payload)
+				dispatch(
+					pushToastMessage({
+						title: 'Success',
+						message: payload.message,
+						dismissable: true,
+						variant: 'success',
+					})
+				)
+			})
+			.catch(({ data: error }) => {
+				dispatch(
+					pushToastMessage({
+						title: 'Error sending email',
+						message: error?.message,
+						dismissable: true,
+						variant: 'error',
+					})
+				)
+			})
+	}
 }

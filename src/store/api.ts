@@ -6,6 +6,10 @@ export interface ILoginRequest {
 	password: string
 }
 
+export interface IEmailConfirmationRequest {
+	email: string
+	userId: string
+}
 export interface IRegisterRequest {
 	firstName: string
 	lastName: string
@@ -48,6 +52,22 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
+		resendConfirmationEmail: builder.mutation<AppResponse, void>({
+			query: () => ({
+				url: `user/resendEmail`,
+				method: 'PUT',
+			}),
+		}),
+		verifyEmail: builder.mutation<AppResponse, string>({
+			query: token => ({
+				url: `verify/${token}`,
+				method: 'PUT',
+			}),
+			transformResponse: (response: AppResponse) => {
+				return response.data
+			},
+			invalidatesTags: ['User'],
+		}),
 		login: builder.mutation<AppResponse, ILoginRequest>({
 			query: credentials => ({
 				url: 'user/login',
@@ -62,23 +82,6 @@ export const api = createApi({
 				method: 'POST',
 			}),
 			invalidatesTags: ['User'],
-		}),
-		getNotifications: builder.query<INotification[], void>({
-			query: () => ({
-				url: 'notification',
-				method: 'GET',
-			}),
-			providesTags: ['Notification'],
-			transformResponse: (response: AppResponse) => {
-				return response.data
-			},
-		}),
-		removeNotification: builder.mutation<AppResponse, INotification>({
-			query: id => ({
-				url: `notification/${id}`,
-				method: 'DELETE',
-			}),
-			invalidatesTags: ['Notification'],
 		}),
 		getEntries: builder.query<IEntry[], void>({
 			query: () => ({
@@ -156,10 +159,9 @@ export const {
 	useUpdateUserMutation,
 	useLoginMutation,
 	useRegisterMutation,
+	useVerifyEmailMutation,
+	useResendConfirmationEmailMutation,
 	useLogoutMutation,
-
-	useGetNotificationsQuery,
-	useRemoveNotificationMutation,
 
 	useGetEntriesQuery,
 	useCreateEntryMutation,
