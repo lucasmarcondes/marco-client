@@ -119,21 +119,23 @@ export const EntryModal = () => {
 				/>
 			),
 			content: <EntryContainer entry={entry} />,
-			size: 'h-[80%] w-2/3',
+			size: 'h-4/5vh w-2/3',
 			actions: (
 				<>
-					<button className='danger' onClick={() => closeModal('delete', entry)}>
-						Delete
-					</button>
-					<button className='secondary' onClick={() => closeModal('cancel')}>
+					{type != 'create' && (
+						<button className='w-full danger md:w-1/12' onClick={() => closeModal('delete', entry)}>
+							Delete
+						</button>
+					)}
+					<button className='w-full  secondary md:w-1/12' onClick={() => closeModal('cancel')}>
 						Cancel
 					</button>
 					{type === 'create' ? (
-						<button className='primary' onClick={() => closeModal('create', entry)}>
+						<button className='w-full  primary md:w-1/12' onClick={() => closeModal('create', entry)}>
 							Create
 						</button>
 					) : (
-						<button className='primary' onClick={() => closeModal('update', entry)}>
+						<button className='w-full primary md:w-1/12' onClick={() => closeModal('update', entry)}>
 							Save
 						</button>
 					)}

@@ -35,8 +35,10 @@ export const Modal = ({ modalContent, onClose }: IModalProps) => {
 					)}
 					<div className='flex-1 p-4'>{modalContent.content}</div>
 					{modalContent.actions && (
-						<div className='flex bg-gray-50 px-4 justify-end md:rounded-b-lg dark:( bg-gray-800 border-0 text-light-300) '>
-							<div className='my-auto space-x-2 py-4 inline-flex'>{modalContent.actions}</div>
+						<div className='flex flex-row bg-gray-50  px-4 justify-end md:rounded-b-lg dark:( bg-gray-800 border-0 text-light-300) '>
+							<div className='flex-row my-auto space-y-2 w-full py-4 md:space-x-2' style={{ textAlignLast: 'right' }}>
+								{modalContent.actions}
+							</div>
 						</div>
 					)}
 				</div>

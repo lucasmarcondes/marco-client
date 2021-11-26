@@ -108,6 +108,6 @@ interface INewEntryButtonProps {
 export const NewEntryButton = ({ onClick }: INewEntryButtonProps) => (
 	<button onClick={onClick} className='ml-2 py-0 secondary'>
 		<BsPlus className='my-auto h-5 w-6' />
-		<span className='my-auto w-max'>New Entry</span>
+		<span className='my-auto w-max  hidden md:block'>New Entry</span>
 	</button>
 )
