@@ -1,16 +1,64 @@
 import { INotification, IUser } from '../../types'
 import { BsX, BsBell } from 'react-icons/bs'
-import { useGetUserQuery, useUpdateUserMutation } from '../../store/api'
+import { useGetUserQuery, useUpdateUserMutation, useResendConfirmationEmailMutation } from '../../store/api'
 import { useState, useRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { pushToastMessage } from '../../store/root'
 
 export const Notifications = () => {
 	const { data: user } = useGetUserQuery()
-	// const userColor = user?.preferences.accentColor ? user.preferences.accentColor : '#BFDBFF'
-	// const textColor = user?.preferences.textColor ? user.preferences.textColor : 'black'
+	const [resendConfirmationEmail] = useResendConfirmationEmailMutation()
+	const dispatch = useDispatch()
 	const notificationsRef = useRef<HTMLInputElement>(null)
 	const [showNotifications, setShowNotifications] = useState(false)
 
-	let notifications = user ? getNotifications(user) : []
+	const sendConfirmationEmail = () => {
+		resendConfirmationEmail()
+			.then(payload => {
+				console.log(payload)
+				dispatch(
+					pushToastMessage({
+						title: 'Email sent',
+						dismissable: true,
+						variant: 'success',
+					})
+				)
+			})
+			.catch(({ data: error }) => {
+				dispatch(
+					pushToastMessage({
+						title: 'Error sending email',
+						message: error?.message,
+						dismissable: true,
+						variant: 'error',
+					})
+				)
+			})
+	}
+
+	let notifications = user?.notifications ? [...user.notifications] : []
+	let emailAlertExists = notifications.some(item => item.id == 'email-confirmation')
+	if (emailAlertExists && user?.isEmailConfirmed) {
+		// remove email notification if user confirmed email
+		notifications = notifications.filter(item => item.id != 'email-confirmation')
+	} else if (!emailAlertExists && !user?.isEmailConfirmed) {
+		// add email notification if user has not confirmed email and it does not exist
+		notifications.push({
+			id: 'email-confirmation',
+			message: (
+				<span>
+					Your email needs to be confirmed!
+					<p>
+						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => sendConfirmationEmail()}>
+							Click here
+						</a>{' '}
+						to resend the confirmation email
+					</p>
+				</span>
+			),
+			dismissable: false,
+		})
+	}
 
 	useEffect(() => {
 		const isOutsideClick = (e: Event) => {
@@ -88,64 +136,4 @@ export const Notification = ({ notification }: Props) => {
 			)}
 		</div>
 	)
-}
-
-const getNotifications = (user: IUser): INotification[] => {
-	let notifications = user.notifications ? [...user.notifications] : []
-	let emailAlertExists = notifications.some(item => item.id == 'email-confirmation')
-	if (emailAlertExists && user.isEmailConfirmed) {
-		// remove email notification if user confirmed email
-		notifications = notifications.filter(item => item.id != 'email-confirmation')
-	} else if (!emailAlertExists && !user.isEmailConfirmed) {
-		// add email notification if user has not confirmed email and it does not exist
-		notifications.push({
-			id: 'email-confirmation',
-			message: (
-				<span>
-					Your email needs to be confirmed!
-					<p>
-						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => sendEmailConfirmationEmail()}>
-							Click here
-						</a>{' '}
-						to resend the confirmation email
-					</p>
-				</span>
-			),
-			dismissable: false,
-		})
-	}
-	return notifications
-}
-
-import { useDispatch } from 'react-redux'
-import { useResendConfirmationEmailMutation } from '../../store/api'
-import { pushToastMessage } from '../../store/root'
-
-export const sendEmailConfirmationEmail = () => {
-	const [resendConfirmationEmail] = useResendConfirmationEmailMutation()
-	const dispatch = useDispatch()
-	return () => {
-		resendConfirmationEmail()
-			.then(payload => {
-				console.log(payload)
-				dispatch(
-					pushToastMessage({
-						title: 'Success',
-						message: payload.message,
-						dismissable: true,
-						variant: 'success',
-					})
-				)
-			})
-			.catch(({ data: error }) => {
-				dispatch(
-					pushToastMessage({
-						title: 'Error sending email',
-						message: error?.message,
-						dismissable: true,
-						variant: 'error',
-					})
-				)
-			})
-	}
 }

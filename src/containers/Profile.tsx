@@ -1,13 +1,39 @@
 import { useState } from 'react'
-import { useGetUserQuery, useUpdateUserMutation } from '../store/api'
+import { useGetUserQuery, useResendConfirmationEmailMutation, useUpdateUserMutation } from '../store/api'
 import { pushToastMessage } from '../store/root'
 import { useDispatch } from 'react-redux'
 import { BsPerson, BsToggles } from 'react-icons/bs'
-import { ColorPicker, Select, Toggle, sendEmailConfirmationEmail } from '../components/common'
+import { ColorPicker, Select, Toggle } from '../components/common'
 import { IUser } from '../types'
 
 export const Profile = () => {
 	const { data: user } = useGetUserQuery()
+	const [resendConfirmationEmail] = useResendConfirmationEmailMutation()
+	const dispatch = useDispatch()
+
+	const sendConfirmationEmail = () => {
+		resendConfirmationEmail()
+			.then(payload => {
+				console.log(payload)
+				dispatch(
+					pushToastMessage({
+						title: 'Email sent',
+						dismissable: true,
+						variant: 'success',
+					})
+				)
+			})
+			.catch(({ data: error }) => {
+				dispatch(
+					pushToastMessage({
+						title: 'Error sending email',
+						message: error?.message,
+						dismissable: true,
+						variant: 'error',
+					})
+				)
+			})
+	}
 
 	const [editMode, setEditMode] = useState(false)
 
@@ -46,6 +72,15 @@ export const Profile = () => {
 									)}
 								</div>
 								<div>{editMode ? <EditMode user={user} toggleEditMode={() => setEditMode(false)} /> : <ViewMode user={user} />}</div>
+								{!user.isEmailConfirmed && !editMode && (
+									<p className='text-sm p-2 text-gray-500 dark:(text-white)'>
+										Your email needs to be confirmed.{' '}
+										<a className='cursor-pointer text-blue-500  dark:(text-blue-300) hover:(underline ) ' onClick={() => sendConfirmationEmail()}>
+											Click here
+										</a>{' '}
+										to resend the confirmation email
+									</p>
+								)}{' '}
 							</div>
 							<div className=' p-2'>
 								<div className='flex font-semibold space-x-2 leading-8 items-center'>
@@ -86,15 +121,6 @@ export const ViewMode = ({ user }: IViewMode) => {
 					</div>
 				</div>
 			</div>
-			{!user.isEmailConfirmed && (
-				<p className='text-sm p-2 text-gray-500 dark:(text-white)'>
-					Your email needs to be confirmed.{' '}
-					<a className='cursor-pointer text-blue-500  dark:(text-blue-300) hover:(underline ) ' onClick={() => sendEmailConfirmationEmail()}>
-						Click here
-					</a>{' '}
-					to resend the confirmation email
-				</p>
-			)}{' '}
 		</>
 	)
 }
