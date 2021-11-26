@@ -36,13 +36,13 @@ input[type='radio'] {
 
 /* buttons */
 button.danger {
-	@apply border border-transparent rounded-md font-medium bg-red-600 shadow-sm text-base text-white w-full py-2 px-4 inline-flex justify-center sm:text-sm sm:w-auto hover:bg-red-700;
+	@apply border border-transparent rounded-md font-medium bg-red-600 shadow-sm text-base text-white py-2 px-4 inline-flex justify-center sm:text-sm hover:bg-red-700;
 }
 button.primary {
-	@apply border border-transparent rounded-md font-medium bg-blue-500 shadow-sm text-base text-white w-full py-2 px-4 inline-flex justify-center sm:text-sm sm:w-auto hover:bg-blue-600;
+	@apply border border-transparent rounded-md font-medium bg-blue-500 shadow-sm text-base text-white py-2 px-4 inline-flex justify-center sm:text-sm hover:bg-blue-600;
 }
 button.secondary {
-	@apply bg-white border rounded-md font-medium border-gray-300 shadow-sm text-base w-full py-2 px-4 text-gray-700 inline-flex justify-center sm:mt-0 sm:text-sm sm:w-auto hover:bg-gray-50;
+	@apply bg-white border rounded-md font-medium border-gray-300 shadow-sm text-base py-2 px-4 text-gray-700 inline-flex justify-center sm:text-sm hover:bg-gray-50;
 }
 
 .dark button.secondary {

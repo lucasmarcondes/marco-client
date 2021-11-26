@@ -58,7 +58,7 @@ export const Profile = () => {
 						</div>
 						<div className='divide-y w-full px-2 md:w-9/12'>
 							<div className='p-2'>
-								<div className='flex flex-row w-full'>
+								<div className='flex flex-row flex-wrap w-full'>
 									<div className='flex font-semibold space-x-2 leading-8 items-center'>
 										<span style={{ color: userColor }}>
 											<BsPerson className='h-5 w-5' />
@@ -186,12 +186,12 @@ export const EditMode = ({ user, toggleEditMode }: IEditMode) => {
 					<input className=' m-2' type='email' defaultValue={newValues.email} onChange={e => setNewValues({ ...newValues, email: e.target.value })} />
 				</div>
 			</div>
-			<div className='flex w-full '>
-				<div className='mt-auto ml-auto p-4'>
-					<button onClick={toggleEditMode} className='secondary'>
+			<div className='flex w-full'>
+				<div className='flex flex-row ml-auto p-2'>
+					<button onClick={toggleEditMode} className='m-2 w-1/2 secondary sm:text-sm'>
 						Cancel
 					</button>
-					<button onClick={save} className='ml-2 primary'>
+					<button onClick={save} className='m-2 w-1/2 primary'>
 						Save
 					</button>
 				</div>
