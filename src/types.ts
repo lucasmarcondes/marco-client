@@ -46,7 +46,6 @@ export interface IUser {
 export interface IUserPreferences {
 	darkMode: boolean
 	accentColor: string
-	textColor: string
 }
 
 export interface IEntry {

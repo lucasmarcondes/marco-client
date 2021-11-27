@@ -75,6 +75,7 @@ export const Notifications = () => {
 			<button
 				onClick={() => notifications.length > 0 && setShowNotifications(!showNotifications)}
 				className='rounded-md my-auto mr-2 p-2 text-light-700 '
+				title={`${notifications.length} unread messages`}
 			>
 				<span className='relative'>
 					<BsBell className='h-5 text-dark-200 w-5 block dark:(text-white ) ' />

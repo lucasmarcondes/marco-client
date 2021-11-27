@@ -36,15 +36,15 @@ export const Login = () => {
 		<div>Loading...</div>
 	) : (
 		<div className='flex h-screen items-center justify-center'>
-			<div className='border rounded-md shadow-sm p-8 w-1/4'>
+			<div className='border rounded-md shadow-sm p-8 w-100'>
 				<form onSubmit={submit} method='POST' className='flex flex-col space-y-3'>
 					<div className='font-semibold text-lg'>Login</div>
 					<input onChange={e => setEmail(e.target.value)} type='email' placeholder='email' />
 					<input onChange={e => setPassword(e.target.value)} type='password' placeholder='password' />
 					<button className='primary'>Login</button>
 				</form>
-				<div className='space-y-1 my-3'>
-					{errors && <span className=' text-sm text-red-500'>{errors}</span>}
+				<div className='space-y-1 my-3 text-sm'>
+					{errors && <span className='  text-red-500'>{errors}</span>}
 					<p>
 						<span>Reset password? </span>
 						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/password-reset')}>
@@ -53,7 +53,7 @@ export const Login = () => {
 					</p>
 					<p>
 						Don't have an account?{' '}
-						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/register')}>
+						<a className='cursor-pointer text-blue-500 hover:(underline ) ' onClick={() => navigate('/register')}>
 							Register here
 						</a>
 					</p>

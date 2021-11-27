@@ -67,18 +67,26 @@ const ProfileButton = () => {
 	const [logout] = useLogoutMutation()
 	const navigate = useNavigate()
 
-	const userColor = user?.preferences.accentColor ? user.preferences.accentColor : '#BFDBFF'
-	const textColor = user?.preferences.textColor ? user.preferences.textColor : 'black'
+	const userColor = user?.preferences.accentColor
+	const [textColor, setTextColor] = useState('text-white')
 
 	useEffect(() => {
 		const isOutsideClick = (e: Event) => {
 			showMenu && !menuRef.current?.contains(e.target as HTMLElement) && setShowMenu(false)
 		}
 		document.addEventListener('mousedown', isOutsideClick)
+		if (userColor) {
+			let variant = userColor.split('-').pop()
+			if (variant && parseInt(variant) > 400) {
+				setTextColor('text-white')
+			} else {
+				setTextColor('text-black')
+			}
+		}
 		return () => {
 			document.removeEventListener('mousedown', isOutsideClick)
 		}
-	}, [showMenu])
+	}, [showMenu, userColor])
 
 	const signout = async () => {
 		try {
@@ -92,11 +100,7 @@ const ProfileButton = () => {
 	}
 	return (
 		<div ref={menuRef}>
-			<button
-				onClick={() => setShowMenu(!showMenu)}
-				className='rounded-full text-lg p-2 dark:(text-dark-400)'
-				style={{ background: userColor, color: textColor }}
-			>
+			<button onClick={() => setShowMenu(!showMenu)} className={'rounded-full text-lg p-2 bg-' + userColor + ' ' + textColor}>
 				{user && (user.firstName[0] + user.lastName[0]).toUpperCase()}
 			</button>
 			{showMenu && (

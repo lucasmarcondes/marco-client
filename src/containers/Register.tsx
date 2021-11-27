@@ -47,7 +47,7 @@ export const Register = () => {
 		<div>Loading...</div>
 	) : (
 		<div className='flex h-screen items-center justify-center'>
-			<div className='border rounded-md  shadow-sm p-8 w-1/4'>
+			<div className='border rounded-md  shadow-sm p-8 w-100'>
 				<form onSubmit={submit} method='POST' className='flex flex-col space-y-3'>
 					<div className='font-semibold text-lg'>Register</div>
 					<input

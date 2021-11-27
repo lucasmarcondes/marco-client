@@ -37,7 +37,7 @@ export const Profile = () => {
 
 	const [editMode, setEditMode] = useState(false)
 
-	const userColor = user?.preferences.accentColor ? user.preferences.accentColor : '#BFDBFF'
+	const userColor = user?.preferences.accentColor
 
 	return (
 		<div className='bg-white h-full dark:(bg-gray-500 text-light-200) '>
@@ -45,7 +45,7 @@ export const Profile = () => {
 				<div className=' mx-auto p-5'>
 					<div className='rounded-sm no-wrap md:divide-x md:flex md:-mx-2'>
 						<div className='mx-2 w-full md:w-3/12'>
-							<div className=' border-t-4  p-2' style={{ borderColor: userColor }}>
+							<div className={'border-t-4  p-2 border-' + userColor}>
 								<h1 className='font-bold my-1 text-xl leading-8'>
 									{user.firstName} {user.lastName}
 								</h1>
@@ -57,10 +57,10 @@ export const Profile = () => {
 							<div className='my-4'></div>
 						</div>
 						<div className='divide-y w-full px-2 md:w-9/12'>
-							<div className='p-2'>
+							<div className='p-2 pb-5'>
 								<div className='flex flex-row flex-wrap w-full'>
 									<div className='flex font-semibold space-x-2 leading-8 items-center'>
-										<span style={{ color: userColor }}>
+										<span className={'text-' + userColor}>
 											<BsPerson className='h-5 w-5' />
 										</span>
 										<span className='tracking-wide'>About</span>
@@ -83,8 +83,8 @@ export const Profile = () => {
 								)}{' '}
 							</div>
 							<div className=' p-2'>
-								<div className='flex font-semibold space-x-2 leading-8 items-center'>
-									<span style={{ color: userColor }}>
+								<div className='flex font-semibold space-x-2 pt-5 leading-8 items-center'>
+									<span className={'text-' + userColor}>
 										<BsToggles className='h-5 w-5' />
 									</span>
 									<span className='tracking-wide'>Preferences</span>
@@ -161,7 +161,7 @@ export const EditMode = ({ user, toggleEditMode }: IEditMode) => {
 	}
 
 	return (
-		<div className='divide-y rounded-md flex-row border-1 shadow-md my-2 text-sm w-full '>
+		<div className='divide-y rounded-md flex-row border-1 shadow-md my-2 text-sm w-full pt-5'>
 			<div className='w-full grid p-4 md:grid-cols-2'>
 				<div className='grid grid-cols-2'>
 					<div className='font-semibold p-2'>First Name</div>
@@ -186,12 +186,12 @@ export const EditMode = ({ user, toggleEditMode }: IEditMode) => {
 					<input className=' m-2' type='email' defaultValue={newValues.email} onChange={e => setNewValues({ ...newValues, email: e.target.value })} />
 				</div>
 			</div>
-			<div className='flex w-full'>
-				<div className='flex flex-row ml-auto p-2'>
-					<button onClick={toggleEditMode} className='m-2 w-1/2 secondary sm:text-sm'>
+			<div className='flex flex-row bg-gray-50  px-6 justify-end md:rounded-b-lg dark:( bg-gray-800 border-0 text-light-300) '>
+				<div className='flex-row my-auto space-y-2 w-full py-4 md:space-x-2' style={{ textAlignLast: 'right' }}>
+					<button onClick={toggleEditMode} className='w-full secondary md:w-1/12'>
 						Cancel
 					</button>
-					<button onClick={save} className='m-2 w-1/2 primary'>
+					<button onClick={save} className='w-full  primary md:w-1/12'>
 						Save
 					</button>
 				</div>
@@ -228,17 +228,6 @@ export const Preferences = ({ user }: IPreferences) => {
 							title='Pick a color'
 							value={user.preferences.accentColor}
 							onChange={val => updateUser({ ...user, preferences: { ...user.preferences, accentColor: val } })}
-						/>
-					</div>
-				</div>
-				<div className='grid grid-cols-2'>
-					<div className='font-semibold p-2'>Text Color</div>
-					<div className='p-2'>
-						<ColorPicker
-							id='textColor'
-							title='Pick a color'
-							value={user.preferences.textColor}
-							onChange={val => updateUser({ ...user, preferences: { ...user.preferences, textColor: val } })}
 						/>
 					</div>
 				</div>
