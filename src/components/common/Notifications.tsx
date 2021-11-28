@@ -1,24 +1,27 @@
 import { INotification, IUser } from '../../types'
 import { BsX, BsBell } from 'react-icons/bs'
-import { useGetUserQuery, useUpdateUserMutation, useResendConfirmationEmailMutation } from '../../store/api'
+import { useGetUserQuery, useUpdateUserMutation, useSendConfirmationEmailMutation } from '../../store/api'
 import { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { pushToastMessage } from '../../store/root'
 
 export const Notifications = () => {
 	const { data: user } = useGetUserQuery()
-	const [resendConfirmationEmail] = useResendConfirmationEmailMutation()
+	const [sendConfirmationEmail] = useSendConfirmationEmailMutation()
 	const dispatch = useDispatch()
 	const notificationsRef = useRef<HTMLInputElement>(null)
 	const [showNotifications, setShowNotifications] = useState(false)
 
-	const sendConfirmationEmail = () => {
-		resendConfirmationEmail()
+	const verifyEmail = () => {
+		sendConfirmationEmail({
+			type: 'verifyEmail',
+		})
+			.unwrap()
 			.then(payload => {
 				console.log(payload)
 				dispatch(
 					pushToastMessage({
-						title: 'Email sent',
+						title: payload.message,
 						dismissable: true,
 						variant: 'success',
 					})
@@ -49,7 +52,7 @@ export const Notifications = () => {
 				<span>
 					Your email needs to be confirmed!
 					<p>
-						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => sendConfirmationEmail()}>
+						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => verifyEmail()}>
 							Click here
 						</a>{' '}
 						to resend the confirmation email

@@ -6,9 +6,14 @@ export interface ILoginRequest {
 	password: string
 }
 
-export interface IEmailConfirmationRequest {
-	email: string
-	userId: string
+export interface IConfirmationEmailRequest {
+	type: string
+	email?: string
+}
+export interface IResetPasswordRequest {
+	token: string
+	password: string
+	confirmPassword: string
 }
 export interface IRegisterRequest {
 	firstName: string
@@ -52,10 +57,11 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['User'],
 		}),
-		resendConfirmationEmail: builder.mutation<AppResponse, void>({
-			query: () => ({
-				url: `user/resendEmail`,
+		sendConfirmationEmail: builder.mutation<AppResponse, IConfirmationEmailRequest>({
+			query: req => ({
+				url: 'user/sendConfirmationEmail',
 				method: 'PUT',
+				body: req,
 			}),
 		}),
 		verifyEmail: builder.mutation<AppResponse, string>({
@@ -63,9 +69,17 @@ export const api = createApi({
 				url: `verify/${token}`,
 				method: 'PUT',
 			}),
-			transformResponse: (response: AppResponse) => {
-				return response.data
-			},
+			// transformResponse: (response: AppResponse) => {
+			// 	return response.data
+			// },
+			invalidatesTags: ['User'],
+		}),
+		resetPassword: builder.mutation<AppResponse, IResetPasswordRequest>({
+			query: req => ({
+				url: 'user/resetPassword',
+				method: 'PUT',
+				body: req,
+			}),
 			invalidatesTags: ['User'],
 		}),
 		login: builder.mutation<AppResponse, ILoginRequest>({
@@ -159,8 +173,9 @@ export const {
 	useUpdateUserMutation,
 	useLoginMutation,
 	useRegisterMutation,
+	useResetPasswordMutation,
 	useVerifyEmailMutation,
-	useResendConfirmationEmailMutation,
+	useSendConfirmationEmailMutation,
 	useLogoutMutation,
 
 	useGetEntriesQuery,

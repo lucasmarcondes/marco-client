@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Entries, Login, Register, Templates, Analytics, Profile, NotFound, EmailVerification } from './containers'
+import { Entries, Login, Register, Templates, Analytics, Profile, NotFound, EmailVerification, PasswordReset, NewPassword } from './containers'
 
 import { Header, Footer, ToastMessages } from './components/common'
 
@@ -19,6 +19,8 @@ export default function App() {
 						<Route path={'/'} element={<Entries />} />
 						<Route path='/login' element={<Login />} />
 						<Route path='/register' element={<Register />} />
+						<Route path='/password-reset/*' element={<PasswordReset />} />
+						<Route path='/new-password/*' element={<NewPassword />} />
 						<Route path='/email-verification/*' element={<EmailVerification />} />
 						<Route path='/templates' element={<Templates />} />
 						<Route path='/analytics' element={<Analytics />} />

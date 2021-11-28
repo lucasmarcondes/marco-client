@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGetUserQuery, useResendConfirmationEmailMutation, useUpdateUserMutation } from '../store/api'
+import { useGetUserQuery, useSendConfirmationEmailMutation, useUpdateUserMutation } from '../store/api'
 import { pushToastMessage } from '../store/root'
 import { useDispatch } from 'react-redux'
 import { BsPerson, BsToggles } from 'react-icons/bs'
@@ -8,16 +8,19 @@ import { IUser } from '../types'
 
 export const Profile = () => {
 	const { data: user } = useGetUserQuery()
-	const [resendConfirmationEmail] = useResendConfirmationEmailMutation()
+	const [sendConfirmationEmail] = useSendConfirmationEmailMutation()
 	const dispatch = useDispatch()
 
-	const sendConfirmationEmail = () => {
-		resendConfirmationEmail()
+	const verifyEmail = () => {
+		sendConfirmationEmail({
+			type: 'verifyEmail',
+		})
+			.unwrap()
 			.then(payload => {
 				console.log(payload)
 				dispatch(
 					pushToastMessage({
-						title: 'Email sent',
+						title: payload.message,
 						dismissable: true,
 						variant: 'success',
 					})
@@ -75,7 +78,7 @@ export const Profile = () => {
 								{!user.isEmailConfirmed && !editMode && (
 									<p className='text-sm p-2 text-gray-500 dark:(text-white)'>
 										Your email needs to be confirmed.{' '}
-										<a className='cursor-pointer text-blue-500  dark:(text-blue-300) hover:(underline ) ' onClick={() => sendConfirmationEmail()}>
+										<a className='cursor-pointer text-blue-500  dark:(text-blue-300) hover:(underline ) ' onClick={() => verifyEmail()}>
 											Click here
 										</a>{' '}
 										to resend the confirmation email
