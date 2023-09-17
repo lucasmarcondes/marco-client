@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* disable focus but enable custom focusing for focus-within  */
 :focus {
 	outline: none !important;
