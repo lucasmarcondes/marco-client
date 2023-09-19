@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Entries, Login, Register, Templates, Analytics, Profile, NotFound, EmailVerification, PasswordReset, NewPassword } from './containers'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { Header, Footer, ToastMessages } from './components/common'
 
