@@ -1,8 +1,7 @@
-import { Entries, Login, Register, Templates, Analytics, Profile, NotFound, EmailVerification, PasswordReset, NewPassword } from './containers'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import { Header, Footer, ToastMessages } from './components/common'
-
+import { Footer, Header, ToastMessages } from './components/common'
+import { Analytics, EmailVerification, Entries, Login, NewPassword, NotFound, PasswordReset, Profile, Register, Templates } from './containers'
 import { useGetUserQuery } from './store/api'
 
 export default function App() {
@@ -11,21 +10,21 @@ export default function App() {
 
 	return (
 		<BrowserRouter>
-			<div className={`${darkMode ? 'dark ' : ''}flex flex-col h-screen dark:bg-gray-700 dark:text-light-300`}>
+			<div className={`${darkMode ? 'dark ' : ''}dark:text-light-300 flex h-screen flex-col dark:bg-gray-700`}>
 				<Header />
-				<div className='flex-1 dark:border-gray-800 dark:bg-gray-800 '>
+				<div className="flex-1 dark:border-gray-800 dark:bg-gray-800 ">
 					<Routes>
 						<Route path={'/entries'} element={<Entries />} />
 						<Route path={'/'} element={<Entries />} />
-						<Route path='/login' element={<Login />} />
-						<Route path='/register' element={<Register />} />
-						<Route path='/password-reset/*' element={<PasswordReset />} />
-						<Route path='/new-password/*' element={<NewPassword />} />
-						<Route path='/email-verification/*' element={<EmailVerification />} />
-						<Route path='/templates' element={<Templates />} />
-						<Route path='/analytics' element={<Analytics />} />
-						<Route path='/profile' element={<Profile />} />
-						<Route path='*' element={<NotFound />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/password-reset/*" element={<PasswordReset />} />
+						<Route path="/new-password/*" element={<NewPassword />} />
+						<Route path="/email-verification/*" element={<EmailVerification />} />
+						<Route path="/templates" element={<Templates />} />
+						<Route path="/analytics" element={<Analytics />} />
+						<Route path="/profile" element={<Profile />} />
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 					<ToastMessages />
 				</div>

@@ -1,5 +1,5 @@
-import { MultiSelect, Select } from '../common'
 import { IProperty } from '../../types'
+import { MultiSelect, Select } from '../common'
 import { Entry } from '.'
 
 type IPropertyValue = string | string[] | boolean
@@ -23,18 +23,18 @@ const renderComponent = (property: IProperty, onChange: (val: IProperty) => void
 				<input
 					type={property.type}
 					defaultValue={`${property.value || property.default}`}
-					className='w-full'
-					onInput={e => updateProperty((e.target as HTMLInputElement).value)}
+					className="w-full"
+					onInput={(e) => updateProperty((e.target as HTMLInputElement).value)}
 				/>
 			)
 		case 'checkbox':
 			return (
-				<div className='border rounded-md flex border-gray-300 h-10'>
+				<div className="flex h-10 rounded-md border border-gray-300">
 					<input
-						type='checkbox'
+						type="checkbox"
 						defaultChecked={!!property.value || !!property.default}
-						className='my-auto ml-2'
-						onInput={e => updateProperty((e.target as HTMLInputElement).checked)}
+						className="my-auto ml-2"
+						onInput={(e) => updateProperty((e.target as HTMLInputElement).checked)}
 					/>
 				</div>
 			)
@@ -46,7 +46,7 @@ const renderComponent = (property: IProperty, onChange: (val: IProperty) => void
 
 export const Property = ({ property, onChange }: IPropertyProps) => (
 	<label>
-		<span className='text-sm'>{property.description}</span>
+		<span className="text-sm">{property.description}</span>
 		{renderComponent(property, onChange)}
 	</label>
 )

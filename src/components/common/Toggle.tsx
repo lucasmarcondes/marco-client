@@ -7,18 +7,14 @@ export interface IToggleProps {
 }
 export const Toggle = ({ value, onChange, label, id, name }: IToggleProps) => {
 	return (
-		<div className='flex items-center'>
-			<label htmlFor={id} className='cursor-pointer relative '>
-				<input type='checkbox' name={name} checked={value} onChange={e => onChange(e.target.checked)} id={id} className='sr-only' />
-				<div className='rounded-full bg-gray-300 h-7.5 shadow-inner w-14'></div>
-				{value && (
-					<div className='bg-black rounded-full border-0 h-6 shadow top-0.75 left-7.25 animate-fadeIn w-6 animate-delay-1s absolute b-black'></div>
-				)}
-				{!value && (
-					<div className='bg-white rounded-full border-0 h-6 shadow top-0.75 left-0.75 animate-fadeIn w-6 animate-delay-1s absolute b-black'></div>
-				)}
+		<div className="flex items-center">
+			<label htmlFor={id} className="relative cursor-pointer ">
+				<input type="checkbox" name={name} checked={value} onChange={(e) => onChange(e.target.checked)} id={id} className="sr-only" />
+				<div className="h-8 w-14 rounded-full bg-gray-300 shadow-inner"></div>
+				{value && <div className="absolute left-7 top-1 h-6 w-6 rounded-full bg-black shadow"></div>}
+				{!value && <div className="absolute left-1 top-1 h-6 w-6 rounded-full border-0 bg-white shadow"></div>}
 			</label>
-			<span className='font-medium ml-3 text-gray-700'>{label}</span>
+			<span className="ml-3 font-medium text-gray-700">{label}</span>
 		</div>
 	)
 }

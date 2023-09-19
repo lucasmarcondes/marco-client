@@ -1,11 +1,12 @@
-import { Modal } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { useCreateEntryMutation, useGetTemplatesQuery, useRemoveEntryMutation, useUpdateEntryMutation } from '../../store/api'
 import { pushToastMessage, setCurrentEntry, setModalType, updateCurrentEntry } from '../../store/root'
-import { EntryContainer } from '.'
-import { useGetTemplatesQuery, useCreateEntryMutation, useUpdateEntryMutation, useRemoveEntryMutation } from '../../store/api'
-import { IModalContent } from '../common/Modal'
 import { RootState } from '../../store/store'
 import { IEntry } from '../../types'
+import { Modal } from '../common'
+import { IModalContent } from '../common/Modal'
+import { EntryContainer } from './'
 
 export const EntryModal = () => {
 	const [createEntry] = useCreateEntryMutation()
@@ -27,13 +28,13 @@ export const EntryModal = () => {
 				val &&
 					(await createEntry(val)
 						.unwrap()
-						.then(payload => {
+						.then(() => {
 							dispatch(
 								pushToastMessage({
 									title: 'Success',
 									message: 'Entry created successfully',
 									variant: 'success',
-									dismissable: true,
+									dismissable: true
 								})
 							)
 						})
@@ -44,7 +45,7 @@ export const EntryModal = () => {
 									title: 'Error',
 									message: error.message,
 									variant: 'error',
-									dismissable: true,
+									dismissable: true
 								})
 							)
 						}))
@@ -53,13 +54,13 @@ export const EntryModal = () => {
 				val &&
 					(await updateEntry(val)
 						.unwrap()
-						.then(payload => {
+						.then((payload) => {
 							dispatch(
 								pushToastMessage({
 									title: 'Success',
 									message: payload.message,
 									variant: 'success',
-									dismissable: true,
+									dismissable: true
 								})
 							)
 						})
@@ -70,7 +71,7 @@ export const EntryModal = () => {
 									title: 'Error',
 									message: error.message,
 									variant: 'error',
-									dismissable: true,
+									dismissable: true
 								})
 							)
 						}))
@@ -79,13 +80,13 @@ export const EntryModal = () => {
 				val?._id &&
 					(await removeEntry(val._id)
 						.unwrap()
-						.then(payload => {
+						.then((payload) => {
 							dispatch(
 								pushToastMessage({
 									title: 'Success',
 									message: payload.message,
 									variant: 'success',
-									dismissable: true,
+									dismissable: true
 								})
 							)
 						})
@@ -96,7 +97,7 @@ export const EntryModal = () => {
 									title: 'Error',
 									message: error.message,
 									variant: 'error',
-									dismissable: true,
+									dismissable: true
 								})
 							)
 						}))
@@ -112,10 +113,10 @@ export const EntryModal = () => {
 		modalContent = {
 			title: (
 				<input
-					onKeyUp={e => dispatch(updateCurrentEntry({ title: (e.target as HTMLInputElement).value }))}
+					onKeyUp={(e) => dispatch(updateCurrentEntry({ title: (e.target as HTMLInputElement).value }))}
 					defaultValue={entry.title}
-					className='bg-transparent rounded-md w-full p-1 pl-0 text-3xl md:text-4xl'
-					placeholder='Title'
+					className="w-full rounded-md bg-transparent p-1 pl-0 text-3xl md:text-4xl"
+					placeholder="Title"
 				/>
 			),
 			content: <EntryContainer entry={entry} />,
@@ -123,24 +124,24 @@ export const EntryModal = () => {
 			actions: (
 				<>
 					{type != 'create' && (
-						<button className='w-full danger md:w-1/12' onClick={() => closeModal('delete', entry)}>
+						<button className="danger w-full md:w-1/12" onClick={() => closeModal('delete', entry)}>
 							Delete
 						</button>
 					)}
-					<button className='w-full  secondary md:w-1/12' onClick={() => closeModal('cancel')}>
+					<button className="secondary  w-full md:w-1/12" onClick={() => closeModal('cancel')}>
 						Cancel
 					</button>
 					{type === 'create' ? (
-						<button className='w-full  primary md:w-1/12' onClick={() => closeModal('create', entry)}>
+						<button className="primary  w-full md:w-1/12" onClick={() => closeModal('create', entry)}>
 							Create
 						</button>
 					) : (
-						<button className='w-full primary md:w-1/12' onClick={() => closeModal('update', entry)}>
+						<button className="primary w-full md:w-1/12" onClick={() => closeModal('update', entry)}>
 							Save
 						</button>
 					)}
 				</>
-			),
+			)
 		}
 	} else {
 		if (templates?.length === 1) {
@@ -150,7 +151,7 @@ export const EntryModal = () => {
 			modalContent = {
 				title: 'Select a Template',
 				content: (
-					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80 dark:bg-gray-800 dark:border-0 dark:text-light-300'>
+					<ul className="w-80 divide-y rounded-lg border bg-white text-lg shadow-sm dark:border-0 dark:bg-gray-800 dark:text-gray-300">
 						{templates?.map((template, index) => (
 							<button
 								onClick={() => {
@@ -158,14 +159,14 @@ export const EntryModal = () => {
 									dispatch(setCurrentEntry({ templateId, properties }))
 									modalContent = null
 								}}
-								className=' border-gray-300 w-full py-2 text-gray-700 block hover:bg-gray-100'
+								className=" block w-full border-gray-300 py-2 text-gray-700 hover:bg-gray-100"
 								key={index}
 							>
 								{template.description}
 							</button>
 						))}
 					</ul>
-				),
+				)
 			}
 		}
 	}

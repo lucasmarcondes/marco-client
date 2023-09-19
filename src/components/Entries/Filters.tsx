@@ -1,12 +1,12 @@
-import { Tag } from '../common'
 import { useGetTemplatesQuery } from '../../store/api'
 import { ILooseObject } from '../../types'
+import { Tag } from '../common'
 
 const properties = [
 	{ title: 'Checkbox', type: 'checkbox' },
 	{ title: 'Text', type: 'text' },
 	{ title: 'Select', type: 'select' },
-	{ title: 'Number	', type: 'number' },
+	{ title: 'Number	', type: 'number' }
 ]
 
 type FiltersProp = {
@@ -22,8 +22,8 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 		switch (e.target.name) {
 			case 'properties':
 			case 'templates':
-				let filterList = [...filters[e.target.name]]
-				let index = filterList.indexOf(e.target.id)
+				const filterList = [...filters[e.target.name]]
+				const index = filterList.indexOf(e.target.id)
 				if (index > -1) filterList.splice(index, 1)
 				else filterList.push(e.target.id)
 				onChange({ ...filters, [e.target.name]: filterList })
@@ -40,81 +40,81 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 
 	return (
 		<form onChange={handleFilterChange}>
-			<div className='top-4 sticky'>
-				<h2 className='font-semibold text-lg mb-1'>Sort by</h2>
-				<fieldset id='chronoSort' className='flex flex-col mb-4'>
+			<div className="sticky top-4">
+				<h2 className="mb-1 text-lg font-semibold">Sort by</h2>
+				<fieldset id="chronoSort" className="mb-4 flex flex-col">
 					<div>
 						<label>
 							<input
-								id='newFirst'
-								type='radio'
-								name='chronoSort'
-								value='newest'
-								className='align-text-bottom dark:text-black dark:border-black selected:dark:bg-gray-300 selected:dark:text-black border-black'
+								id="newFirst"
+								type="radio"
+								name="chronoSort"
+								value="newest"
+								className="selected:dark:bg-gray-300 selected:dark:text-black border-black align-text-bottom dark:border-black dark:text-black"
 								defaultChecked
 							/>
-							<span className='pl-2'>Newest First</span>
+							<span className="pl-2">Newest First</span>
 						</label>
 					</div>
 					<div>
 						<label>
 							<input
-								id='oldFirst'
-								type='radio'
-								name='chronoSort'
-								value='oldest'
-								className='align-text-bottom dark:text-black dark:border-black selected:dark:bg-gray-300 selected:dark:text-black border-black'
+								id="oldFirst"
+								type="radio"
+								name="chronoSort"
+								value="oldest"
+								className="selected:dark:bg-gray-300 selected:dark:text-black border-black align-text-bottom dark:border-black dark:text-black"
 							/>
-							<span className='pl-2'>Oldest First</span>
+							<span className="pl-2">Oldest First</span>
 						</label>
 					</div>
 				</fieldset>
-				<h2 className='font-semibold text-lg mb-1'>Templates</h2>
-				<div className='flex flex-col mb-4'>
+				<h2 className="mb-1 text-lg font-semibold">Templates</h2>
+				<div className="mb-4 flex flex-col">
 					{!isLoading &&
 						templates &&
 						templates.map((val, index) => {
 							return (
 								<label key={index}>
 									<input
-										name='templates'
-										type='checkbox'
+										name="templates"
+										type="checkbox"
 										id={val._id}
-										className='dalign-text-bottom dark:text-black dark:border-black selected:dark:bg-gray-300 selected:dark:text-black border-black'
+										className="selected:dark:bg-gray-300 selected:dark:text-black border-black align-text-bottom dark:border-black dark:text-black"
 									/>
-									<span className='pl-2'>{val.description}</span>
+									<span className="pl-2">{val.description}</span>
 								</label>
 							)
 						})}
 				</div>
-				<h2 className='font-semibold text-lg mb-1'>Properties</h2>
-				<div className='flex flex-wrap mb-4'>
-					{properties.map(prop => {
-						let type = filters.properties.includes(prop.type) ? 'checked' : prop.type
+				<h2 className="mb-1 text-lg font-semibold">Properties</h2>
+				<div className="mb-4 flex flex-wrap">
+					{properties.map((prop) => {
+						const type = filters.properties.includes(prop.type) ? 'checked' : prop.type
 						return (
 							<span key={prop.type}>
-								<input type='checkbox' name='properties' id={prop.type} className='hidden' onClick={handleFilterChange} />
+								<input type="checkbox" name="properties" id={prop.type} className="hidden" onClick={handleFilterChange} />
 								<label htmlFor={prop.type}>
 									<Tag
 										type={type}
 										label={prop.title}
-										className='border-1 m-1 dark:border-dark-500 hover:cursor-pointer hover:bg-light-200 hover:border-dark-500'
+										className="m-1 border hover:cursor-pointer hover:border-gray-500 hover:bg-gray-200 dark:border-gray-500"
 									/>
 								</label>
 							</span>
 						)
 					})}
 				</div>
-				<h2 className='font-semibold text-lg mb-1'>Dates</h2>
-				<div className='flex flex-col'>
-					<label className='flex flex-col'>
+				<h2 className="mb-1 text-lg font-semibold">Dates</h2>
+				<div className="flex flex-col">
+					<label className="flex flex-col">
 						<span>Begin</span>
-						<input name='startDate' type='date' className='mb-2 dark:text-black dark:bg-gray-300 dark:border-gray-800' />
+						<input name="startDate" type="date" className="mb-2 dark:border-gray-800 dark:bg-gray-300 dark:text-black" />
 					</label>
 
-					<label className='flex flex-col'>
+					<label className="flex flex-col">
 						<span>End</span>
-						<input name='endDate' type='date' className='dark:text-black dark:bg-gray-300 dark:border-gray-800' />
+						<input name="endDate" type="date" className="dark:border-gray-800 dark:bg-gray-300 dark:text-black" />
 					</label>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
-import { updateCurrentTemplate } from '../../store/root'
 import { useDispatch } from 'react-redux'
+
+import { updateCurrentTemplate } from '../../store/root'
 import { ITemplate } from '../../types'
 
 export interface ITemplateListProps {
@@ -12,20 +13,20 @@ export const TemplateList = ({ templates, currentTemplate }: ITemplateListProps)
 
 	return (
 		<>
-			{templates?.map(template => (
+			{templates?.map((template) => (
 				<button
 					key={template._id}
 					onClick={() => dispatch(updateCurrentTemplate(template))}
 					className={`${
 						template._id === currentTemplate?._id ? 'bg-gray-800 text-white' : 'hover:bg-gray-200'
-					} my-1 rounded-l-md text-left w-full py-2 px-3 transition ease-in block`}
+					} my-1 block w-full rounded-l-md px-3 py-2 text-left transition ease-in`}
 				>
 					{template.description}
 				</button>
 			))}
 			<button
 				onClick={() => dispatch(updateCurrentTemplate(template))}
-				className='rounded-l-md my-1 text-left w-full py-2 px-3 transition ease-in text-blue-500 block hover:bg-gray-200'
+				className="my-1 block w-full rounded-l-md px-3 py-2 text-left text-blue-500 transition ease-in hover:bg-gray-200"
 			>
 				Add a New Template
 			</button>

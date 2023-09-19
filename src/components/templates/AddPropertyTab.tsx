@@ -1,8 +1,9 @@
-import { BsType, BsCheck, BsHash, BsMenuButtonWide } from 'react-icons/bs'
 import { IconType } from 'react-icons'
-import { ITemplate, IProperty, PropertyType } from '../../types'
+import { BsCheck, BsHash, BsMenuButtonWide, BsType } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
+
 import { updateCurrentTemplate } from '../../store/root'
+import { IProperty, ITemplate, PropertyType } from '../../types'
 
 export interface IAddPropertyTabProps {
 	template: ITemplate
@@ -27,7 +28,7 @@ export const AddPropertyTab = ({ template }: IAddPropertyTabProps) => {
 		{ type: 'text', description: 'single line of text', icon: BsType },
 		{ type: 'checkbox', description: 'true or false input', icon: BsCheck },
 		{ type: 'number', description: 'number-based input', icon: BsHash },
-		{ type: 'select', description: 'dropdown for single or multiple items', icon: BsMenuButtonWide },
+		{ type: 'select', description: 'dropdown for single or multiple items', icon: BsMenuButtonWide }
 	]
 	return (
 		<>
@@ -35,11 +36,11 @@ export const AddPropertyTab = ({ template }: IAddPropertyTabProps) => {
 				<button
 					onClick={() => addProperty(btn.type)}
 					key={index}
-					className='rounded-md flex my-1 w-full py-2 transition ease-in group hover:bg-gray-200'
+					className="group my-1 flex w-full rounded-md py-2 transition ease-in hover:bg-gray-200"
 				>
-					<btn.icon className='rounded-md my-auto bg-gray-100 h-9 mx-3 p-2 transition ease-in w-9 group-hover:bg-white' />
-					<div className='text-left pr-1'>
-						<div className='font-bold text-medium'>{btn.type.charAt(0).toUpperCase() + btn.type.slice(1)}</div>
+					<btn.icon className="mx-3 my-auto h-9 w-9 rounded-md bg-gray-100 p-2 transition ease-in group-hover:bg-white" />
+					<div className="pr-1 text-left">
+						<div className="text-lg font-bold">{btn.type.charAt(0).toUpperCase() + btn.type.slice(1)}</div>
 						<span>{btn.description}</span>
 					</div>
 				</button>

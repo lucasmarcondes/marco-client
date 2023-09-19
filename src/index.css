@@ -5,7 +5,7 @@
 /* disable focus but enable custom focusing for focus-within  */
 :focus {
 	outline: none !important;
-	@apply transition ease-in z-50 duration-75 focus-visible:ring;
+	@apply z-50 transition duration-75 ease-in focus-visible:ring;
 }
 
 /* remove all types of focus for inputs that do not have a type */
@@ -19,26 +19,26 @@ input[type='email'],
 input[type='number'],
 input[type='password'],
 input[type='search'] {
-	@apply border rounded-md border-gray-300 h-10 focus:border-blue-200 focus:ring-offset-0 focus:ring-2 focus:ring-opacity-50 focus:ring-blue-500;
+	@apply h-10 rounded-md border border-gray-300 focus:border-blue-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-0;
 }
 
 input[type='checkbox'] {
-	@apply border rounded-sm border-gray-300 h-[1.15rem] w-[1.15rem] focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500;
+	@apply h-[1.15rem] w-[1.15rem] rounded-sm border border-gray-300 focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-0;
 }
 
 input[type='radio'] {
-	@apply border border-gray-300 focus:ring-offset-0 focus:ring-4 focus:ring-opacity-50 focus:ring-blue-500;
+	@apply border border-gray-300 focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-0;
 }
 
 /* buttons */
 button.danger {
-	@apply border border-transparent rounded-md font-medium bg-red-600 shadow-sm text-base text-white py-2 px-4 inline-flex justify-center sm:text-sm hover:bg-red-700;
+	@apply inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 sm:text-sm;
 }
 button.primary {
-	@apply border border-transparent rounded-md font-medium bg-blue-500 shadow-sm text-base text-white py-2 px-4 inline-flex justify-center sm:text-sm hover:bg-blue-600;
+	@apply inline-flex justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600 sm:text-sm;
 }
 button.secondary {
-	@apply bg-white border rounded-md font-medium border-gray-300 shadow-sm text-base py-2 px-4 text-gray-700 inline-flex justify-center sm:text-sm hover:bg-gray-50;
+	@apply inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 sm:text-sm;
 }
 
 .dark button.secondary {

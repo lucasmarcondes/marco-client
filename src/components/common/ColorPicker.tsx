@@ -9,7 +9,7 @@ export interface IColorPickerProps {
 }
 const colors = ['red', 'green', 'blue', 'warm-gray']
 const variants = [500]
-export const ColorPicker = ({ value, onChange, title, id }: IColorPickerProps) => {
+export const ColorPicker = ({ value, onChange, title }: IColorPickerProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [textColor, setTextColor] = useState('text-white')
 	const setValue = (color: string, variant: number) => {
@@ -18,7 +18,7 @@ export const ColorPicker = ({ value, onChange, title, id }: IColorPickerProps) =
 
 	useEffect(() => {
 		if (value) {
-			let variant = value.split('-').pop()
+			const variant = value.split('-').pop()
 			if (variant && parseInt(variant) > 400) {
 				setTextColor('text-white')
 			} else {
@@ -28,7 +28,7 @@ export const ColorPicker = ({ value, onChange, title, id }: IColorPickerProps) =
 	}, [value])
 
 	return (
-		<div className='flex relative' title={title}>
+		<div className="relative flex" title={title}>
 			{/* <input
 				type='color'
 				id={id}
@@ -38,20 +38,20 @@ export const ColorPicker = ({ value, onChange, title, id }: IColorPickerProps) =
 				style={{ background: value, textColor: value }}
 			/>
 			<label htmlFor={id} className='rounded-full cursor-pointer flex my-auto border-2 h-6 w-6' style={style}></label> */}
-			<div onClick={() => setIsOpen(!isOpen)} className={'rounded-full cursor-pointer flex my-auto border-1 h-8 w-8 bg-' + value}>
+			<div onClick={() => setIsOpen(!isOpen)} className={'border-1 bg- my-auto flex h-8 w-8 cursor-pointer rounded-full' + value}>
 				<BsEyedropper className={'m-auto h-4 w-4 ' + textColor} />
 			</div>
 			{isOpen && (
-				<div className='border rounded-md border-gray-300 top-full shadow-lg mt-2 origin-top-right right-50 absolute'>
-					<div className='bg-white rounded-md shadow-xs p-2'>
-						<div className='flex'>
-							{colors.map(color => (
-								<div key={color} className=''>
-									{variants.map(variant => (
+				<div className="absolute top-full mt-2 origin-top-right rounded-md border border-gray-300 shadow-lg">
+					<div className="rounded-md bg-white p-2 shadow-sm">
+						<div className="flex">
+							{colors.map((color) => (
+								<div key={color} className="">
+									{variants.map((variant) => (
 										<div
 											key={color + '-' + variant}
 											onClick={() => setValue(color, variant)}
-											className={'rounded-full cursor-pointer h-6 my-1 mx-1 w-6 bg-' + color + '-' + variant}
+											className={'bg- mx-1 my-1 h-6 w-6 cursor-pointer rounded-full' + color + '-' + variant}
 										></div>
 									))}
 								</div>

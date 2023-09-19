@@ -36,6 +36,6 @@
     "tailwindcss/no-custom-classname": "warn",
     "tailwindcss/no-contradicting-classname": "error",
     "simple-import-sort/imports": "warn",
-    "simple-import-sort/ixports": "warn"
+    "simple-import-sort/exports": "warn"
   }
 }

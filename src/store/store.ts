@@ -7,9 +7,9 @@ import { root } from './root'
 export const store = configureStore({
 	reducer: {
 		[api.reducerPath]: api.reducer,
-		root: root.reducer,
+		root: root.reducer
 	},
-	middleware: getDefaultMiddleware => [...getDefaultMiddleware(), api.middleware],
+	middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), api.middleware]
 })
 
 setupListeners(store.dispatch)

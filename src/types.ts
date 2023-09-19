@@ -61,7 +61,7 @@ export interface IEntry {
 
 export interface ITemplate {
 	_id?: string
-	description?: String
+	description?: string
 	properties?: IProperty[]
 	createdDate?: Date
 	createdById?: string

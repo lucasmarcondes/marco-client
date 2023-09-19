@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IUser, ITemplate, IEntry, AppResponse, INotification } from '../types'
+
+import { AppResponse, IEntry, ITemplate, IUser } from '../types'
 
 export interface ILoginRequest {
 	email: string
@@ -27,145 +28,145 @@ export const api = createApi({
 	reducerPath: 'api',
 	baseQuery: fetchBaseQuery({
 		baseUrl: 'http://localhost:3030/api/',
-		credentials: 'include',
+		credentials: 'include'
 	}),
 	tagTypes: ['User', 'Entry', 'Template', 'Notification'],
-	endpoints: builder => ({
+	endpoints: (builder) => ({
 		getUser: builder.query<IUser, void>({
 			query: () => ({
 				url: 'user',
-				method: 'GET',
+				method: 'GET'
 			}),
 			providesTags: ['User'],
 			transformResponse: (response: AppResponse) => {
 				return response.data
-			},
+			}
 		}),
 		updateUser: builder.mutation<AppResponse, IUser>({
-			query: credentials => ({
+			query: (credentials) => ({
 				url: 'user',
 				method: 'PUT',
-				body: credentials,
+				body: credentials
 			}),
-			invalidatesTags: ['User'],
+			invalidatesTags: ['User']
 		}),
 		register: builder.mutation<AppResponse, IRegisterRequest>({
-			query: credentials => ({
+			query: (credentials) => ({
 				url: 'user',
 				method: 'POST',
-				body: credentials,
+				body: credentials
 			}),
-			invalidatesTags: ['User'],
+			invalidatesTags: ['User']
 		}),
 		sendConfirmationEmail: builder.mutation<AppResponse, IConfirmationEmailRequest>({
-			query: req => ({
+			query: (req) => ({
 				url: 'user/sendConfirmationEmail',
 				method: 'PUT',
-				body: req,
-			}),
+				body: req
+			})
 		}),
 		verifyEmail: builder.mutation<AppResponse, string>({
-			query: token => ({
+			query: (token) => ({
 				url: `verify/${token}`,
-				method: 'PUT',
+				method: 'PUT'
 			}),
 			// transformResponse: (response: AppResponse) => {
 			// 	return response.data
 			// },
-			invalidatesTags: ['User'],
+			invalidatesTags: ['User']
 		}),
 		resetPassword: builder.mutation<AppResponse, IResetPasswordRequest>({
-			query: req => ({
+			query: (req) => ({
 				url: 'user/resetPassword',
 				method: 'PUT',
-				body: req,
+				body: req
 			}),
-			invalidatesTags: ['User'],
+			invalidatesTags: ['User']
 		}),
 		login: builder.mutation<AppResponse, ILoginRequest>({
-			query: credentials => ({
+			query: (credentials) => ({
 				url: 'user/login',
 				method: 'POST',
-				body: credentials,
+				body: credentials
 			}),
-			invalidatesTags: ['User'],
+			invalidatesTags: ['User']
 		}),
 		logout: builder.mutation<AppResponse, void>({
 			query: () => ({
 				url: 'user/logout',
-				method: 'POST',
+				method: 'POST'
 			}),
-			invalidatesTags: ['User'],
+			invalidatesTags: ['User']
 		}),
 		getEntries: builder.query<IEntry[], void>({
 			query: () => ({
 				url: 'entry',
-				method: 'GET',
+				method: 'GET'
 			}),
 			providesTags: ['Entry'],
 			transformResponse: (response: AppResponse) => {
 				return response.data
-			},
+			}
 		}),
 		createEntry: builder.mutation<IEntry, IEntry>({
-			query: entry => ({
+			query: (entry) => ({
 				url: 'entry',
 				method: 'POST',
-				body: entry,
+				body: entry
 			}),
-			invalidatesTags: ['Entry'],
+			invalidatesTags: ['Entry']
 		}),
 
 		updateEntry: builder.mutation<AppResponse, IEntry>({
-			query: entry => ({
+			query: (entry) => ({
 				url: `entry/${entry._id}`,
 				method: 'PUT',
-				body: entry,
+				body: entry
 			}),
-			invalidatesTags: ['Entry'],
+			invalidatesTags: ['Entry']
 		}),
 		removeEntry: builder.mutation<AppResponse, string>({
-			query: id => ({
+			query: (id) => ({
 				url: `entry/${id}`,
-				method: 'DELETE',
+				method: 'DELETE'
 			}),
-			invalidatesTags: ['Entry'],
+			invalidatesTags: ['Entry']
 		}),
 		getTemplates: builder.query<ITemplate[], void>({
 			query: () => ({
 				url: 'template',
-				method: 'GET',
+				method: 'GET'
 			}),
 			providesTags: ['Template'],
 			transformResponse: (response: AppResponse) => {
 				return response.data
-			},
+			}
 		}),
 		createTemplate: builder.mutation<ITemplate, Omit<ITemplate, '_id'>>({
-			query: template => ({
+			query: (template) => ({
 				url: 'template',
 				method: 'POST',
-				body: template,
+				body: template
 			}),
-			invalidatesTags: ['Template'],
+			invalidatesTags: ['Template']
 		}),
 
 		updateTemplate: builder.mutation<AppResponse, ITemplate>({
-			query: template => ({
+			query: (template) => ({
 				url: `template/${template._id}`,
 				method: 'PUT',
-				body: template,
+				body: template
 			}),
-			invalidatesTags: ['Template'],
+			invalidatesTags: ['Template']
 		}),
 		removeTemplate: builder.mutation<AppResponse, string>({
-			query: id => ({
+			query: (id) => ({
 				url: `template/${id}`,
-				method: 'DELETE',
+				method: 'DELETE'
 			}),
-			invalidatesTags: ['Template'],
-		}),
-	}),
+			invalidatesTags: ['Template']
+		})
+	})
 })
 
 export const {
@@ -186,5 +187,5 @@ export const {
 	useGetTemplatesQuery,
 	useCreateTemplateMutation,
 	useUpdateTemplateMutation,
-	useRemoveTemplateMutation,
+	useRemoveTemplateMutation
 } = api

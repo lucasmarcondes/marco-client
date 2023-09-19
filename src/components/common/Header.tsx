@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { BsList, BsMoonFill, BsSunFill, BsX } from 'react-icons/bs'
 import { NavLink, useLocation } from 'react-router-dom'
-import { BsList, BsX, BsSunFill, BsMoonFill, BsBell } from 'react-icons/bs'
-import { useLogoutMutation, useGetUserQuery, useUpdateUserMutation } from '../../store/api'
 import { useNavigate } from 'react-router-dom'
+
+import { useGetUserQuery, useLogoutMutation, useUpdateUserMutation } from '../../store/api'
 import { Notifications } from './Notifications'
 
 const links = ['Entries', 'Templates', 'Analytics']
@@ -26,20 +27,20 @@ export const Header = () => {
 	// if (!user) return null
 
 	return (
-		<div className='border py-2 px-4 md:px-8 dark:bg-gray-800 dark:border-0 dark:text-light-300'>
-			<div className='flex h-12 relative items-center justify-between'>
-				<button onClick={toggleMobileNav} className='rounded-md my-auto p-1 md:hidden dark:hover:bg-gray-300 hover:bg-gray-200 hover:text-dark-200'>
-					{showMobileNav ? <BsX className='h-6 w-6 block' /> : <BsList className='h-6 w-6 block' />}
+		<div className="border px-4 py-2 dark:border-0 dark:bg-gray-800 dark:text-gray-300 md:px-8">
+			<div className="relative flex h-12 items-center justify-between">
+				<button onClick={toggleMobileNav} className="my-auto rounded-md p-1 hover:bg-gray-200 hover:text-black dark:hover:bg-gray-300 md:hidden">
+					{showMobileNav ? <BsX className="block h-6 w-6" /> : <BsList className="block h-6 w-6" />}
 				</button>
-				<div className='flex space-x-4'>
-					<span className='flex font-bold flex-shrink-0 text-2xl items-center md:text-xl'>marco</span>
-					<nav className='space-x-4 hidden md:flex'>
-						{links.map(page => (
+				<div className="flex space-x-4">
+					<span className="flex shrink-0 items-center text-2xl font-bold md:text-xl">marco</span>
+					<nav className="hidden space-x-4 md:flex">
+						{links.map((page) => (
 							<NavLink
 								to={`/${page.toLowerCase()}`}
 								key={page}
 								className={({ isActive }) =>
-									`${isActive ? 'font-bold ' : ''}rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline dark:text-light-300`
+									`${isActive ? 'font-bold ' : ''}rounded-md font-large dark:text-light-300 px-3 py-2 text-sm text-gray-900 no-underline`
 								}
 							>
 								{page}
@@ -47,9 +48,9 @@ export const Header = () => {
 						))}
 					</nav>
 				</div>
-				<span className='flex space-x-4'>
-					<button onClick={toggleDarkMode} className='rounded-md my-auto p-2 text-light-700 '>
-						{darkMode ? <BsSunFill className='h-5 w-5 block ' /> : <BsMoonFill className='h-5 text-dark-200 w-5 block' />}
+				<span className="flex space-x-4">
+					<button onClick={toggleDarkMode} className="my-auto rounded-md p-2 text-gray-700 ">
+						{darkMode ? <BsSunFill className="block h-5 w-5 " /> : <BsMoonFill className="block h-5 w-5 text-black" />}
 					</button>
 					<Notifications />
 					<ProfileButton />
@@ -76,7 +77,7 @@ const ProfileButton = () => {
 		}
 		document.addEventListener('mousedown', isOutsideClick)
 		if (userColor) {
-			let variant = userColor.split('-').pop()
+			const variant = userColor.split('-').pop()
 			if (variant && parseInt(variant) > 400) {
 				setTextColor('text-white')
 			} else {
@@ -100,21 +101,21 @@ const ProfileButton = () => {
 	}
 	return (
 		<div ref={menuRef}>
-			<button onClick={() => setShowMenu(!showMenu)} className={'rounded-full text-lg p-2 bg-' + userColor + ' ' + textColor}>
+			<button onClick={() => setShowMenu(!showMenu)} className={'bg- rounded-full p-2 text-lg' + userColor + ' ' + textColor}>
 				{user && (user.firstName[0] + user.lastName[0]).toUpperCase()}
 			</button>
 			{showMenu && (
-				<menu className='bg-white rounded-sm border-1 shadow-md mt-1 pl-0 right-0 animate-fadeIn animate-animated w-48 z-50 absolute dark:bg-gray-800 dark:text-light-300 dark:border-gray-900'>
+				<menu className="absolute right-0 z-50 mt-1 w-48 rounded-sm border bg-white pl-0 shadow-md dark:border-gray-900 dark:bg-gray-800 dark:text-gray-300">
 					<NavLink
-						to='/profile'
+						to="/profile"
 						onClick={() => setShowMenu(false)}
-						className='text-sm py-3 px-4 text-gray-900 block no-underline dark:hover:bg-gray-600 dark:bg-gray-800 dark:border-0 dark:text-light-300 hover:bg-gray-100 '
+						className="block px-4 py-3 text-sm text-gray-900 no-underline hover:bg-gray-100 dark:border-0 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-600 "
 					>
 						Profile
 					</NavLink>
 					<button
 						onClick={() => signout()}
-						className='text-sm text-left w-full py-3 px-4 text-gray-900 block no-underline dark:hover:bg-gray-600 dark:bg-gray-800 dark:border-0 dark:ext-light-300 hover:bg-gray-100'
+						className="block w-full px-4 py-3 text-left text-sm text-gray-900 no-underline hover:bg-gray-100 dark:border-0 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-600"
 					>
 						Logout
 					</button>
@@ -129,14 +130,16 @@ type MobileMenuProps = {
 }
 
 const MobileMenu = ({ toggleNav }: MobileMenuProps) => (
-	<nav className='space-y-1 pb-3 '>
-		{links.map(page => (
+	<nav className="space-y-1 pb-3 ">
+		{links.map((page) => (
 			<NavLink
 				to={`/${page.toLowerCase()}`}
 				onClick={toggleNav}
 				key={page}
 				className={({ isActive }) =>
-					`${isActive ? 'font-bold ' : ''}rounded-md flex m-1 p-1 text-gray-900 self-center no-underline dark:bg-gray-800 dark:border-0 dark:text-light-300)`
+					`${
+						isActive ? 'font-bold ' : ''
+					}rounded-md dark:text-light-300) m-1 flex self-center p-1 text-gray-900 no-underline dark:border-0 dark:bg-gray-800`
 				}
 			>
 				{page}
