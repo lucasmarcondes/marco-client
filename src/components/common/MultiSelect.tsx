@@ -79,7 +79,7 @@ export const MultiSelect = ({ defaultValue, options, onSelect }: IMultiSelectPro
 								{...getSelectedItemProps({ selectedItem, index })}
 							>
 								<BsX
-									className='cursor-pointer h-5 mt-0.75 transition w-5 hover:(cursor-pointer text-gray-600 duration-150) '
+									className='cursor-pointer h-5 mt-0.75 transition w-5 hover:cursor-pointer hover:text-gray-600 hover:duration-150'
 									type='button'
 									onClick={e => {
 										e.stopPropagation()

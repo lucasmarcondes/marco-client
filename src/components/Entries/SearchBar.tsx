@@ -20,7 +20,7 @@ export const SearchBar = ({ className, onSearch }: SearchBarProps) => {
 				type='search'
 				id='search'
 				placeholder='Search...'
-				className='w-full pl-9 dark:(bg-gray-300 text-black) '
+				className='w-full pl-9 dark:bg-gray-300 dark:text-black'
 				onChange={handleSearchKeyChange}
 			/>
 		</label>

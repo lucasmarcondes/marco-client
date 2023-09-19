@@ -9,7 +9,7 @@ interface IEntryProps {
 export const Entry = ({ entry, searchedText, onClick }: IEntryProps) => {
 	return (
 		<div className='mx-auto md:px-6' onClick={() => onClick('view', entry)}>
-			<div className='bg-white rounded-md border-1 border-gray-300 my-8 py-4 px-8 dark:(bg-gray-800 border-0 text-light-300) '>
+			<div className='bg-white rounded-md border-1 border-gray-300 my-8 py-4 px-8 dark:bg-gray-800 dark:border-0 dark:text-light-300'>
 				{entry && (
 					<>
 						<div>
@@ -32,12 +32,12 @@ export const Entry = ({ entry, searchedText, onClick }: IEntryProps) => {
 					<div className='bg-gradient-to-tr m-1 animate-pulse'>
 						<div>
 							<div className='flex'>
-								<h2 className=' font-semibold bg-gray-200 h-30px mb-2 text-gray-800 text-3xl w-6/12 dark:(bg-gray-500) '></h2>
+								<h2 className=' font-semibold bg-gray-200 h-30px mb-2 text-gray-800 text-3xl w-6/12 dark:bg-gray-500'></h2>
 								<div className='ml-auto  bg-blue-200 h-20px text-sm opacity-50 text-gray-500 w-1/12'></div>
 							</div>
-							<p className='bg-gray-200 h-20px mt-2 text-gray-300 dark:(bg-gray-700)'></p>
-							<p className='bg-gray-200 h-20px mt-2 text-gray-300 dark:(bg-gray-700)'></p>
-							<p className='bg-gray-200 h-20px mt-2 text-gray-300 dark:(bg-gray-700)'></p>
+							<p className='bg-gray-200 h-20px mt-2 text-gray-300 dark:bg-gray-700'></p>
+							<p className='bg-gray-200 h-20px mt-2 text-gray-300 dark:bg-gray-700'></p>
+							<p className='bg-gray-200 h-20px mt-2 text-gray-300 dark:bg-gray-700'></p>
 						</div>
 					</div>
 				)}

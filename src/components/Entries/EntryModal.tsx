@@ -150,7 +150,7 @@ export const EntryModal = () => {
 			modalContent = {
 				title: 'Select a Template',
 				content: (
-					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80 dark:( bg-gray-800 border-0 text-light-300) '>
+					<ul className='divide-y bg-white border rounded-lg shadow-sm text-lg w-80 dark:bg-gray-800 dark:border-0 dark:text-light-300'>
 						{templates?.map((template, index) => (
 							<button
 								onClick={() => {

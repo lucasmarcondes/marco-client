@@ -36,7 +36,7 @@ const getStyles = (type?: string) => {
 			break
 		}
 		case 'checked': {
-			obj.style = 'border-1 border-dark-100 dark:(bg-light-800 border-)'
+			obj.style = 'border-1 border-dark-100 dark:bg-light-800 border-'
 			obj.icon = <BsCheck className='my-auto h-5 w-5' />
 			break
 		}
@@ -49,7 +49,7 @@ const getStyles = (type?: string) => {
 }
 
 export const Tag = ({ label, className, type }: TagProps) => {
-	let css = ['flex rounded-lg p-1 pl-2 pr-3 text-sm dark:( text-dark-300 ) ', className]
+	let css = ['flex rounded-lg p-1 pl-2 pr-3 text-sm dark:text-dark-300', className]
 	css.push(getTagStyle(type))
 	return (
 		<div className={css.join(' ')}>

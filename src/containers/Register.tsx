@@ -73,7 +73,7 @@ export const Register = () => {
 							<p>{errors}</p>
 							{showResetPassword && (
 								<>
-									<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/password-reset')}>
+									<a className='cursor-pointer text-blue-500  hover:underline' onClick={() => navigate('/password-reset')}>
 										Click here
 									</a>{' '}
 									<span>if you would like to reset your password</span>
@@ -83,7 +83,7 @@ export const Register = () => {
 					)}
 					<p>
 						Already have an account?{' '}
-						<a className='cursor-pointer text-blue-500  hover:(underline ) ' onClick={() => navigate('/login')}>
+						<a className='cursor-pointer text-blue-500  hover:underline' onClick={() => navigate('/login')}>
 							Login
 						</a>
 					</p>

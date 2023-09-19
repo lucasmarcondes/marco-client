@@ -58,7 +58,7 @@ export const NewPassword = () => {
 					)}
 					<p>
 						Go back to login page?{' '}
-						<a className='cursor-pointer text-blue-500 hover:(underline ) ' onClick={() => navigate('/login')}>
+						<a className='cursor-pointer text-blue-500 hover:underline' onClick={() => navigate('/login')}>
 							Click here
 						</a>
 					</p>

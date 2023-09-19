@@ -26,9 +26,9 @@ export const Header = () => {
 	// if (!user) return null
 
 	return (
-		<div className='border py-2 px-4 md:px-8 dark:( bg-gray-800 border-0 text-light-300 ) '>
+		<div className='border py-2 px-4 md:px-8 dark:bg-gray-800 dark:border-0 dark:text-light-300'>
 			<div className='flex h-12 relative items-center justify-between'>
-				<button onClick={toggleMobileNav} className='rounded-md my-auto p-1 md:hidden dark:(hover:bg-gray-300) hover:bg-gray-200 hover:text-dark-200'>
+				<button onClick={toggleMobileNav} className='rounded-md my-auto p-1 md:hidden dark:hover:bg-gray-300 hover:bg-gray-200 hover:text-dark-200'>
 					{showMobileNav ? <BsX className='h-6 w-6 block' /> : <BsList className='h-6 w-6 block' />}
 				</button>
 				<div className='flex space-x-4'>
@@ -39,7 +39,7 @@ export const Header = () => {
 								to={`/${page.toLowerCase()}`}
 								key={page}
 								className={({ isActive }) =>
-									`${isActive ? 'font-bold ' : ''}rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline dark:(text-light-300)`
+									`${isActive ? 'font-bold ' : ''}rounded-md font-large text-sm py-2 px-3 text-gray-900 no-underline dark:text-light-300`
 								}
 							>
 								{page}
@@ -48,7 +48,7 @@ export const Header = () => {
 					</nav>
 				</div>
 				<span className='flex space-x-4'>
-					<button onClick={toggleDarkMode} className='rounded-md my-auto p-1 p-2 text-light-700 '>
+					<button onClick={toggleDarkMode} className='rounded-md my-auto p-2 text-light-700 '>
 						{darkMode ? <BsSunFill className='h-5 w-5 block ' /> : <BsMoonFill className='h-5 text-dark-200 w-5 block' />}
 					</button>
 					<Notifications />
@@ -104,17 +104,17 @@ const ProfileButton = () => {
 				{user && (user.firstName[0] + user.lastName[0]).toUpperCase()}
 			</button>
 			{showMenu && (
-				<menu className='bg-white rounded-sm border-1 shadow-md mt-1 pl-0 right-0 animate-fadeIn animate-animated w-48 z-50 absolute dark:( bg-gray-800 text-light-300 border-gray-900 ) '>
+				<menu className='bg-white rounded-sm border-1 shadow-md mt-1 pl-0 right-0 animate-fadeIn animate-animated w-48 z-50 absolute dark:bg-gray-800 dark:text-light-300 dark:border-gray-900'>
 					<NavLink
 						to='/profile'
 						onClick={() => setShowMenu(false)}
-						className='text-sm py-3 px-4 text-gray-900 block no-underline dark:( hover:bg-gray-600 bg-gray-800 border-0 text-light-300 ) hover:bg-gray-100 '
+						className='text-sm py-3 px-4 text-gray-900 block no-underline dark:hover:bg-gray-600 dark:bg-gray-800 dark:border-0 dark:text-light-300 hover:bg-gray-100 '
 					>
 						Profile
 					</NavLink>
 					<button
 						onClick={() => signout()}
-						className='text-sm text-left w-full py-3 px-4 text-gray-900 block no-underline dark:( hover:bg-gray-600 bg-gray-800 border-0 text-light-300 ) hover:bg-gray-100 '
+						className='text-sm text-left w-full py-3 px-4 text-gray-900 block no-underline dark:hover:bg-gray-600 dark:bg-gray-800 dark:border-0 dark:ext-light-300 hover:bg-gray-100'
 					>
 						Logout
 					</button>
@@ -136,7 +136,7 @@ const MobileMenu = ({ toggleNav }: MobileMenuProps) => (
 				onClick={toggleNav}
 				key={page}
 				className={({ isActive }) =>
-					`${isActive ? 'font-bold ' : ''}rounded-md flex m-1 p-1 text-gray-900 self-center no-underline dark:( bg-gray-800 border-0 text-light-300)`
+					`${isActive ? 'font-bold ' : ''}rounded-md flex m-1 p-1 text-gray-900 self-center no-underline dark:bg-gray-800 dark:border-0 dark:text-light-300)`
 				}
 			>
 				{page}

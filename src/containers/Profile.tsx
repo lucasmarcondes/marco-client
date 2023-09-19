@@ -43,7 +43,7 @@ export const Profile = () => {
 	const userColor = user?.preferences.accentColor
 
 	return (
-		<div className='bg-white h-full dark:(bg-gray-500 text-light-200) '>
+		<div className='bg-white h-full dark:bg-gray-500 dark:text-light-200'>
 			{user && (
 				<div className=' mx-auto p-5'>
 					<div className='rounded-sm no-wrap md:divide-x md:flex md:-mx-2'>
@@ -76,9 +76,9 @@ export const Profile = () => {
 								</div>
 								<div>{editMode ? <EditMode user={user} toggleEditMode={() => setEditMode(false)} /> : <ViewMode user={user} />}</div>
 								{!user.isEmailConfirmed && !editMode && (
-									<p className='text-sm p-2 text-gray-500 dark:(text-white)'>
+									<p className='text-sm p-2 text-gray-500 dark:text-white'>
 										Your email needs to be confirmed.{' '}
-										<a className='cursor-pointer text-blue-500  dark:(text-blue-300) hover:(underline ) ' onClick={() => verifyEmail()}>
+										<a className='cursor-pointer text-blue-500  dark:text-blue-300 hover:underline' onClick={() => verifyEmail()}>
 											Click here
 										</a>{' '}
 										to resend the confirmation email
@@ -108,7 +108,7 @@ interface IViewMode {
 export const ViewMode = ({ user }: IViewMode) => {
 	return (
 		<>
-			<div className='flex flex-row text-sm grid md:grid-cols-2'>
+			<div className='flex-row text-sm grid md:grid-cols-2'>
 				<div className='grid grid-cols-2'>
 					<div className='font-semibold p-2'>First Name</div>
 					<div className='p-2'>{user.firstName}</div>
@@ -189,7 +189,7 @@ export const EditMode = ({ user, toggleEditMode }: IEditMode) => {
 					<input className=' m-2' type='email' defaultValue={newValues.email} onChange={e => setNewValues({ ...newValues, email: e.target.value })} />
 				</div>
 			</div>
-			<div className='flex flex-row bg-gray-50  px-6 justify-end md:rounded-b-lg dark:( bg-gray-800 border-0 text-light-300) '>
+			<div className='flex flex-row bg-gray-50  px-6 justify-end md:rounded-b-lg dark:bg-gray-800 dark:border-0 dark:text-light-300'>
 				<div className='flex-row my-auto space-y-2 w-full py-4 md:space-x-2' style={{ textAlignLast: 'right' }}>
 					<button onClick={toggleEditMode} className='w-full secondary md:w-1/12'>
 						Cancel

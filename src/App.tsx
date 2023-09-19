@@ -7,13 +7,13 @@ import { useGetUserQuery } from './store/api'
 
 export default function App() {
 	const { data: user } = useGetUserQuery()
-	const darkMode = user ? user.preferences.darkMode : false
+	const darkMode = user?.preferences?.darkMode || false
 
 	return (
 		<BrowserRouter>
-			<div className={`${darkMode ? 'dark ' : ''}flex flex-col h-screen dark:(bg-gray-700 text-light-300)`}>
+			<div className={`${darkMode ? 'dark ' : ''}flex flex-col h-screen dark:bg-gray-700 dark:text-light-300`}>
 				<Header />
-				<div className='flex-1 dark: (border-gray-800 bg-gray-800) '>
+				<div className='flex-1 dark:border-gray-800 dark:bg-gray-800 '>
 					<Routes>
 						<Route path={'/entries'} element={<Entries />} />
 						<Route path={'/'} element={<Entries />} />

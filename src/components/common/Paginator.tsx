@@ -22,7 +22,7 @@ export const Paginator = ({ items, pageSize, currentPage }: IPaginatorProps) => 
 					<button
 						onClick={() => updateCurrentPage(currentPage - 1)}
 						disabled={currentPage == 1}
-						className='bg-white rounded-l-md font-medium border-gray-300 border-1 shadow-sm text-base w-full py-2 px-4 text-gray-700 inline-flex justify-center sm:mt-0 sm:text-sm sm:w-auto hover:bg-gray-50 disabled:(cursor-default bg-gray-200 opacity-90 hover:bg-gray-200) '
+						className='bg-white rounded-l-md font-medium border-gray-300 border-1 shadow-sm text-base w-full py-2 px-4 text-gray-700 inline-flex justify-center sm:mt-0 sm:text-sm sm:w-auto hover:bg-gray-50 disabled:cursor-default disabled:bg-gray-200 disabled:opacity-90 disabled:hover:bg-gray-200'
 					>
 						<BsChevronLeft className='my-auto h-3 mr-2 w-3' />
 						Previous
@@ -59,7 +59,7 @@ export const Paginator = ({ items, pageSize, currentPage }: IPaginatorProps) => 
 					<button
 						onClick={() => updateCurrentPage(currentPage + 1)}
 						disabled={currentPage == pages}
-						className='bg-white rounded-r-md font-medium border-gray-300 border-1 shadow-sm text-base w-full py-2 px-4 text-gray-700 inline-flex justify-center sm:mt-0 sm:text-sm sm:w-auto hover:bg-gray-50 disabled:(cursor-default bg-gray-200 opacity-90 hover:bg-gray-200) '
+						className='bg-white rounded-r-md font-medium border-gray-300 border-1 shadow-sm text-base w-full py-2 px-4 text-gray-700 inline-flex justify-center sm:mt-0 sm:text-sm sm:w-auto hover:bg-gray-50 disabled:cursor-default disabled:bg-gray-200 disabled:opacity-90 disabled:hover:bg-gray-200'
 					>
 						Next
 						<BsChevronRight className='my-auto h-3 ml-2 w-3' />

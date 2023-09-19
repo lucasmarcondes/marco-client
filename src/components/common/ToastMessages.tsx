@@ -42,7 +42,7 @@ export const ToastMessage = ({ toastMessage }: Props) => {
 
 	let variant = getVarient(toastMessage.variant)
 	return (
-		<div className='bg-white rounded-lg flex shadow-lg mt-2 w-md animate-slideInUp animate-animated overflow-hidden dark:(bg-gray-800) '>
+		<div className='bg-white rounded-lg flex shadow-lg mt-2 w-md animate-slideInUp animate-animated overflow-hidden dark:bg-gray-800'>
 			{variant.icon}
 
 			<div className='-mx-3 py-2 px-4'>
@@ -56,7 +56,7 @@ export const ToastMessage = ({ toastMessage }: Props) => {
 				<BsX
 					type='button'
 					onClick={() => dispatch(removeToastMessage(toastMessage))}
-					className='my-auto h-6 transition w-6 dark:(text-white) hover:(cursor-pointer text-gray-600 duration-150) '
+					className='my-auto h-6 transition w-6 dark:text-white hover:cursor-pointer hover:text-gray-600 hover:duration-150'
 				/>
 			</div>
 		</div>

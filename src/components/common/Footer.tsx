@@ -5,18 +5,18 @@ export const Footer = () => {
 	if (['/login', '/register'].includes(location.pathname)) return null
 
 	return (
-		<div className='border-t p-4 px-4 md:p-8 md:px-4 dark:(bg-gray-800 text-white) '>
+		<div className='border-t p-4 px-4 md:p-8 md:px-4 dark:bg-gray-800 dark:text-white '>
 			<div className='md:flex md:items-center md:justify-between'>
 				<div className='flex md:order-2'>
 					<a
 						href='https://github.com/lucasmarcondes/marco-client'
-						className='flex font-semibold space-x-2 text-black items-center dark:(bg-gray-800 text-white) hover:text-gray-700 '
+						className='flex font-semibold space-x-2 text-black items-center dark:bg-gray-800 dark:text-white hover:text-gray-700 '
 					>
 						<BsGithub size={20} />
 						<p>Github React App</p>
 					</a>
 				</div>
-				<p className='mt-4 text-base text-gray-400 md:order-1 md:mt-0 dark:(bg-gray-800 text-white) '>© 2021 Marcondes, Inc. All rights reserved.</p>
+				<p className='mt-4 text-base text-gray-400 md:order-1 md:mt-0 dark:bg-gray-800 dark:text-white'>© 2021 Marcondes, Inc. All rights reserved.</p>
 			</div>
 		</div>
 	)

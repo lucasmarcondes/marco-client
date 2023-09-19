@@ -50,7 +50,7 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 								type='radio'
 								name='chronoSort'
 								value='newest'
-								className='align-text-bottom dark:(text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
+								className='align-text-bottom dark:text-black dark:border-black selected:dark:bg-gray-300 selected:dark:text-black border-black'
 								defaultChecked
 							/>
 							<span className='pl-2'>Newest First</span>
@@ -63,7 +63,7 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 								type='radio'
 								name='chronoSort'
 								value='oldest'
-								className='align-text-bottom dark:(text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
+								className='align-text-bottom dark:text-black dark:border-black selected:dark:bg-gray-300 selected:dark:text-black border-black'
 							/>
 							<span className='pl-2'>Oldest First</span>
 						</label>
@@ -80,7 +80,7 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 										name='templates'
 										type='checkbox'
 										id={val._id}
-										className='dark:(text-black border-black selected:(dark:(bg-gray-300 text-black border-black) '
+										className='dalign-text-bottom dark:text-black dark:border-black selected:dark:bg-gray-300 selected:dark:text-black border-black'
 									/>
 									<span className='pl-2'>{val.description}</span>
 								</label>
@@ -98,7 +98,7 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 									<Tag
 										type={type}
 										label={prop.title}
-										className='border-1 m-1 dark:(border-dark-500) hover:(cursor-pointer bg-light-200 border-dark-500) '
+										className='border-1 m-1 dark:border-dark-500 hover:cursor-pointer hover:bg-light-200 hover:border-dark-500'
 									/>
 								</label>
 							</span>
@@ -109,12 +109,12 @@ export const Filters = ({ onChange, filters }: FiltersProp) => {
 				<div className='flex flex-col'>
 					<label className='flex flex-col'>
 						<span>Begin</span>
-						<input name='startDate' type='date' className='mb-2 dark:( text-black bg-gray-300 border-gray-800) ' />
+						<input name='startDate' type='date' className='mb-2 dark:text-black dark:bg-gray-300 dark:border-gray-800' />
 					</label>
 
 					<label className='flex flex-col'>
 						<span>End</span>
-						<input name='endDate' type='date' className='dark:( text-black bg-gray-300 border-gray-800) ' />
+						<input name='endDate' type='date' className='dark:text-black dark:bg-gray-300 dark:border-gray-800' />
 					</label>
 				</div>
 			</div>
